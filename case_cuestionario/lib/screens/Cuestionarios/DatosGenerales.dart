@@ -74,43 +74,127 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
-                Container(
-                  width: 200,
-                  padding: EdgeInsets.fromLTRB(16, 8, 16, 16),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: DropdownButtonFormField<String>(
-                    value: selectedSemester,
-                    decoration:
-                        InputDecoration.collapsed(hintText: 'Seleccione uno'),
-                    dropdownColor: Theme.of(context).colorScheme.onBackground,
-                    icon: Icon(Icons.arrow_drop_down),
-                    iconSize: 24,
-                    elevation: 16,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedSemester = newValue;
-                      });
-                    },
-                    items: <String>[
-                      'Tercer semestre',
-                      'Quinto semestre',
-                      'Séptimo semestre',
-                      'Noveno semestre',
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.background),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Radio(
+                          value: 'Tercer',
+                          groupValue: selectedSemester,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedSemester = value.toString();
+                            });
+                          },
+                          activeColor:
+                              Theme.of(context).colorScheme.onBackground,
+                          fillColor: MaterialStateColor.resolveWith(
+                            (states) {
+                              if (states.contains(MaterialState.selected)) {
+                                return Theme.of(context)
+                                    .colorScheme
+                                    .onBackground;
+                              } else {
+                                return Theme.of(context)
+                                    .colorScheme
+                                    .onBackground; // Set the color for unselected state
+                              }
+                            },
+                          ),
                         ),
-                      );
-                    }).toList(),
-                  ),
+                        Text('Tercer semestre', style: TextStyle(fontSize: 20)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Radio(
+                          value: 'Quinto',
+                          groupValue: selectedSemester,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedSemester = value.toString();
+                            });
+                          },
+                          activeColor:
+                              Theme.of(context).colorScheme.onBackground,
+                          fillColor: MaterialStateColor.resolveWith(
+                            (states) {
+                              if (states.contains(MaterialState.selected)) {
+                                return Theme.of(context)
+                                    .colorScheme
+                                    .onBackground;
+                              } else {
+                                return Theme.of(context)
+                                    .colorScheme
+                                    .onBackground;
+                              }
+                            },
+                          ),
+                        ),
+                        Text('Quinto semestre', style: TextStyle(fontSize: 20)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Radio(
+                          value: 'Septimo',
+                          groupValue: selectedSemester,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedSemester = value.toString();
+                            });
+                          },
+                          activeColor:
+                              Theme.of(context).colorScheme.onBackground,
+                          fillColor: MaterialStateColor.resolveWith(
+                            (states) {
+                              if (states.contains(MaterialState.selected)) {
+                                return Theme.of(context)
+                                    .colorScheme
+                                    .onBackground;
+                              } else {
+                                return Theme.of(context)
+                                    .colorScheme
+                                    .onBackground;
+                              }
+                            },
+                          ),
+                        ),
+                        Text('Séptimo semestre', style: TextStyle(fontSize: 20)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Radio(
+                          value: 'Noveno',
+                          groupValue: selectedSemester,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedSemester = value.toString();
+                            });
+                          },
+                          activeColor:
+                              Theme.of(context).colorScheme.onBackground,
+                          fillColor: MaterialStateColor.resolveWith(
+                            (states) {
+                              if (states.contains(MaterialState.selected)) {
+                                return Theme.of(context)
+                                    .colorScheme
+                                    .onBackground;
+                              } else {
+                                return Theme.of(context)
+                                    .colorScheme
+                                    .onBackground;
+                              }
+                            },
+                          ),
+                        ),
+                        Text('Noveno semestre', style: TextStyle(fontSize: 20)),
+                      ],
+                    ),
+                  ],
                 ),
+              
                 SizedBox(
                   height: 10,
                 ),
