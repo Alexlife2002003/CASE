@@ -16,14 +16,28 @@ class Incorporacion extends StatefulWidget {
 }
 
 class _IncorporacionState extends State<Incorporacion> {
-  String? selectedModoEnterar;
-  String? selectedImportanciaActividades;
-  String? selectedEspacioEstudiar;
-  String? selectedTransporte;
-  String? selectedTiempo;
-  String? selectedConocesCebuaz;
-  String? selectedUsasCebuaz;
-  String? selectedSatisfecha;
+  String? selectedModoEnterar; // ¿Cómo te enteraste de la Licenciatura?
+  String?
+      selectedImportanciaActividades; //¿Qué nivel de importancia tienen las actividades escolares dentro de tu familia
+  String?
+      selectedEspacioEstudiar; //¿Cuentas en tu casa con un espacio para estudiar y hacer tus trabajos escolares?
+  bool Escritorio = false;
+  bool Internet = false;
+  bool Impresora = false;
+  bool Calculadora = false;
+  bool Computadora = false;
+  bool Tablet = false;
+  bool Todas = false;
+  String?
+      selectedRecursosEconomicos; //Los recursos económicos con los que cuentas para realizar tus estudios son:
+  String?
+      selectedTransporte; //¿Qué medio de trasporte utilizas para trasladarte a la escuela? ¿Qué medio de trasporte utilizas para trasladarte a la escuela?
+  String?
+      selectedTiempo; // ¿Cuánto tiempo haces para llegar a la escuela desde tu domicilio actual?
+  String? selectedConocesCebuaz; //¿Conoces el CEBUAZ?
+  String? selectedUsasCebuaz; //¿Usas el CEBUAZ?
+
+// En comparación con tu experiencia en el Bachillerato ¿Qué tanto ha cambiado tu vida durante tu estancia en la Universidad?
   List<Experiencia> experiencias = [
     Experiencia(aspect: 'Exigencia académica', experiencia: ''),
     Experiencia(aspect: 'Ambiente social y cultural', experiencia: ''),
@@ -31,9 +45,33 @@ class _IncorporacionState extends State<Incorporacion> {
     Experiencia(aspect: 'Relación con los maestros', experiencia: ''),
     Experiencia(aspect: 'Relación con los compañeros', experiencia: ''),
   ];
+  String?
+      selectedSatisfecha; //¿Hasta qué punto consideras satisfechas tus expectativas al iniciar la carrera?
 
-  String? selectedRecursosEconomicos;
   @override
+  Widget buildCheckboxRow(
+      String label, bool value, ValueChanged<bool?> onChanged) {
+    return Row(
+      children: [
+        Checkbox(
+          checkColor: Colors.white,
+          fillColor: MaterialStateProperty.resolveWith((states) {
+            return states.contains(MaterialState.selected)
+                ? Theme.of(context).colorScheme.onBackground
+                : Theme.of(context).colorScheme.background;
+          }),
+          value: value,
+          onChanged: onChanged,
+          side: BorderSide(
+            color: Theme.of(context).colorScheme.onBackground,
+            width: 2.0,
+          ),
+        ),
+        Text(label, style: TextStyle(fontSize: 18)),
+      ],
+    );
+  }
+
   Widget buildText(String text) {
     return Padding(
       padding: EdgeInsets.only(bottom: 8.0),
@@ -67,29 +105,6 @@ class _IncorporacionState extends State<Incorporacion> {
           ),
         ),
         Text(label, style: TextStyle(fontSize: 18)),
-      ],
-    );
-  }
-
-  Widget buildRadio(
-      String value, String? groupValue, Function(String?) onChanged) {
-    return Row(
-      children: [
-        Radio(
-          value: value,
-          groupValue: groupValue,
-          onChanged: onChanged,
-          activeColor: Theme.of(context).colorScheme.onBackground,
-          fillColor: MaterialStateColor.resolveWith(
-            (states) {
-              if (states.contains(MaterialState.selected)) {
-                return Theme.of(context).colorScheme.onBackground;
-              } else {
-                return Theme.of(context).colorScheme.onBackground;
-              }
-            },
-          ),
-        ),
       ],
     );
   }
@@ -187,6 +202,45 @@ class _IncorporacionState extends State<Incorporacion> {
                 ),
                 buildText(
                     'De los siguientes medios, ¿con cuáles cuentas para estudiar?* (Selecciona todos los que correspondan.)'),
+                Column(
+                  children: [
+                    buildCheckboxRow('Escritorio', Escritorio, (value) {
+                      setState(() {
+                        Escritorio = value!;
+                      });
+                    }),
+                    buildCheckboxRow('Internet', Internet, (value) {
+                      setState(() {
+                        Internet = value!;
+                      });
+                    }),
+                    buildCheckboxRow('Impresora', Impresora, (value) {
+                      setState(() {
+                        Impresora = value!;
+                      });
+                    }),
+                    buildCheckboxRow('Calculadora', Calculadora, (value) {
+                      setState(() {
+                        Calculadora = value!;
+                      });
+                    }),
+                    buildCheckboxRow('Computadora', Computadora, (value) {
+                      setState(() {
+                        Computadora = value!;
+                      });
+                    }),
+                    buildCheckboxRow('Tablet', Tablet, (value) {
+                      setState(() {
+                        Tablet = value!;
+                      });
+                    }),
+                    buildCheckboxRow('Todas las anteriores', Todas, (value) {
+                      setState(() {
+                        Todas = value!;
+                      });
+                    }),
+                  ],
+                ),
                 buildText(
                     'Los recursos económicos con los que cuentas para realizar tus estudios son:'),
                 Column(
@@ -339,7 +393,7 @@ class _IncorporacionState extends State<Incorporacion> {
                     rows: experiencias.map((experiencia) {
                       return DataRow(cells: [
                         DataCell(Container(
-                          width: 150, // Fixed width for each cell
+                          width: 150,
                           child: Text(experiencia.aspect),
                         )),
                         DataCell(Radio(
@@ -437,7 +491,30 @@ class _IncorporacionState extends State<Incorporacion> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            debugPrint(selectedModoEnterar);
+                            debugPrint(selectedImportanciaActividades);
+                            debugPrint(selectedEspacioEstudiar);
+                            debugPrint("Escritorio $Escritorio");
+                            debugPrint("Internet $Internet");
+                            debugPrint("Impresora $Impresora");
+                            debugPrint("Calculadora $Calculadora");
+                            debugPrint("Computadora $Computadora");
+                            debugPrint("Tablet $Tablet");
+                            debugPrint("Todas $Todas");
+                            debugPrint(selectedRecursosEconomicos);
+                            debugPrint(selectedTransporte);
+                            debugPrint(selectedTiempo);
+                            debugPrint(selectedConocesCebuaz);
+                            debugPrint(selectedUsasCebuaz);
+
+                            for (Experiencia experiencia in experiencias) {
+                              debugPrint(
+                                  'Aspect: ${experiencia.aspect}, Experiencia: ${experiencia.experiencia}');
+                            }
+
+                            debugPrint(selectedSatisfecha);
+                          },
                           child: Material(
                             elevation: 5,
                             borderRadius: BorderRadius.circular(12),

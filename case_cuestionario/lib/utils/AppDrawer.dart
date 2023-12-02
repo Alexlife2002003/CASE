@@ -1,4 +1,3 @@
-import 'package:case_cuestionario/screens/Cuestionarios/AbandonoEscolar.dart';
 import 'package:case_cuestionario/screens/Cuestionarios/DatosGenerales.dart';
 import 'package:case_cuestionario/screens/Cuestionarios/Incorporacion.dart';
 import 'package:flutter/material.dart';
@@ -155,9 +154,7 @@ class AppWithDrawer extends StatelessWidget {
                           ),
                         ],
                       ),
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> AbandonoEscolar()));
-                      },
+                      onTap: () {},
                     ),
                     ListTile(
                       title: Row(
