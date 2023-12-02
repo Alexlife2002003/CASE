@@ -1,4 +1,5 @@
 import 'package:case_cuestionario/utils/AppDrawer.dart';
+import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
 
 class DatosGenerales extends StatefulWidget {
@@ -15,58 +16,79 @@ class _DatosGeneralesState extends State<DatosGenerales> {
   String? selectedOption;
   String? selectedYear;
   final _nombreCompletoController = TextEditingController();
-  final _municipcioController = TextEditingController();
+  final _municipioController = TextEditingController();
 
-  @override
-  Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenheight = MediaQuery.of(context).size.height;
-    Widget buildInputField(String text, TextEditingController controller,
-        TextInputType inputType) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 0),
-        child: Container(
-          width: screenWidth - 50,
-          height: 50,
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.onBackground,
-            border: Border.all(color: Colors.white, width: .2),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 0),
-            child: TextField(
-              style: TextStyle(
-                color: Colors
-                    .black, // Change this line to set the input text color to red
+  
+  Widget buildInputField(
+      String text, TextEditingController controller, TextInputType inputType) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 0),
+      child: Container(
+        width: MediaQuery.of(context).size.width - 50,
+        height: 50,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.onBackground,
+          border: Border.all(color: Colors.white, width: .2),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 0),
+          child: TextField(
+            style: TextStyle(color: Colors.black),
+            keyboardType: inputType,
+            controller: controller,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: text,
+              hintStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
+                fontSize: 20,
               ),
-              keyboardType: inputType,
-              controller: controller,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: text,
-                hintStyle: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey,
-                  fontSize: 20,
-                ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 10),
-              ),
+              contentPadding: EdgeInsets.symmetric(horizontal: 10),
             ),
           ),
         ),
-      );
-    }
+      ),
+    );
+  }
 
+  Widget buildRadioButton(String label, String value, String? groupValue,
+      Function(String?) onChanged) {
+    return Row(
+      children: [
+        Radio(
+          value: value,
+          groupValue: groupValue,
+          onChanged: onChanged,
+          activeColor: Theme.of(context).colorScheme.onBackground,
+          fillColor: MaterialStateColor.resolveWith(
+            (states) {
+              if (states.contains(MaterialState.selected)) {
+                return Theme.of(context).colorScheme.onBackground;
+              } else {
+                return Theme.of(context).colorScheme.onBackground;
+              }
+            },
+          ),
+        ),
+        Text(label, style: TextStyle(fontSize: 20)),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return AppWithDrawer(
       title: 'Datos Generales',
       content: Scaffold(
         body: Padding(
-          padding: EdgeInsets.only(left: 25.0), // Adjust the left margin
+          padding: EdgeInsets.only(left: 25.0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+              
                 Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
@@ -76,128 +98,22 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                 ),
                 Column(
                   children: [
-                    Row(
-                      children: [
-                        Radio(
-                          value: 'Tercer',
-                          groupValue: selectedSemester,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedSemester = value.toString();
-                            });
-                          },
-                          activeColor:
-                              Theme.of(context).colorScheme.onBackground,
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              } else {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground; // Set the color for unselected state
-                              }
-                            },
-                          ),
-                        ),
-                        Text('Tercer semestre', style: TextStyle(fontSize: 20)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Radio(
-                          value: 'Quinto',
-                          groupValue: selectedSemester,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedSemester = value.toString();
-                            });
-                          },
-                          activeColor:
-                              Theme.of(context).colorScheme.onBackground,
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              } else {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              }
-                            },
-                          ),
-                        ),
-                        Text('Quinto semestre', style: TextStyle(fontSize: 20)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Radio(
-                          value: 'Septimo',
-                          groupValue: selectedSemester,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedSemester = value.toString();
-                            });
-                          },
-                          activeColor:
-                              Theme.of(context).colorScheme.onBackground,
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              } else {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              }
-                            },
-                          ),
-                        ),
-                        Text('Séptimo semestre', style: TextStyle(fontSize: 20)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Radio(
-                          value: 'Noveno',
-                          groupValue: selectedSemester,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedSemester = value.toString();
-                            });
-                          },
-                          activeColor:
-                              Theme.of(context).colorScheme.onBackground,
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              } else {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              }
-                            },
-                          ),
-                        ),
-                        Text('Noveno semestre', style: TextStyle(fontSize: 20)),
-                      ],
-                    ),
+                    for (var semester in [
+                      'Tercer',
+                      'Quinto',
+                      'Septimo',
+                      'Noveno'
+                    ])
+                      buildRadioButton(
+                          '$semester semestre', semester, selectedSemester,
+                          (value) {
+                        setState(() {
+                          selectedSemester = value;
+                        });
+                      }),
                   ],
                 ),
-              
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
@@ -207,9 +123,7 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                 ),
                 buildInputField('Nombre completo', _nombreCompletoController,
                     TextInputType.name),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
@@ -219,99 +133,15 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                 ),
                 Column(
                   children: [
-                    Row(
-                      children: [
-                        Radio(
-                          value: 'Mujer',
-                          groupValue: selectedSexo,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedSexo = value.toString();
-                            });
-                          },
-                          activeColor:
-                              Theme.of(context).colorScheme.onBackground,
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              } else {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground; // Set the color for unselected state
-                              }
-                            },
-                          ),
-                        ),
-                        Text('Mujer', style: TextStyle(fontSize: 20)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Radio(
-                          value: 'Hombre',
-                          groupValue: selectedSexo,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedSexo = value.toString();
-                            });
-                          },
-                          activeColor:
-                              Theme.of(context).colorScheme.onBackground,
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              } else {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              }
-                            },
-                          ),
-                        ),
-                        Text('Hombre', style: TextStyle(fontSize: 20)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Radio(
-                          value: 'LGTIQ+',
-                          groupValue: selectedSexo,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedSexo = value.toString();
-                            });
-                          },
-                          activeColor:
-                              Theme.of(context).colorScheme.onBackground,
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              } else {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              }
-                            },
-                          ),
-                        ),
-                        Text('LGTIQ+', style: TextStyle(fontSize: 20)),
-                      ],
-                    ),
+                    for (var gender in ['Mujer', 'Hombre', 'LGTIQ+'])
+                      buildRadioButton(gender, gender, selectedSexo, (value) {
+                        setState(() {
+                          selectedSexo = value;
+                        });
+                      }),
                   ],
                 ),
-                
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
@@ -320,10 +150,8 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                   ),
                 ),
                 buildInputField('Municipio de procedencia',
-                    _municipcioController, TextInputType.name),
-                SizedBox(
-                  height: 10,
-                ),
+                    _municipioController, TextInputType.name),
+                SizedBox(height: 10),
                 Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
@@ -333,122 +161,18 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                 ),
                 Column(
                   children: [
-                    Row(
-                      children: [
-                        Radio(
-                          value: 'Soltero',
-                          groupValue: selectedEstadoCivil,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedEstadoCivil = value.toString();
-                            });
-                          },
-                          activeColor:
-                              Theme.of(context).colorScheme.onBackground,
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              } else {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground; // Set the color for unselected state
-                              }
-                            },
-                          ),
-                        ),
-                        Text('Soltero (a)', style: TextStyle(fontSize: 20)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Radio(
-                          value: 'Casado',
-                          groupValue: selectedEstadoCivil,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedEstadoCivil = value.toString();
-                            });
-                          },
-                          activeColor:
-                              Theme.of(context).colorScheme.onBackground,
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              } else {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              }
-                            },
-                          ),
-                        ),
-                        Text('Casado (a)', style: TextStyle(fontSize: 20)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Radio(
-                          value: 'Union',
-                          groupValue: selectedEstadoCivil,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedEstadoCivil = value.toString();
-                            });
-                          },
-                          activeColor:
-                              Theme.of(context).colorScheme.onBackground,
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              } else {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              }
-                            },
-                          ),
-                        ),
-                        Text('Union Libre', style: TextStyle(fontSize: 20)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Radio(
-                          value: 'Otro',
-                          groupValue: selectedEstadoCivil,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedEstadoCivil = value.toString();
-                            });
-                          },
-                          activeColor:
-                              Theme.of(context).colorScheme.onBackground,
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              } else {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              }
-                            },
-                          ),
-                        ),
-                        Text('Otro', style: TextStyle(fontSize: 20)),
-                      ],
-                    ),
+                    for (var status in [
+                      'Soltero (a)',
+                      'Casado (a)',
+                      'Union',
+                      'Otro'
+                    ])
+                      buildRadioButton('$status', status, selectedEstadoCivil,
+                          (value) {
+                        setState(() {
+                          selectedEstadoCivil = value;
+                        });
+                      }),
                   ],
                 ),
                 Padding(
@@ -460,49 +184,17 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                 ),
                 Row(
                   children: [
-                    Radio(
-                      value: 'Yes',
-                      groupValue: selectedOption,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedOption = value.toString();
-                        });
-                      },
-                      activeColor: Theme.of(context).colorScheme.onBackground,
-                      fillColor: MaterialStateColor.resolveWith(
-                        (states) {
-                          if (states.contains(MaterialState.selected)) {
-                            return Theme.of(context).colorScheme.onBackground;
-                          } else {
-                            return Theme.of(context)
-                                .colorScheme
-                                .onBackground; // Set the color for unselected state
-                          }
-                        },
-                      ),
-                    ),
-                    Text('Si', style: TextStyle(fontSize: 20)),
+                    buildRadioButton('Si', 'Yes', selectedOption, (value) {
+                      setState(() {
+                        selectedOption = value;
+                      });
+                    }),
                     SizedBox(width: 25),
-                    Radio(
-                      value: 'No',
-                      groupValue: selectedOption,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedOption = value.toString();
-                        });
-                      },
-                      activeColor: Theme.of(context).colorScheme.onBackground,
-                      fillColor: MaterialStateColor.resolveWith(
-                        (states) {
-                          if (states.contains(MaterialState.selected)) {
-                            return Theme.of(context).colorScheme.onBackground;
-                          } else {
-                            return Theme.of(context).colorScheme.onBackground;
-                          }
-                        },
-                      ),
-                    ),
-                    Text('No', style: TextStyle(fontSize: 20)),
+                    buildRadioButton('No', 'No', selectedOption, (value) {
+                      setState(() {
+                        selectedOption = value;
+                      });
+                    }),
                   ],
                 ),
                 Padding(
@@ -553,13 +245,11 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                     }).toList(),
                   ),
                 ),
-                SizedBox(
-                  height: 25,
-                ),
+                SizedBox(height: 25),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 0),
                   child: Container(
-                    width: screenWidth - 50,
+                    width: MediaQuery.of(context).size.width - 50,
                     height: 50,
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.onSurface,
@@ -568,10 +258,71 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                     ),
                     child: GestureDetector(
                       onTap: () {
-                        print(selectedSemester);
-                        print(_nombreCompletoController.text);
+                        if (selectedSemester == null ||
+                            selectedSemester!.isEmpty) {
+                          showSnackbar(
+                              context,
+                              '¡Dejaste el semestre sin contestar!',
+                              Theme.of(context).colorScheme.error);
+
+                          return;
+                        }
+
+                        if (_nombreCompletoController.text.isEmpty) {
+                          showSnackbar(
+                              context,
+                              '¡Dejaste tu nombre sin contestar!',
+                              Theme.of(context).colorScheme.error);
+                          return;
+                        }
+
+                        if (selectedSexo == null || selectedSexo!.isEmpty) {
+                          showSnackbar(
+                              context,
+                              '¡Dejaste tu sexo sin contestar!',
+                              Theme.of(context).colorScheme.error);
+                          return;
+                        }
+
+                        if (_municipioController.text.isEmpty) {
+                          showSnackbar(
+                              context,
+                              '¡Dejaste el municipio sin contestar!',
+                              Theme.of(context).colorScheme.error);
+                          return;
+                        }
+
+                        if (selectedEstadoCivil == null ||
+                            selectedEstadoCivil!.isEmpty) {
+                          showSnackbar(
+                              context,
+                              '¡Dejaste tu estado civil sin contestar!',
+                              Theme.of(context).colorScheme.error);
+                          return;
+                        }
+
+                        if (selectedOption == null || selectedOption!.isEmpty) {
+                          showSnackbar(
+                              context,
+                              '¡Dejaste si trabajas sin contestar!',
+                              Theme.of(context).colorScheme.error);
+                          return;
+                        }
+
+                        if (selectedYear == null || selectedYear!.isEmpty) {
+                          showSnackbar(
+                              context,
+                              '¡Dejaste tu año de ingreso sin contestar!',
+                              Theme.of(context).colorScheme.error);
+
+                          return;
+                        }
+
+                        // If none of the above conditions are met, all values are valid
+                        debugPrint(selectedSemester);
+                        print(_nombreCompletoController.text.trim());
                         print(selectedSexo);
-                        print(_municipcioController.text);
+                        print(_municipioController.text);
                         print(selectedEstadoCivil);
                         print(selectedOption);
                         print(selectedYear);
@@ -580,22 +331,23 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                         elevation: 5,
                         borderRadius: BorderRadius.circular(12),
                         child: Container(
-                          width: screenWidth - 0,
+                          width: MediaQuery.of(context).size.width,
                           height: 50,
                           decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                              border:
-                                  Border.all(color: Colors.white, width: 2)),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Colors.white, width: 2),
+                          ),
                           child: Center(
-                              child: Text(
-                            'Guardar',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.background,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                            child: Text(
+                              'Guardar',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.background,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
                             ),
-                          )),
+                          ),
                         ),
                       ),
                     ),

@@ -1,4 +1,6 @@
+import 'package:case_cuestionario/screens/Cuestionarios/AbandonoEscolar.dart';
 import 'package:case_cuestionario/screens/Cuestionarios/DatosGenerales.dart';
+import 'package:case_cuestionario/screens/Cuestionarios/Incorporacion.dart';
 import 'package:flutter/material.dart';
 import 'package:case_cuestionario/screens/Users/Login.dart';
 
@@ -6,7 +8,7 @@ class AppWithDrawer extends StatelessWidget {
   final Widget content;
   final String title;
 
-  const AppWithDrawer({required this.content,required this.title});
+  const AppWithDrawer({required this.content, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +71,10 @@ class AppWithDrawer extends StatelessWidget {
                         ],
                       ),
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>DatosGenerales()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DatosGenerales()));
                       },
                     ),
                     ListTile(
@@ -85,7 +90,12 @@ class AppWithDrawer extends StatelessWidget {
                           ),
                         ],
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Incorporacion()));
+                      },
                     ),
                     ListTile(
                       title: Row(
@@ -145,7 +155,9 @@ class AppWithDrawer extends StatelessWidget {
                           ),
                         ],
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> AbandonoEscolar()));
+                      },
                     ),
                     ListTile(
                       title: Row(
