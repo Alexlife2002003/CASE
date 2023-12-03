@@ -1,13 +1,13 @@
-import 'package:case_cuestionario/screens/Cuestionarios/DatosGenerales.dart';
-import 'package:case_cuestionario/screens/Cuestionarios/Incorporacion.dart';
+import 'package:case_cuestionario/screens/Cuestionarios/datos_generales.dart';
+import 'package:case_cuestionario/screens/Cuestionarios/incorporacion.dart';
 import 'package:flutter/material.dart';
-import 'package:case_cuestionario/screens/Users/Login.dart';
+import 'package:case_cuestionario/screens/Users/login.dart';
 
 class AppWithDrawer extends StatelessWidget {
   final Widget content;
   final String title;
 
-  const AppWithDrawer({required this.content, required this.title});
+  const AppWithDrawer({super.key, required this.content, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +35,10 @@ class AppWithDrawer extends StatelessWidget {
             SizedBox(
               height: screenWidth / 3,
               child: DrawerHeader(
-                decoration: BoxDecoration(),
+                decoration: const BoxDecoration(),
                 child: InkWell(
                   onTap: () {},
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -59,7 +59,7 @@ class AppWithDrawer extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     ListTile(
-                      title: Row(
+                      title: const Row(
                         children: [
                           Icon(Icons.check_box_outline_blank),
                           SizedBox(
@@ -73,11 +73,11 @@ class AppWithDrawer extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => DatosGenerales()));
+                                builder: (context) => const DatosGenerales()));
                       },
                     ),
                     ListTile(
-                      title: Row(
+                      title: const Row(
                         children: [
                           Icon(Icons.check_box_outline_blank),
                           SizedBox(
@@ -93,11 +93,11 @@ class AppWithDrawer extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Incorporacion()));
+                                builder: (context) => const Incorporacion()));
                       },
                     ),
                     ListTile(
-                      title: Row(
+                      title:const Row(
                         children: [
                           Icon(Icons.check_box_outline_blank),
                           SizedBox(
@@ -112,7 +112,7 @@ class AppWithDrawer extends StatelessWidget {
                       onTap: () {},
                     ),
                     ListTile(
-                      title: Row(
+                      title: const Row(
                         children: [
                           Icon(Icons.check_box_outline_blank),
                           SizedBox(
@@ -127,7 +127,7 @@ class AppWithDrawer extends StatelessWidget {
                       onTap: () {},
                     ),
                     ListTile(
-                      title: Row(
+                      title:const Row(
                         children: [
                           Icon(Icons.check_box_outline_blank),
                           SizedBox(
@@ -142,7 +142,7 @@ class AppWithDrawer extends StatelessWidget {
                       onTap: () {},
                     ),
                     ListTile(
-                      title: Row(
+                      title:const Row(
                         children: [
                           Icon(Icons.check_box_outline_blank),
                           SizedBox(
@@ -157,7 +157,7 @@ class AppWithDrawer extends StatelessWidget {
                       onTap: () {},
                     ),
                     ListTile(
-                      title: Row(
+                      title: const Row(
                         children: [
                           Icon(Icons.check_box_outline_blank),
                           SizedBox(
@@ -172,7 +172,7 @@ class AppWithDrawer extends StatelessWidget {
                       onTap: () {},
                     ),
                     ListTile(
-                      title: Row(
+                      title: const Row(
                         children: [
                           Icon(Icons.check_box_outline_blank),
                           SizedBox(
@@ -187,7 +187,7 @@ class AppWithDrawer extends StatelessWidget {
                       onTap: () {},
                     ),
                     ListTile(
-                      title: Row(
+                      title: const Row(
                         children: [
                           Icon(Icons.check_box_outline_blank),
                           SizedBox(
@@ -226,7 +226,7 @@ class AppWithDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Login()));
+                    context, MaterialPageRoute(builder: (context) => const Login()));
               },
             ),
           ],

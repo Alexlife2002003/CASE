@@ -1,4 +1,4 @@
-import 'package:case_cuestionario/screens/Users/Login.dart';
+import 'package:case_cuestionario/screens/Users/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,21 +11,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Color darkblue = Color.fromARGB(255, 0, 0, 139);
+    Color darkblue = const Color.fromARGB(255, 0, 0, 139);
 
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme(
           primary: darkblue, // The primary color for the overall theme
-          secondary:Color(0xfff5686aa), // The secondary color for the overall theme
+          secondary:const Color(0xff5686aa), // The secondary color for the overall theme
           surface: Colors.white, // The surface color (background color of components)
-          background: Color(0xfff111b3e), // The background color of the app
-          error: Color(0xFFB00020), // The color to use for error indicators
+          background: const Color(0xff111b3e), // The background color of the app
+          error: const Color(0xFFB00020), // The color to use for error indicators
           onPrimary: Colors.black, // The color to use for text and icons on the primary color
           onSecondary: Colors.black, // The color to use for text and icons on the secondary color
           onSurface: Colors.white, // The color to use for text and icons on the surface color
-          onBackground:Color(0xfff927249), // The color to use for text and icons on the background color
+          onBackground:const Color(0xff927249), // The color to use for text and icons on the background color
           onError: Colors.white, // The color to use for text and icons on error backgrounds
           brightness:
               Brightness.light, // The overall brightness of the color scheme

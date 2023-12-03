@@ -1,4 +1,4 @@
-import 'package:case_cuestionario/utils/AppDrawer.dart';
+import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget {
@@ -11,7 +11,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    return AppWithDrawer(
+    return const AppWithDrawer(
       title: 'Dashboard',
       content: Scaffold()
     );

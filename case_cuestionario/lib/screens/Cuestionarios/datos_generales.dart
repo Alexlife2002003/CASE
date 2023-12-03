@@ -1,4 +1,4 @@
-import 'package:case_cuestionario/utils/AppDrawer.dart';
+import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,6 @@ class _DatosGeneralesState extends State<DatosGenerales> {
   final _nombreCompletoController = TextEditingController();
   final _municipioController = TextEditingController();
 
-  
   Widget buildInputField(
       String text, TextEditingController controller, TextInputType inputType) {
     return Padding(
@@ -34,18 +33,18 @@ class _DatosGeneralesState extends State<DatosGenerales> {
         child: Padding(
           padding: const EdgeInsets.only(left: 0),
           child: TextField(
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
             keyboardType: inputType,
             controller: controller,
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: text,
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.grey,
                 fontSize: 20,
               ),
-              contentPadding: EdgeInsets.symmetric(horizontal: 10),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 10),
             ),
           ),
         ),
@@ -72,7 +71,7 @@ class _DatosGeneralesState extends State<DatosGenerales> {
             },
           ),
         ),
-        Text(label, style: TextStyle(fontSize: 20)),
+        Text(label, style: const TextStyle(fontSize: 20)),
       ],
     );
   }
@@ -83,13 +82,12 @@ class _DatosGeneralesState extends State<DatosGenerales> {
       title: 'Datos Generales',
       content: Scaffold(
         body: Padding(
-          padding: EdgeInsets.only(left: 25.0),
+          padding: const EdgeInsets.only(left: 25.0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-              
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     'Semestre*',
@@ -113,8 +111,8 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                       }),
                   ],
                 ),
-                SizedBox(height: 10),
-                Padding(
+                const SizedBox(height: 10),
+                const Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     'Nombre completo (iniciando con APELLIDO). *',
@@ -123,8 +121,8 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                 ),
                 buildInputField('Nombre completo', _nombreCompletoController,
                     TextInputType.name),
-                SizedBox(height: 10),
-                Padding(
+                const SizedBox(height: 10),
+                const Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     'Sexo/Género *',
@@ -141,8 +139,8 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                       }),
                   ],
                 ),
-                SizedBox(height: 10),
-                Padding(
+                const SizedBox(height: 10),
+                const Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     'Municipio de procedencia. *',
@@ -151,8 +149,8 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                 ),
                 buildInputField('Municipio de procedencia',
                     _municipioController, TextInputType.name),
-                SizedBox(height: 10),
-                Padding(
+                const SizedBox(height: 10),
+                const Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     'Estado civil:',
@@ -167,7 +165,7 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                       'Union',
                       'Otro'
                     ])
-                      buildRadioButton('$status', status, selectedEstadoCivil,
+                      buildRadioButton(status, status, selectedEstadoCivil,
                           (value) {
                         setState(() {
                           selectedEstadoCivil = value;
@@ -175,7 +173,7 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                       }),
                   ],
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     '¿Trabaja actualmente? *',
@@ -189,7 +187,7 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                         selectedOption = value;
                       });
                     }),
-                    SizedBox(width: 25),
+                    const SizedBox(width: 25),
                     buildRadioButton('No', 'No', selectedOption, (value) {
                       setState(() {
                         selectedOption = value;
@@ -197,7 +195,7 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                     }),
                   ],
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     'Año de ingreso. *',
@@ -206,17 +204,17 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                 ),
                 Container(
                   width: 200,
-                  padding: EdgeInsets.fromLTRB(16, 8, 16, 16),
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.onBackground,
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: DropdownButtonFormField<String>(
                     value: selectedYear,
-                    decoration:
-                        InputDecoration.collapsed(hintText: 'Seleccione uno'),
+                    decoration: const InputDecoration.collapsed(
+                        hintText: 'Seleccione uno'),
                     dropdownColor: Theme.of(context).colorScheme.onBackground,
-                    icon: Icon(Icons.arrow_drop_down),
+                    icon: const Icon(Icons.arrow_drop_down),
                     iconSize: 24,
                     elevation: 16,
                     onChanged: (String? newValue) {
@@ -245,7 +243,7 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                     }).toList(),
                   ),
                 ),
-                SizedBox(height: 25),
+                const SizedBox(height: 25),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 0),
                   child: Container(
@@ -320,12 +318,12 @@ class _DatosGeneralesState extends State<DatosGenerales> {
 
                         // If none of the above conditions are met, all values are valid
                         debugPrint(selectedSemester);
-                        print(_nombreCompletoController.text.trim());
-                        print(selectedSexo);
-                        print(_municipioController.text);
-                        print(selectedEstadoCivil);
-                        print(selectedOption);
-                        print(selectedYear);
+                        debugPrint(_nombreCompletoController.text.trim());
+                        debugPrint(selectedSexo);
+                        debugPrint(_municipioController.text);
+                        debugPrint(selectedEstadoCivil);
+                        debugPrint(selectedOption);
+                        debugPrint(selectedYear);
                       },
                       child: Material(
                         elevation: 5,

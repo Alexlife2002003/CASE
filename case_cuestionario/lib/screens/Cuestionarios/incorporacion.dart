@@ -1,4 +1,4 @@
-import 'package:case_cuestionario/utils/AppDrawer.dart';
+import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:flutter/material.dart';
 
 class Experiencia {
@@ -21,13 +21,13 @@ class _IncorporacionState extends State<Incorporacion> {
       selectedImportanciaActividades; //¿Qué nivel de importancia tienen las actividades escolares dentro de tu familia
   String?
       selectedEspacioEstudiar; //¿Cuentas en tu casa con un espacio para estudiar y hacer tus trabajos escolares?
-  bool Escritorio = false;
-  bool Internet = false;
-  bool Impresora = false;
-  bool Calculadora = false;
-  bool Computadora = false;
-  bool Tablet = false;
-  bool Todas = false;
+  bool escritorio = false;
+  bool internet = false;
+  bool impresora = false;
+  bool calculadora = false;
+  bool computadora = false;
+  bool tablet = false;
+  bool todas = false;
   String?
       selectedRecursosEconomicos; //Los recursos económicos con los que cuentas para realizar tus estudios son:
   String?
@@ -48,7 +48,7 @@ class _IncorporacionState extends State<Incorporacion> {
   String?
       selectedSatisfecha; //¿Hasta qué punto consideras satisfechas tus expectativas al iniciar la carrera?
 
-  @override
+  
   Widget buildCheckboxRow(
       String label, bool value, ValueChanged<bool?> onChanged) {
     return Row(
@@ -67,17 +67,17 @@ class _IncorporacionState extends State<Incorporacion> {
             width: 2.0,
           ),
         ),
-        Text(label, style: TextStyle(fontSize: 18)),
+        Text(label, style: const TextStyle(fontSize: 18)),
       ],
     );
   }
 
   Widget buildText(String text) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 8.0),
+      padding: const EdgeInsets.only(bottom: 8.0),
       child: Text(
         text,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
         ),
@@ -104,7 +104,7 @@ class _IncorporacionState extends State<Incorporacion> {
             },
           ),
         ),
-        Text(label, style: TextStyle(fontSize: 18)),
+        Text(label, style: const TextStyle(fontSize: 18)),
       ],
     );
   }
@@ -123,17 +123,17 @@ class _IncorporacionState extends State<Incorporacion> {
                 buildText('¿Cómo te enteraste de la Licenciatura?*'),
                 Container(
                   width: 300,
-                  padding: EdgeInsets.fromLTRB(16, 8, 16, 16),
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.onBackground,
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: DropdownButtonFormField<String>(
                     value: selectedModoEnterar,
-                    decoration:
-                        InputDecoration.collapsed(hintText: 'Seleccione uno'),
+                    decoration: const InputDecoration.collapsed(
+                        hintText: 'Seleccione uno'),
                     dropdownColor: Theme.of(context).colorScheme.onBackground,
-                    icon: Icon(Icons.arrow_drop_down),
+                    icon: const Icon(Icons.arrow_drop_down),
                     iconSize: 24,
                     elevation: 16,
                     onChanged: (String? newValue) {
@@ -160,7 +160,7 @@ class _IncorporacionState extends State<Incorporacion> {
                     }).toList(),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 buildText(
@@ -173,7 +173,7 @@ class _IncorporacionState extends State<Incorporacion> {
                       'Medio',
                       'Bajo'
                     ])
-                      buildRadioButton('$importancia', importancia,
+                      buildRadioButton(importancia, importancia,
                           selectedImportanciaActividades, (value) {
                         setState(() {
                           selectedImportanciaActividades = value;
@@ -191,7 +191,7 @@ class _IncorporacionState extends State<Incorporacion> {
                         selectedEspacioEstudiar = value;
                       });
                     }),
-                    SizedBox(width: 25),
+                    const SizedBox(width: 25),
                     buildRadioButton('No', 'No', selectedEspacioEstudiar,
                         (value) {
                       setState(() {
@@ -204,39 +204,39 @@ class _IncorporacionState extends State<Incorporacion> {
                     'De los siguientes medios, ¿con cuáles cuentas para estudiar?* (Selecciona todos los que correspondan.)'),
                 Column(
                   children: [
-                    buildCheckboxRow('Escritorio', Escritorio, (value) {
+                    buildCheckboxRow('escritorio', escritorio, (value) {
                       setState(() {
-                        Escritorio = value!;
+                        escritorio = value!;
                       });
                     }),
-                    buildCheckboxRow('Internet', Internet, (value) {
+                    buildCheckboxRow('internet', internet, (value) {
                       setState(() {
-                        Internet = value!;
+                        internet = value!;
                       });
                     }),
-                    buildCheckboxRow('Impresora', Impresora, (value) {
+                    buildCheckboxRow('impresora', impresora, (value) {
                       setState(() {
-                        Impresora = value!;
+                        impresora = value!;
                       });
                     }),
-                    buildCheckboxRow('Calculadora', Calculadora, (value) {
+                    buildCheckboxRow('calculadora', calculadora, (value) {
                       setState(() {
-                        Calculadora = value!;
+                        calculadora = value!;
                       });
                     }),
-                    buildCheckboxRow('Computadora', Computadora, (value) {
+                    buildCheckboxRow('computadora', computadora, (value) {
                       setState(() {
-                        Computadora = value!;
+                        computadora = value!;
                       });
                     }),
-                    buildCheckboxRow('Tablet', Tablet, (value) {
+                    buildCheckboxRow('tablet', tablet, (value) {
                       setState(() {
-                        Tablet = value!;
+                        tablet = value!;
                       });
                     }),
-                    buildCheckboxRow('Todas las anteriores', Todas, (value) {
+                    buildCheckboxRow('todas las anteriores', todas, (value) {
                       setState(() {
-                        Todas = value!;
+                        todas = value!;
                       });
                     }),
                   ],
@@ -251,7 +251,7 @@ class _IncorporacionState extends State<Incorporacion> {
                       'Nulos',
                     ])
                       buildRadioButton(
-                          '$option', option, selectedRecursosEconomicos,
+                          option, option, selectedRecursosEconomicos,
                           (value) {
                         setState(() {
                           selectedRecursosEconomicos = value;
@@ -263,17 +263,17 @@ class _IncorporacionState extends State<Incorporacion> {
                     '¿Qué medio de transporte utilizas para trasladarte a la escuela?*'),
                 Container(
                   width: 300,
-                  padding: EdgeInsets.fromLTRB(16, 8, 16, 16),
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.onBackground,
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: DropdownButtonFormField<String>(
                     value: selectedTransporte,
-                    decoration:
-                        InputDecoration.collapsed(hintText: 'Seleccione uno'),
+                    decoration: const InputDecoration.collapsed(
+                        hintText: 'Seleccione uno'),
                     dropdownColor: Theme.of(context).colorScheme.onBackground,
-                    icon: Icon(Icons.arrow_drop_down),
+                    icon: const Icon(Icons.arrow_drop_down),
                     iconSize: 24,
                     elevation: 16,
                     onChanged: (String? newValue) {
@@ -299,24 +299,24 @@ class _IncorporacionState extends State<Incorporacion> {
                     }).toList(),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 buildText(
                     '¿Cuánto tiempo haces para llegar a la escuela desde tu domicilio actual?*'),
                 Container(
                   width: 300,
-                  padding: EdgeInsets.fromLTRB(16, 8, 16, 16),
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.onBackground,
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: DropdownButtonFormField<String>(
                     value: selectedTiempo,
-                    decoration:
-                        InputDecoration.collapsed(hintText: 'Seleccione uno'),
+                    decoration: const InputDecoration.collapsed(
+                        hintText: 'Seleccione uno'),
                     dropdownColor: Theme.of(context).colorScheme.onBackground,
-                    icon: Icon(Icons.arrow_drop_down),
+                    icon: const Icon(Icons.arrow_drop_down),
                     iconSize: 24,
                     elevation: 16,
                     onChanged: (String? newValue) {
@@ -342,7 +342,7 @@ class _IncorporacionState extends State<Incorporacion> {
                     }).toList(),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 buildText('¿Conoces el CEBUAZ?*'),
@@ -354,7 +354,7 @@ class _IncorporacionState extends State<Incorporacion> {
                         selectedConocesCebuaz = value;
                       });
                     }),
-                    SizedBox(width: 25),
+                    const SizedBox(width: 25),
                     buildRadioButton('No', 'No', selectedConocesCebuaz,
                         (value) {
                       setState(() {
@@ -371,7 +371,7 @@ class _IncorporacionState extends State<Incorporacion> {
                         selectedUsasCebuaz = value;
                       });
                     }),
-                    SizedBox(width: 25),
+                    const SizedBox(width: 25),
                     buildRadioButton('No', 'No', selectedUsasCebuaz, (value) {
                       setState(() {
                         selectedUsasCebuaz = value;
@@ -384,7 +384,7 @@ class _IncorporacionState extends State<Incorporacion> {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: DataTable(
-                    columns: [
+                    columns: const [
                       DataColumn(label: Text('Aspecto')),
                       DataColumn(label: Text('Es mejor')),
                       DataColumn(label: Text('Es igual')),
@@ -392,7 +392,7 @@ class _IncorporacionState extends State<Incorporacion> {
                     ],
                     rows: experiencias.map((experiencia) {
                       return DataRow(cells: [
-                        DataCell(Container(
+                        DataCell(SizedBox(
                           width: 150,
                           child: Text(experiencia.aspect),
                         )),
@@ -460,7 +460,7 @@ class _IncorporacionState extends State<Incorporacion> {
                     }).toList(),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
                 buildText(
@@ -473,13 +473,13 @@ class _IncorporacionState extends State<Incorporacion> {
                       'Poco Satisfactoria',
                       'Nada satisfactoria'
                     ])
-                      buildRadioButton('$option', option, selectedSatisfecha,
+                      buildRadioButton(option, option, selectedSatisfecha,
                           (value) {
                         setState(() {
                           selectedSatisfecha = value;
                         });
                       }),
-                    SizedBox(height: 25),
+                    const SizedBox(height: 25),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 0),
                       child: Container(
@@ -495,13 +495,13 @@ class _IncorporacionState extends State<Incorporacion> {
                             debugPrint(selectedModoEnterar);
                             debugPrint(selectedImportanciaActividades);
                             debugPrint(selectedEspacioEstudiar);
-                            debugPrint("Escritorio $Escritorio");
-                            debugPrint("Internet $Internet");
-                            debugPrint("Impresora $Impresora");
-                            debugPrint("Calculadora $Calculadora");
-                            debugPrint("Computadora $Computadora");
-                            debugPrint("Tablet $Tablet");
-                            debugPrint("Todas $Todas");
+                            debugPrint("escritorio $escritorio");
+                            debugPrint("internet $internet");
+                            debugPrint("impresora $impresora");
+                            debugPrint("calculadora $calculadora");
+                            debugPrint("computadora $computadora");
+                            debugPrint("tablet $tablet");
+                            debugPrint("todas $todas");
                             debugPrint(selectedRecursosEconomicos);
                             debugPrint(selectedTransporte);
                             debugPrint(selectedTiempo);
