@@ -1,4 +1,5 @@
 import 'package:case_cuestionario/utils/app_drawer.dart';
+import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
 
 class Experiencia {
@@ -48,7 +49,6 @@ class _IncorporacionState extends State<Incorporacion> {
   String?
       selectedSatisfecha; //¿Hasta qué punto consideras satisfechas tus expectativas al iniciar la carrera?
 
-  
   Widget buildCheckboxRow(
       String label, bool value, ValueChanged<bool?> onChanged) {
     return Row(
@@ -251,8 +251,7 @@ class _IncorporacionState extends State<Incorporacion> {
                       'Nulos',
                     ])
                       buildRadioButton(
-                          option, option, selectedRecursosEconomicos,
-                          (value) {
+                          option, option, selectedRecursosEconomicos, (value) {
                         setState(() {
                           selectedRecursosEconomicos = value;
                         });
@@ -492,9 +491,39 @@ class _IncorporacionState extends State<Incorporacion> {
                         ),
                         child: GestureDetector(
                           onTap: () {
+                            if (selectedModoEnterar == null) {
+                              showSnackbar(
+                                  context,
+                                  '¡Dejaste como te enteraste de la licenciatura sin contestar!',
+                                  Theme.of(context).colorScheme.error);
+                                  return;
+                            }
+                            if(selectedImportanciaActividades==null){
+                              showSnackbar(
+                              context,
+                              '¡Dejaste el nivel de importancia sin contestar!',
+                              Theme.of(context).colorScheme.error);
+                              return;
+                            }
+                            if(selectedEspacioEstudiar==null){
+                              showSnackbar(
+                              context,
+                              '¡Dejaste el espacio para estudiar sin contestar!',
+                              Theme.of(context).colorScheme.error);
+                              return;
+                            }
                             debugPrint(selectedModoEnterar);
                             debugPrint(selectedImportanciaActividades);
                             debugPrint(selectedEspacioEstudiar);
+                            //En duda
+                            if(escritorio==false && internet==false && impresora==false && calculadora==false 
+                            && computadora==false && tablet==false && todas==false){
+                              showSnackbar(
+                              context,
+                              '¡Dejaste los medios con los que cuentas sin contestar!',
+                              Theme.of(context).colorScheme.error);
+                              return;
+                            }
                             debugPrint("escritorio $escritorio");
                             debugPrint("internet $internet");
                             debugPrint("impresora $impresora");
@@ -502,17 +531,66 @@ class _IncorporacionState extends State<Incorporacion> {
                             debugPrint("computadora $computadora");
                             debugPrint("tablet $tablet");
                             debugPrint("todas $todas");
+                            if(selectedRecursosEconomicos==null){
+                              showSnackbar(
+                              context,
+                              '¡Dejaste los recursos economicos sin contestar!',
+                              Theme.of(context).colorScheme.error);
+                              return;
+                            }
                             debugPrint(selectedRecursosEconomicos);
+                            if(selectedTransporte == null){
+                              showSnackbar(
+                              context,
+                              '¡Dejaste el medio de transporte sin contestar!',
+                              Theme.of(context).colorScheme.error);
+                              return;
+                            }
                             debugPrint(selectedTransporte);
+                            if(selectedTiempo==null){
+                              showSnackbar(
+                              context,
+                              '¡Dejaste el tiempo para llegar a la escuela sin contestar!',
+                              Theme.of(context).colorScheme.error);
+                              return;
+                            }
                             debugPrint(selectedTiempo);
+                            if(selectedConocesCebuaz==null){
+                              showSnackbar(
+                              context,
+                              '¡Dejaste si conoces el CEBUAZ sin contestar!',
+                              Theme.of(context).colorScheme.error);
+                              return;
+                            }
                             debugPrint(selectedConocesCebuaz);
+                            if(selectedUsasCebuaz==null){
+                              showSnackbar(
+                              context,
+                              '¡Dejaste si usas el CEBUAZ sin contestar!',
+                              Theme.of(context).colorScheme.error);
+                              return;
+
+                            }
                             debugPrint(selectedUsasCebuaz);
 
                             for (Experiencia experiencia in experiencias) {
+                              
                               debugPrint(
                                   'Aspect: ${experiencia.aspect}, Experiencia: ${experiencia.experiencia}');
+                              if(experiencia.experiencia.isEmpty){
+                                showSnackbar(
+                              context,
+                              '¡Dejaste incompleto el cuadro de experiencias sin contestar!',
+                              Theme.of(context).colorScheme.error);
+                              return;
+                              }
                             }
-
+                            if(selectedSatisfecha==null){
+                              showSnackbar(
+                              context,
+                              '¡Dejaste si tus expecatitivas al iniciar la carrera fueron satisfechas sin contestar!',
+                              Theme.of(context).colorScheme.error);
+                            }
                             debugPrint(selectedSatisfecha);
                           },
                           child: Material(
