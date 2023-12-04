@@ -1,3 +1,4 @@
+import 'package:case_cuestionario/Datos/datosIncorporacion.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +121,7 @@ class _IncorporacionState extends State<Incorporacion> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                buildText('¿Cómo te enteraste de la Licenciatura?*'),
+                buildText(pregunta1),
                 Container(
                   width: 300,
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
@@ -141,14 +142,8 @@ class _IncorporacionState extends State<Incorporacion> {
                         selectedModoEnterar = newValue;
                       });
                     },
-                    items: <String>[
-                      'Redes Sociales',
-                      'Página de la UAZ',
-                      'Tríptico',
-                      'Expoorienta CASE-BUAZ',
-                      'Familiar o conocido',
-                      'Otra',
-                    ].map<DropdownMenuItem<String>>((String value) {
+                    items: como_se_entero
+                        .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(
@@ -163,16 +158,10 @@ class _IncorporacionState extends State<Incorporacion> {
                 const SizedBox(
                   height: 15,
                 ),
-                buildText(
-                    '¿Qué nivel de importancia tienen las actividades escolares dentro de tu familia?*'),
+                buildText(pregunta2),
                 Column(
                   children: [
-                    for (var importancia in [
-                      'Muy alto',
-                      'Alto',
-                      'Medio',
-                      'Bajo'
-                    ])
+                    for (var importancia in nivel_importancia)
                       buildRadioButton(importancia, importancia,
                           selectedImportanciaActividades, (value) {
                         setState(() {
@@ -181,8 +170,7 @@ class _IncorporacionState extends State<Incorporacion> {
                       }),
                   ],
                 ),
-                buildText(
-                    '¿Cuentas en tu casa con un espacio para estudiar y hacer tus trabajos escolares?*'),
+                buildText(pregunta3),
                 Row(
                   children: [
                     buildRadioButton('Si', 'Si', selectedEspacioEstudiar,
@@ -200,8 +188,7 @@ class _IncorporacionState extends State<Incorporacion> {
                     }),
                   ],
                 ),
-                buildText(
-                    'De los siguientes medios, ¿con cuáles cuentas para estudiar?* (Selecciona todos los que correspondan.)'),
+                buildText(pregunta4),
                 Column(
                   children: [
                     buildCheckboxRow('escritorio', escritorio, (value) {
@@ -241,15 +228,10 @@ class _IncorporacionState extends State<Incorporacion> {
                     }),
                   ],
                 ),
-                buildText(
-                    'Los recursos económicos con los que cuentas para realizar tus estudios son:'),
+                buildText(pregunta5),
                 Column(
                   children: [
-                    for (var option in [
-                      'Suficientes',
-                      'Insuficientes',
-                      'Nulos',
-                    ])
+                    for (var option in recursos_economicos)
                       buildRadioButton(
                           option, option, selectedRecursosEconomicos, (value) {
                         setState(() {
@@ -259,7 +241,7 @@ class _IncorporacionState extends State<Incorporacion> {
                   ],
                 ),
                 buildText(
-                    '¿Qué medio de transporte utilizas para trasladarte a la escuela?*'),
+                    pregunta6),
                 Container(
                   width: 300,
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
@@ -280,13 +262,8 @@ class _IncorporacionState extends State<Incorporacion> {
                         selectedTransporte = newValue;
                       });
                     },
-                    items: <String>[
-                      'Autobús',
-                      'Taxi',
-                      'Auto propio',
-                      'Caminando',
-                      'Otro',
-                    ].map<DropdownMenuItem<String>>((String value) {
+                    items: transporte
+                        .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(
@@ -302,7 +279,7 @@ class _IncorporacionState extends State<Incorporacion> {
                   height: 15,
                 ),
                 buildText(
-                    '¿Cuánto tiempo haces para llegar a la escuela desde tu domicilio actual?*'),
+                    pregunta7),
                 Container(
                   width: 300,
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
@@ -323,13 +300,8 @@ class _IncorporacionState extends State<Incorporacion> {
                         selectedTiempo = newValue;
                       });
                     },
-                    items: <String>[
-                      'Menos de 1/2 hora',
-                      'De 1/2 hora a 1 hora',
-                      'De 1 hora a 2 horas',
-                      'Más de 2 horas',
-                      'Otro',
-                    ].map<DropdownMenuItem<String>>((String value) {
+                    items: tiempo_transporte
+                        .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(
@@ -344,7 +316,7 @@ class _IncorporacionState extends State<Incorporacion> {
                 const SizedBox(
                   height: 15,
                 ),
-                buildText('¿Conoces el CEBUAZ?*'),
+                buildText(pregunta8),
                 Row(
                   children: [
                     buildRadioButton('Si', 'Si', selectedConocesCebuaz,
@@ -362,7 +334,7 @@ class _IncorporacionState extends State<Incorporacion> {
                     }),
                   ],
                 ),
-                buildText('¿Usas el CEBUAZ?*'),
+                buildText(pregunta9),
                 Row(
                   children: [
                     buildRadioButton('Si', 'Si', selectedUsasCebuaz, (value) {
@@ -379,7 +351,7 @@ class _IncorporacionState extends State<Incorporacion> {
                   ],
                 ),
                 buildText(
-                    'En comparación con tu experiencia en el Bachillerato, ¿qué tanto ha cambiado tu vida durante tu estancia en la Universidad?'),
+                    pregunta10),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: DataTable(
@@ -463,15 +435,10 @@ class _IncorporacionState extends State<Incorporacion> {
                   width: 15,
                 ),
                 buildText(
-                    'En relación con tu experiencia obtenida hasta la fecha en el Programa Académico, ¿hasta qué punto consideras satisfechas tus expectativas al iniciar la carrera?'),
+                    pregunta11),
                 Column(
                   children: [
-                    for (var option in [
-                      'Muy satisfactoria',
-                      'Satisfactoria',
-                      'Poco Satisfactoria',
-                      'Nada satisfactoria'
-                    ])
+                    for (var option in experiencia_obtenida)
                       buildRadioButton(option, option, selectedSatisfecha,
                           (value) {
                         setState(() {
@@ -496,32 +463,37 @@ class _IncorporacionState extends State<Incorporacion> {
                                   context,
                                   '¡Dejaste como te enteraste de la licenciatura sin contestar!',
                                   Theme.of(context).colorScheme.error);
-                                  return;
-                            }
-                            if(selectedImportanciaActividades==null){
-                              showSnackbar(
-                              context,
-                              '¡Dejaste el nivel de importancia sin contestar!',
-                              Theme.of(context).colorScheme.error);
                               return;
                             }
-                            if(selectedEspacioEstudiar==null){
+                            if (selectedImportanciaActividades == null) {
                               showSnackbar(
-                              context,
-                              '¡Dejaste el espacio para estudiar sin contestar!',
-                              Theme.of(context).colorScheme.error);
+                                  context,
+                                  '¡Dejaste el nivel de importancia sin contestar!',
+                                  Theme.of(context).colorScheme.error);
+                              return;
+                            }
+                            if (selectedEspacioEstudiar == null) {
+                              showSnackbar(
+                                  context,
+                                  '¡Dejaste el espacio para estudiar sin contestar!',
+                                  Theme.of(context).colorScheme.error);
                               return;
                             }
                             debugPrint(selectedModoEnterar);
                             debugPrint(selectedImportanciaActividades);
                             debugPrint(selectedEspacioEstudiar);
                             //En duda
-                            if(escritorio==false && internet==false && impresora==false && calculadora==false 
-                            && computadora==false && tablet==false && todas==false){
+                            if (escritorio == false &&
+                                internet == false &&
+                                impresora == false &&
+                                calculadora == false &&
+                                computadora == false &&
+                                tablet == false &&
+                                todas == false) {
                               showSnackbar(
-                              context,
-                              '¡Dejaste los medios con los que cuentas sin contestar!',
-                              Theme.of(context).colorScheme.error);
+                                  context,
+                                  '¡Dejaste los medios con los que cuentas sin contestar!',
+                                  Theme.of(context).colorScheme.error);
                               return;
                             }
                             debugPrint("escritorio $escritorio");
@@ -531,65 +503,63 @@ class _IncorporacionState extends State<Incorporacion> {
                             debugPrint("computadora $computadora");
                             debugPrint("tablet $tablet");
                             debugPrint("todas $todas");
-                            if(selectedRecursosEconomicos==null){
+                            if (selectedRecursosEconomicos == null) {
                               showSnackbar(
-                              context,
-                              '¡Dejaste los recursos economicos sin contestar!',
-                              Theme.of(context).colorScheme.error);
+                                  context,
+                                  '¡Dejaste los recursos economicos sin contestar!',
+                                  Theme.of(context).colorScheme.error);
                               return;
                             }
                             debugPrint(selectedRecursosEconomicos);
-                            if(selectedTransporte == null){
+                            if (selectedTransporte == null) {
                               showSnackbar(
-                              context,
-                              '¡Dejaste el medio de transporte sin contestar!',
-                              Theme.of(context).colorScheme.error);
+                                  context,
+                                  '¡Dejaste el medio de transporte sin contestar!',
+                                  Theme.of(context).colorScheme.error);
                               return;
                             }
                             debugPrint(selectedTransporte);
-                            if(selectedTiempo==null){
+                            if (selectedTiempo == null) {
                               showSnackbar(
-                              context,
-                              '¡Dejaste el tiempo para llegar a la escuela sin contestar!',
-                              Theme.of(context).colorScheme.error);
+                                  context,
+                                  '¡Dejaste el tiempo para llegar a la escuela sin contestar!',
+                                  Theme.of(context).colorScheme.error);
                               return;
                             }
                             debugPrint(selectedTiempo);
-                            if(selectedConocesCebuaz==null){
+                            if (selectedConocesCebuaz == null) {
                               showSnackbar(
-                              context,
-                              '¡Dejaste si conoces el CEBUAZ sin contestar!',
-                              Theme.of(context).colorScheme.error);
+                                  context,
+                                  '¡Dejaste si conoces el CEBUAZ sin contestar!',
+                                  Theme.of(context).colorScheme.error);
                               return;
                             }
                             debugPrint(selectedConocesCebuaz);
-                            if(selectedUsasCebuaz==null){
+                            if (selectedUsasCebuaz == null) {
                               showSnackbar(
-                              context,
-                              '¡Dejaste si usas el CEBUAZ sin contestar!',
-                              Theme.of(context).colorScheme.error);
+                                  context,
+                                  '¡Dejaste si usas el CEBUAZ sin contestar!',
+                                  Theme.of(context).colorScheme.error);
                               return;
-
                             }
                             debugPrint(selectedUsasCebuaz);
 
                             for (Experiencia experiencia in experiencias) {
-                              
                               debugPrint(
                                   'Aspect: ${experiencia.aspect}, Experiencia: ${experiencia.experiencia}');
-                              if(experiencia.experiencia.isEmpty){
+                              if (experiencia.experiencia.isEmpty) {
                                 showSnackbar(
-                              context,
-                              '¡Dejaste incompleto el cuadro de experiencias sin contestar!',
-                              Theme.of(context).colorScheme.error);
-                              return;
+                                    context,
+                                    '¡Dejaste incompleto el cuadro de experiencias sin contestar!',
+                                    Theme.of(context).colorScheme.error);
+                                return;
                               }
                             }
-                            if(selectedSatisfecha==null){
+                            if (selectedSatisfecha == null) {
                               showSnackbar(
-                              context,
-                              '¡Dejaste si tus expecatitivas al iniciar la carrera fueron satisfechas sin contestar!',
-                              Theme.of(context).colorScheme.error);
+                                  context,
+                                  '¡Dejaste si tus expecatitivas al iniciar la carrera fueron satisfechas sin contestar!',
+                                  Theme.of(context).colorScheme.error);
                             }
                             debugPrint(selectedSatisfecha);
                           },

@@ -1,3 +1,4 @@
+import 'package:case_cuestionario/Datos/datosDatosGenerals.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
@@ -87,21 +88,16 @@ class _DatosGeneralesState extends State<DatosGenerales> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
+                 Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
-                    'Semestre*',
+                    semestretext,
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Column(
                   children: [
-                    for (var semester in [
-                      'Tercer',
-                      'Quinto',
-                      'Septimo',
-                      'Noveno'
-                    ])
+                    for (var semester in semestre)
                       buildRadioButton(
                           '$semester semestre', semester, selectedSemester,
                           (value) {
@@ -112,26 +108,26 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Padding(
+                 Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
-                    'Nombre completo (iniciando con APELLIDO). *',
+                    nombrecompleto,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
-                buildInputField('Nombre completo', _nombreCompletoController,
+                buildInputField(hintNombre, _nombreCompletoController,
                     TextInputType.name),
                 const SizedBox(height: 10),
-                const Padding(
+                 Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
-                    'Sexo/Género *',
+                    sexoGenero,
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Column(
                   children: [
-                    for (var gender in ['Mujer', 'Hombre', 'LGTIQ+'])
+                    for (var gender in genero)
                       buildRadioButton(gender, gender, selectedSexo, (value) {
                         setState(() {
                           selectedSexo = value;
@@ -140,31 +136,26 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Padding(
+                 Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
-                    'Municipio de procedencia. *',
+                    municipio,
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
-                buildInputField('Municipio de procedencia',
+                buildInputField(hintMunicipio,
                     _municipioController, TextInputType.name),
                 const SizedBox(height: 10),
-                const Padding(
+                 Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
-                    'Estado civil:',
+                    estadocivil,
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Column(
                   children: [
-                    for (var status in [
-                      'Soltero (a)',
-                      'Casado (a)',
-                      'Union',
-                      'Otro'
-                    ])
+                    for (var status in estadoCivil)
                       buildRadioButton(status, status, selectedEstadoCivil,
                           (value) {
                         setState(() {
@@ -173,10 +164,10 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                       }),
                   ],
                 ),
-                const Padding(
+                 Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
-                    '¿Trabaja actualmente? *',
+                    trabaja,
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -195,10 +186,10 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                     }),
                   ],
                 ),
-                const Padding(
+                 Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
-                    'Año de ingreso. *',
+                    yearingreso,
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -222,16 +213,7 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                         selectedYear = newValue;
                       });
                     },
-                    items: <String>[
-                      '2022',
-                      '2021',
-                      '2020',
-                      '2019',
-                      '2018',
-                      '2017',
-                      '2016',
-                      'Otro',
-                    ].map<DropdownMenuItem<String>>((String value) {
+                    items: anio.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(
