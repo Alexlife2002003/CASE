@@ -1,5 +1,6 @@
 import 'package:case_cuestionario/Datos/datosIdioma.dart';
 import 'package:case_cuestionario/Datos/datosIncorporacion.dart';
+import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
@@ -15,35 +16,16 @@ class _IdiomaState extends State<Idioma> {
   String? _selectedPregunta42;
   String? _selectedPregunta43;
   String? _selectedPregunta44;
-  @override
-  Widget buildRadioButton(String label, String value, String? groupValue,
-      Function(String?) onChanged) {
-    return Row(
-      children: [
-        Radio(
-          value: value,
-          groupValue: groupValue,
-          onChanged: onChanged,
-          activeColor: Theme.of(context).colorScheme.onBackground,
-          fillColor: MaterialStateColor.resolveWith(
-            (states) {
-              if (states.contains(MaterialState.selected)) {
-                return Theme.of(context).colorScheme.onBackground;
-              } else {
-                return Theme.of(context).colorScheme.onBackground;
-              }
-            },
-          ),
-        ),
-        Text(label, style: const TextStyle(fontSize: 18)),
-        SizedBox(
-          width: 25,
-        )
-      ],
-    );
+
+  void rebuild() {
+    setState(() {
+      // Perform any necessary state changes
+    });
   }
 
+  @override
   Widget build(BuildContext context) {
+    WidgetBuilderHelper helper = WidgetBuilderHelper(context, rebuild);
     return AppWithDrawer(
       title: 'Idioma',
       content: Scaffold(
@@ -57,8 +39,8 @@ class _IdiomaState extends State<Idioma> {
                 Row(
                   children: [
                     for (var option in respuesta42)
-                      buildRadioButton(option, option, _selectedPregunta42,
-                          (value) {
+                      helper.buildRadioButton(
+                          option, option, _selectedPregunta42, (value) {
                         setState(() {
                           _selectedPregunta42 = value;
                         });
@@ -69,8 +51,8 @@ class _IdiomaState extends State<Idioma> {
                 Row(
                   children: [
                     for (var option in respuesta43)
-                      buildRadioButton(option, option, _selectedPregunta43,
-                          (value) {
+                      helper.buildRadioButton(
+                          option, option, _selectedPregunta43, (value) {
                         setState(() {
                           _selectedPregunta43 = value;
                         });
@@ -81,15 +63,17 @@ class _IdiomaState extends State<Idioma> {
                 Row(
                   children: [
                     for (var option in respuesta44)
-                      buildRadioButton(option, option, _selectedPregunta44,
-                          (value) {
+                      helper.buildRadioButton(
+                          option, option, _selectedPregunta44, (value) {
                         setState(() {
                           _selectedPregunta44 = value;
                         });
                       }),
                   ],
                 ),
-               SizedBox(height: 15,),
+                SizedBox(
+                  height: 15,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 0),
                   child: Container(

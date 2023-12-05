@@ -1,4 +1,5 @@
 import 'package:case_cuestionario/Datos/datosAreaProfesional.dart';
+import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
@@ -93,151 +94,23 @@ class _AreaProfesionalState extends State<AreaProfesional> {
     DatosDeTabla(aspect: 'Realizar un doctorado', answer: ''),
   ];
 
+  
 
-  Widget buildRadioButton(String label, String value, String? groupValue,
-      Function(String?) onChanged) {
-    return Row(
-      children: [
-        Radio(
-          value: value,
-          groupValue: groupValue,
-          onChanged: onChanged,
-          activeColor: Theme.of(context).colorScheme.onBackground,
-          fillColor: MaterialStateColor.resolveWith(
-            (states) {
-              if (states.contains(MaterialState.selected)) {
-                return Theme.of(context).colorScheme.onBackground;
-              } else {
-                return Theme.of(context).colorScheme.onBackground;
-              }
-            },
-          ),
-        ),
-        Text(label, style: const TextStyle(fontSize: 18)),
-        SizedBox(
-          width: 25,
-        )
-      ],
-    );
-  }
+ 
 
-  Widget buildInputField(String text, TextEditingController controller) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 0),
-      child: Container(
-        width: MediaQuery.of(context).size.width - 50,
-        height: 50,
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onBackground,
-          border: Border.all(color: Colors.white, width: .2),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 0),
-          child: TextField(
-            style: const TextStyle(color: Colors.black),
-            keyboardType: TextInputType.text,
-            controller: controller,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: text,
-              hintStyle: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.grey,
-                fontSize: 20,
-              ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  
 
-  Widget buildCustomDataTable(
-      List<DatosDeTabla> data, List<String> columnLabels) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: DataTable(
-        dataRowHeight: 60,
-        columns: [
-          DataColumn(label: Text('Aspecto')),
-          for (var label in columnLabels) DataColumn(label: Text(label)),
-        ],
-        rows: data.map((experiencia) {
-          return DataRow(cells: [
-            DataCell(SizedBox(
-              width: 150,
-              child: Text(experiencia.aspect),
-            )),
-            for (var label in columnLabels)
-              DataCell(Radio(
-                value: label,
-                groupValue: experiencia.answer,
-                fillColor: MaterialStateColor.resolveWith(
-                  (states) {
-                    if (states.contains(MaterialState.selected)) {
-                      return Theme.of(context).colorScheme.onBackground;
-                    } else {
-                      return Colors.white;
-                    }
-                  },
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    experiencia.answer = value as String;
-                  });
-                },
-              )),
-          ]);
-        }).toList(),
-      ),
-    );
-  }
-
-  Widget buildDropdown(String label, String? value, List<String> items,
-      Function(String?) onChanged) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.onBackground,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: DropdownButtonFormField<String>(
-            value: _selectedPregunta17,
-            decoration: InputDecoration.collapsed(hintText: label),
-            dropdownColor: Theme.of(context).colorScheme.onBackground,
-            icon: const Icon(Icons.arrow_drop_down),
-            iconSize: 24,
-            elevation: 16,
-            onChanged: (String? newValue) {
-              setState(() {
-                value = newValue;
-              });
-            },
-            items: items.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(
-                  value,
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.background),
-                ),
-              );
-            }).toList(),
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        )
-      ],
-    );
+  void rebuild() {
+    setState(() {
+      // Perform any necessary state changes
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    WidgetBuilderHelper helper = WidgetBuilderHelper(context, rebuild);
+
+    double inputwidth = MediaQuery.of(context).size.width - 50;
     return AppWithDrawer(
       title: 'AreaProfesional',
       content: Scaffold(
@@ -251,7 +124,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                 Column(
                   children: [
                     for (var option in respuesta12)
-                      buildRadioButton(option, option, _selected_pregunta12,
+                      helper.buildRadioButton(option, option, _selected_pregunta12,
                           (value) {
                         setState(() {
                           _selected_pregunta12 = value;
@@ -260,17 +133,23 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                   ],
                 ),
                 buildText(pregunta13),
-                buildInputField('Materia(s)', _pregunta13Controller),
+                helper.buildInputField(
+                  'Materia(s)',
+                  _pregunta13Controller,
+                ),
                 const SizedBox(
                   height: 15,
                 ),
                 buildText(pregunta14),
-                buildInputField("Materia", _pregunta14Controller),
+                helper.buildInputField(
+                  "Materia",
+                  _pregunta14Controller,
+                ),
                 const SizedBox(
                   height: 15,
                 ),
                 buildText(pregunta15),
-                buildCustomDataTable(tablapregunta15, respuesta15fila),
+                helper.buildCustomDataTable(tablapregunta15, respuesta15fila),
                 const SizedBox(
                   height: 15,
                 ),
@@ -278,7 +157,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                 Row(
                   children: [
                     for (var option in respuesta16)
-                      buildRadioButton(option, option, _selectedPregunta16,
+                      helper.buildRadioButton(option, option, _selectedPregunta16,
                           (value) {
                         setState(() {
                           _selectedPregunta16 = value;
@@ -287,7 +166,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                   ],
                 ),
                 buildText(pregunta17),
-                buildDropdown(
+                helper.buildDropdown(
                   'Seleccione uno:',
                   _selectedPregunta17,
                   respuesta17,
@@ -298,7 +177,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                   },
                 ),
                 buildText(pregunta18),
-                buildDropdown(
+                helper.buildDropdown(
                   'Seleccione uno:',
                   _selectedPregunta18,
                   respuesta18,
@@ -312,7 +191,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                 Row(
                   children: [
                     for (var option in respuesta19)
-                      buildRadioButton(option, option, _selectedPregunta19,
+                      helper.buildRadioButton(option, option, _selectedPregunta19,
                           (value) {
                         setState(() {
                           _selectedPregunta19 = value;
@@ -321,7 +200,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                   ],
                 ),
                 buildText(pregunta20),
-                buildDropdown(
+                helper.buildDropdown(
                   'Seleccione uno:',
                   _selectedPregunta20,
                   respuesta20,
@@ -332,7 +211,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                   },
                 ),
                 buildText(pregunta21),
-                buildCustomDataTable(tablapregunta21, respuesta21fila),
+                helper.buildCustomDataTable(tablapregunta21, respuesta21fila),
                 SizedBox(
                   height: 15,
                 ),
@@ -340,7 +219,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                 Column(
                   children: [
                     for (var option in respuesta22)
-                      buildRadioButton(option, option, _selectedPregunta22,
+                      helper.buildRadioButton(option, option, _selectedPregunta22,
                           (value) {
                         setState(() {
                           _selectedPregunta22 = value;
@@ -352,7 +231,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                 Column(
                   children: [
                     for (var option in respuesta23)
-                      buildRadioButton(option, option, _selectedPregunta23,
+                      helper.buildRadioButton(option, option, _selectedPregunta23,
                           (value) {
                         setState(() {
                           _selectedPregunta23 = value;
@@ -364,7 +243,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                 Column(
                   children: [
                     for (var option in respuesta24)
-                      buildRadioButton(option, option, _selectedPregunta24,
+                      helper.buildRadioButton(option, option, _selectedPregunta24,
                           (value) {
                         setState(() {
                           _selectedPregunta24 = value;
@@ -373,18 +252,18 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                   ],
                 ),
                 buildText(pregunta25),
-                buildCustomDataTable(tablapregunta25, respuesta25fila),
+                helper.buildCustomDataTable(tablapregunta25, respuesta25fila),
                 SizedBox(
                   height: 15,
                 ),
                 buildText(pregunta26), //completar
                 buildText(pregunta27),
-                buildCustomDataTable(tablapregunta27, respuesta27fila),
+                helper.buildCustomDataTable(tablapregunta27, respuesta27fila),
                 SizedBox(
                   height: 15,
                 ),
                 buildText(pregunta28),
-                buildDropdown(
+                helper.buildDropdown(
                   'Seleccione uno:',
                   _selectedPregunta28,
                   respuesta28,
@@ -398,7 +277,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                 Row(
                   children: [
                     for (var option in respuesta29)
-                      buildRadioButton(option, option, _selectedPregunta29,
+                      helper.buildRadioButton(option, option, _selectedPregunta29,
                           (value) {
                         setState(() {
                           _selectedPregunta29 = value;
@@ -407,7 +286,10 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                   ],
                 ),
                 buildText(pregunta30),
-                buildInputField("Material", _pregunta30Controller),
+                helper.buildInputField(
+                  "Material",
+                  _pregunta30Controller,
+                ),
                 const SizedBox(
                   height: 15,
                 ),
@@ -415,7 +297,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                 Row(
                   children: [
                     for (var option in respuesta31)
-                      buildRadioButton(option, option, _selectedPregunta31,
+                      helper.buildRadioButton(option, option, _selectedPregunta31,
                           (value) {
                         setState(() {
                           _selectedPregunta31 = value;
@@ -428,7 +310,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                   Column(
                     children: [
                       for (var option in respuesta32)
-                        buildRadioButton(option, option, _selectedPregunta32,
+                        helper.buildRadioButton(option, option, _selectedPregunta32,
                             (value) {
                           setState(() {
                             _selectedPregunta32 = value;
@@ -440,7 +322,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                 Column(
                   children: [
                     for (var option in respuesta33)
-                      buildRadioButton(option, option, _selectedPregunta33,
+                      helper.buildRadioButton(option, option, _selectedPregunta33,
                           (value) {
                         setState(() {
                           _selectedPregunta33 = value;
@@ -452,7 +334,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                 Column(
                   children: [
                     for (var option in respuesta34)
-                      buildRadioButton(option, option, _selectedPregunta34,
+                      helper.buildRadioButton(option, option, _selectedPregunta34,
                           (value) {
                         setState(() {
                           _selectedPregunta34 = value;
@@ -461,7 +343,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                   ],
                 ),
                 buildText(pregunta35),
-                buildDropdown(
+                helper.buildDropdown(
                   'Seleccione uno:',
                   _selectedPregunta35,
                   respuesta35,
@@ -472,7 +354,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                   },
                 ),
                 buildText(pregunta36),
-                buildDropdown(
+                helper.buildDropdown(
                   'Seleccione uno:',
                   _selectedPregunta36,
                   respuesta36,
@@ -483,14 +365,14 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                   },
                 ),
                 buildText(pregunta37),
-                buildCustomDataTable(tablapregunta37, respuesta37fila),
+                helper.buildCustomDataTable(tablapregunta37, respuesta37fila),
                 SizedBox(
                   height: 15,
                 ),
                 buildText(pregunta38), //completar programa academico
                 buildText(pregunta39), // completar programa academico
                 buildText(pregunta40),
-                buildDropdown(
+                helper.buildDropdown(
                   'Seleccione uno:',
                   _selectedPregunta40,
                   respuesta40,
@@ -501,7 +383,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                   },
                 ),
                 buildText(pregunta41),
-                buildCustomDataTable(tablapregunta41, respuesta41fila),
+                helper.buildCustomDataTable(tablapregunta41, respuesta41fila),
                 SizedBox(
                   height: 15,
                 ),

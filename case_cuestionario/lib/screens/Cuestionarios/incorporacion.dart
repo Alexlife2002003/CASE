@@ -1,4 +1,5 @@
 import 'package:case_cuestionario/Datos/datosIncorporacion.dart';
+import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
@@ -50,56 +51,20 @@ class _IncorporacionState extends State<Incorporacion> {
   String?
       selectedSatisfecha; //¿Hasta qué punto consideras satisfechas tus expectativas al iniciar la carrera?
 
-  Widget buildCheckboxRow(
-      String label, bool value, ValueChanged<bool?> onChanged) {
-    return Row(
-      children: [
-        Checkbox(
-          checkColor: Colors.white,
-          fillColor: MaterialStateProperty.resolveWith((states) {
-            return states.contains(MaterialState.selected)
-                ? Theme.of(context).colorScheme.onBackground
-                : Theme.of(context).colorScheme.background;
-          }),
-          value: value,
-          onChanged: onChanged,
-          side: BorderSide(
-            color: Theme.of(context).colorScheme.onBackground,
-            width: 2.0,
-          ),
-        ),
-        Text(label, style: const TextStyle(fontSize: 18)),
-      ],
-    );
+ 
+
+ 
+
+ void rebuild() {
+    setState(() {
+      // Perform any necessary state changes
+    });
   }
-
-
-  Widget buildRadioButton(String label, String value, String? groupValue,
-      Function(String?) onChanged) {
-    return Row(
-      children: [
-        Radio(
-          value: value,
-          groupValue: groupValue,
-          onChanged: onChanged,
-          activeColor: Theme.of(context).colorScheme.onBackground,
-          fillColor: MaterialStateColor.resolveWith(
-            (states) {
-              if (states.contains(MaterialState.selected)) {
-                return Theme.of(context).colorScheme.onBackground;
-              } else {
-                return Theme.of(context).colorScheme.onBackground;
-              }
-            },
-          ),
-        ),
-        Text(label, style: const TextStyle(fontSize: 18)),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+
+    WidgetBuilderHelper helper = WidgetBuilderHelper(context, rebuild);
+
     return AppWithDrawer(
       title: 'Incorporacion',
       content: Scaffold(
@@ -150,7 +115,7 @@ class _IncorporacionState extends State<Incorporacion> {
                 Column(
                   children: [
                     for (var importancia in nivel_importancia)
-                      buildRadioButton(importancia, importancia,
+                      helper.buildRadioButton(importancia, importancia,
                           selectedImportanciaActividades, (value) {
                         setState(() {
                           selectedImportanciaActividades = value;
@@ -161,14 +126,14 @@ class _IncorporacionState extends State<Incorporacion> {
                 buildText(pregunta3),
                 Row(
                   children: [
-                    buildRadioButton('Si', 'Si', selectedEspacioEstudiar,
+                    helper.buildRadioButton('Si', 'Si', selectedEspacioEstudiar,
                         (value) {
                       setState(() {
                         selectedEspacioEstudiar = value;
                       });
                     }),
                     const SizedBox(width: 25),
-                    buildRadioButton('No', 'No', selectedEspacioEstudiar,
+                    helper.buildRadioButton('No', 'No', selectedEspacioEstudiar,
                         (value) {
                       setState(() {
                         selectedEspacioEstudiar = value;
@@ -179,37 +144,37 @@ class _IncorporacionState extends State<Incorporacion> {
                 buildText(pregunta4),
                 Column(
                   children: [
-                    buildCheckboxRow('escritorio', escritorio, (value) {
+                    helper.buildCheckboxRow('escritorio', escritorio, (value) {
                       setState(() {
                         escritorio = value!;
                       });
                     }),
-                    buildCheckboxRow('internet', internet, (value) {
+                    helper.buildCheckboxRow('internet', internet, (value) {
                       setState(() {
                         internet = value!;
                       });
                     }),
-                    buildCheckboxRow('impresora', impresora, (value) {
+                    helper.buildCheckboxRow('impresora', impresora, (value) {
                       setState(() {
                         impresora = value!;
                       });
                     }),
-                    buildCheckboxRow('calculadora', calculadora, (value) {
+                    helper.buildCheckboxRow('calculadora', calculadora, (value) {
                       setState(() {
                         calculadora = value!;
                       });
                     }),
-                    buildCheckboxRow('computadora', computadora, (value) {
+                    helper.buildCheckboxRow('computadora', computadora, (value) {
                       setState(() {
                         computadora = value!;
                       });
                     }),
-                    buildCheckboxRow('tablet', tablet, (value) {
+                    helper.buildCheckboxRow('tablet', tablet, (value) {
                       setState(() {
                         tablet = value!;
                       });
                     }),
-                    buildCheckboxRow('todas las anteriores', todas, (value) {
+                    helper.buildCheckboxRow('todas las anteriores', todas, (value) {
                       setState(() {
                         todas = value!;
                       });
@@ -220,7 +185,7 @@ class _IncorporacionState extends State<Incorporacion> {
                 Column(
                   children: [
                     for (var option in recursos_economicos)
-                      buildRadioButton(
+                      helper.buildRadioButton(
                           option, option, selectedRecursosEconomicos, (value) {
                         setState(() {
                           selectedRecursosEconomicos = value;
@@ -228,8 +193,7 @@ class _IncorporacionState extends State<Incorporacion> {
                       }),
                   ],
                 ),
-                buildText(
-                    pregunta6),
+                buildText(pregunta6),
                 Container(
                   width: 300,
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
@@ -266,8 +230,7 @@ class _IncorporacionState extends State<Incorporacion> {
                 const SizedBox(
                   height: 15,
                 ),
-                buildText(
-                    pregunta7),
+                buildText(pregunta7),
                 Container(
                   width: 300,
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
@@ -307,14 +270,14 @@ class _IncorporacionState extends State<Incorporacion> {
                 buildText(pregunta8),
                 Row(
                   children: [
-                    buildRadioButton('Si', 'Si', selectedConocesCebuaz,
+                    helper.buildRadioButton('Si', 'Si', selectedConocesCebuaz,
                         (value) {
                       setState(() {
                         selectedConocesCebuaz = value;
                       });
                     }),
                     const SizedBox(width: 25),
-                    buildRadioButton('No', 'No', selectedConocesCebuaz,
+                    helper.buildRadioButton('No', 'No', selectedConocesCebuaz,
                         (value) {
                       setState(() {
                         selectedConocesCebuaz = value;
@@ -325,21 +288,20 @@ class _IncorporacionState extends State<Incorporacion> {
                 buildText(pregunta9),
                 Row(
                   children: [
-                    buildRadioButton('Si', 'Si', selectedUsasCebuaz, (value) {
+                    helper.buildRadioButton('Si', 'Si', selectedUsasCebuaz, (value) {
                       setState(() {
                         selectedUsasCebuaz = value;
                       });
                     }),
                     const SizedBox(width: 25),
-                    buildRadioButton('No', 'No', selectedUsasCebuaz, (value) {
+                    helper.buildRadioButton('No', 'No', selectedUsasCebuaz, (value) {
                       setState(() {
                         selectedUsasCebuaz = value;
                       });
                     }),
                   ],
                 ),
-                buildText(
-                    pregunta10),
+                buildText(pregunta10),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: DataTable(
@@ -422,12 +384,11 @@ class _IncorporacionState extends State<Incorporacion> {
                 const SizedBox(
                   width: 15,
                 ),
-                buildText(
-                    pregunta11),
+                buildText(pregunta11),
                 Column(
                   children: [
                     for (var option in experiencia_obtenida)
-                      buildRadioButton(option, option, selectedSatisfecha,
+                      helper.buildRadioButton(option, option, selectedSatisfecha,
                           (value) {
                         setState(() {
                           selectedSatisfecha = value;

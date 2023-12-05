@@ -1,4 +1,5 @@
 import 'package:case_cuestionario/Datos/datosDatosGenerals.dart';
+import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
@@ -19,66 +20,17 @@ class _DatosGeneralesState extends State<DatosGenerales> {
   final _nombreCompletoController = TextEditingController();
   final _municipioController = TextEditingController();
 
-  Widget buildInputField(
-      String text, TextEditingController controller, TextInputType inputType) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 0),
-      child: Container(
-        width: MediaQuery.of(context).size.width - 50,
-        height: 50,
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onBackground,
-          border: Border.all(color: Colors.white, width: .2),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 0),
-          child: TextField(
-            style: const TextStyle(color: Colors.black),
-            keyboardType: inputType,
-            controller: controller,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: text,
-              hintStyle: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.grey,
-                fontSize: 20,
-              ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildRadioButton(String label, String value, String? groupValue,
-      Function(String?) onChanged) {
-    return Row(
-      children: [
-        Radio(
-          value: value,
-          groupValue: groupValue,
-          onChanged: onChanged,
-          activeColor: Theme.of(context).colorScheme.onBackground,
-          fillColor: MaterialStateColor.resolveWith(
-            (states) {
-              if (states.contains(MaterialState.selected)) {
-                return Theme.of(context).colorScheme.onBackground;
-              } else {
-                return Theme.of(context).colorScheme.onBackground;
-              }
-            },
-          ),
-        ),
-        Text(label, style: const TextStyle(fontSize: 20)),
-      ],
-    );
+  
+  void rebuild() {
+    setState(() {
+      // Perform any necessary state changes
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    WidgetBuilderHelper helper = WidgetBuilderHelper(context, rebuild);
+
     return AppWithDrawer(
       title: 'Datos Generales',
       content: Scaffold(
@@ -88,7 +40,7 @@ class _DatosGeneralesState extends State<DatosGenerales> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 Padding(
+                Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     semestretext,
@@ -98,7 +50,7 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                 Column(
                   children: [
                     for (var semester in semestre)
-                      buildRadioButton(
+                      helper.buildRadioButton(
                           '$semester semestre', semester, selectedSemester,
                           (value) {
                         setState(() {
@@ -108,17 +60,17 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                 Padding(
+                Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     nombrecompleto,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
-                buildInputField(hintNombre, _nombreCompletoController,
-                    TextInputType.name),
+                helper.buildInputField(
+                    hintNombre, _nombreCompletoController),
                 const SizedBox(height: 10),
-                 Padding(
+                Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     sexoGenero,
@@ -128,7 +80,7 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                 Column(
                   children: [
                     for (var gender in genero)
-                      buildRadioButton(gender, gender, selectedSexo, (value) {
+                      helper.buildRadioButton(gender, gender, selectedSexo, (value) {
                         setState(() {
                           selectedSexo = value;
                         });
@@ -136,17 +88,17 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                 Padding(
+                Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     municipio,
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
-                buildInputField(hintMunicipio,
-                    _municipioController, TextInputType.name),
+                helper.buildInputField(
+                    hintMunicipio, _municipioController),
                 const SizedBox(height: 10),
-                 Padding(
+                Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     estadocivil,
@@ -156,7 +108,7 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                 Column(
                   children: [
                     for (var status in estadoCivil)
-                      buildRadioButton(status, status, selectedEstadoCivil,
+                      helper.buildRadioButton(status, status, selectedEstadoCivil,
                           (value) {
                         setState(() {
                           selectedEstadoCivil = value;
@@ -164,7 +116,7 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                       }),
                   ],
                 ),
-                 Padding(
+                Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     trabaja,
@@ -173,20 +125,20 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                 ),
                 Row(
                   children: [
-                    buildRadioButton('Si', 'Yes', selectedOption, (value) {
+                    helper.buildRadioButton('Si', 'Yes', selectedOption, (value) {
                       setState(() {
                         selectedOption = value;
                       });
                     }),
                     const SizedBox(width: 25),
-                    buildRadioButton('No', 'No', selectedOption, (value) {
+                    helper.buildRadioButton('No', 'No', selectedOption, (value) {
                       setState(() {
                         selectedOption = value;
                       });
                     }),
                   ],
                 ),
-                 Padding(
+                Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     yearingreso,
