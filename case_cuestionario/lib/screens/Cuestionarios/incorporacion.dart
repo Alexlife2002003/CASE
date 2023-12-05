@@ -19,11 +19,9 @@ class Incorporacion extends StatefulWidget {
 }
 
 class _IncorporacionState extends State<Incorporacion> {
-  String? selectedModoEnterar; // ¿Cómo te enteraste de la Licenciatura?
-  String?
-      selectedImportanciaActividades; //¿Qué nivel de importancia tienen las actividades escolares dentro de tu familia
-  String?
-      selectedEspacioEstudiar; //¿Cuentas en tu casa con un espacio para estudiar y hacer tus trabajos escolares?
+  String? selectedModoEnterar;
+  String? selectedImportanciaActividades;
+  String? selectedEspacioEstudiar;
   bool escritorio = false;
   bool internet = false;
   bool impresora = false;
@@ -31,16 +29,12 @@ class _IncorporacionState extends State<Incorporacion> {
   bool computadora = false;
   bool tablet = false;
   bool todas = false;
-  String?
-      selectedRecursosEconomicos; //Los recursos económicos con los que cuentas para realizar tus estudios son:
-  String?
-      selectedTransporte; //¿Qué medio de trasporte utilizas para trasladarte a la escuela? ¿Qué medio de trasporte utilizas para trasladarte a la escuela?
-  String?
-      selectedTiempo; // ¿Cuánto tiempo haces para llegar a la escuela desde tu domicilio actual?
-  String? selectedConocesCebuaz; //¿Conoces el CEBUAZ?
-  String? selectedUsasCebuaz; //¿Usas el CEBUAZ?
+  String? selectedRecursosEconomicos;
+  String? selectedTransporte;
+  String? selectedTiempo;
+  String? selectedConocesCebuaz;
+  String? selectedUsasCebuaz;
 
-// En comparación con tu experiencia en el Bachillerato ¿Qué tanto ha cambiado tu vida durante tu estancia en la Universidad?
   List<Experiencia> experiencias = [
     Experiencia(aspect: 'Exigencia académica', experiencia: ''),
     Experiencia(aspect: 'Ambiente social y cultural', experiencia: ''),
@@ -48,21 +42,16 @@ class _IncorporacionState extends State<Incorporacion> {
     Experiencia(aspect: 'Relación con los maestros', experiencia: ''),
     Experiencia(aspect: 'Relación con los compañeros', experiencia: ''),
   ];
-  String?
-      selectedSatisfecha; //¿Hasta qué punto consideras satisfechas tus expectativas al iniciar la carrera?
+  String? selectedSatisfecha;
 
- 
-
- 
-
- void rebuild() {
+  void rebuild() {
     setState(() {
-      // Perform any necessary state changes
+     
     });
   }
+
   @override
   Widget build(BuildContext context) {
-
     WidgetBuilderHelper helper = WidgetBuilderHelper(context, rebuild);
 
     return AppWithDrawer(
@@ -159,12 +148,14 @@ class _IncorporacionState extends State<Incorporacion> {
                         impresora = value!;
                       });
                     }),
-                    helper.buildCheckboxRow('calculadora', calculadora, (value) {
+                    helper.buildCheckboxRow('calculadora', calculadora,
+                        (value) {
                       setState(() {
                         calculadora = value!;
                       });
                     }),
-                    helper.buildCheckboxRow('computadora', computadora, (value) {
+                    helper.buildCheckboxRow('computadora', computadora,
+                        (value) {
                       setState(() {
                         computadora = value!;
                       });
@@ -174,7 +165,8 @@ class _IncorporacionState extends State<Incorporacion> {
                         tablet = value!;
                       });
                     }),
-                    helper.buildCheckboxRow('todas las anteriores', todas, (value) {
+                    helper.buildCheckboxRow('todas las anteriores', todas,
+                        (value) {
                       setState(() {
                         todas = value!;
                       });
@@ -288,13 +280,15 @@ class _IncorporacionState extends State<Incorporacion> {
                 buildText(pregunta9),
                 Row(
                   children: [
-                    helper.buildRadioButton('Si', 'Si', selectedUsasCebuaz, (value) {
+                    helper.buildRadioButton('Si', 'Si', selectedUsasCebuaz,
+                        (value) {
                       setState(() {
                         selectedUsasCebuaz = value;
                       });
                     }),
                     const SizedBox(width: 25),
-                    helper.buildRadioButton('No', 'No', selectedUsasCebuaz, (value) {
+                    helper.buildRadioButton('No', 'No', selectedUsasCebuaz,
+                        (value) {
                       setState(() {
                         selectedUsasCebuaz = value;
                       });
@@ -382,14 +376,14 @@ class _IncorporacionState extends State<Incorporacion> {
                   ),
                 ),
                 const SizedBox(
-                  width: 15,
+                  height: 15,
                 ),
                 buildText(pregunta11),
                 Column(
                   children: [
                     for (var option in experiencia_obtenida)
-                      helper.buildRadioButton(option, option, selectedSatisfecha,
-                          (value) {
+                      helper.buildRadioButton(
+                          option, option, selectedSatisfecha, (value) {
                         setState(() {
                           selectedSatisfecha = value;
                         });

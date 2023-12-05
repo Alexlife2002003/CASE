@@ -20,10 +20,9 @@ class _DatosGeneralesState extends State<DatosGenerales> {
   final _nombreCompletoController = TextEditingController();
   final _municipioController = TextEditingController();
 
-  
   void rebuild() {
     setState(() {
-      // Perform any necessary state changes
+     
     });
   }
 
@@ -41,10 +40,11 @@ class _DatosGeneralesState extends State<DatosGenerales> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(bottom: 8.0),
+                  padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     semestretext,
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Column(
@@ -61,26 +61,28 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                 ),
                 const SizedBox(height: 10),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 8.0),
+                  padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     nombrecompleto,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
-                helper.buildInputField(
-                    hintNombre, _nombreCompletoController),
+                helper.buildInputField(hintNombre, _nombreCompletoController),
                 const SizedBox(height: 10),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 8.0),
+                  padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     sexoGenero,
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Column(
                   children: [
                     for (var gender in genero)
-                      helper.buildRadioButton(gender, gender, selectedSexo, (value) {
+                      helper.buildRadioButton(gender, gender, selectedSexo,
+                          (value) {
                         setState(() {
                           selectedSexo = value;
                         });
@@ -89,27 +91,28 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                 ),
                 const SizedBox(height: 10),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 8.0),
+                  padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     municipio,
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
-                helper.buildInputField(
-                    hintMunicipio, _municipioController),
+                helper.buildInputField(hintMunicipio, _municipioController),
                 const SizedBox(height: 10),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 8.0),
+                  padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     estadocivil,
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Column(
                   children: [
                     for (var status in estadoCivil)
-                      helper.buildRadioButton(status, status, selectedEstadoCivil,
-                          (value) {
+                      helper.buildRadioButton(
+                          status, status, selectedEstadoCivil, (value) {
                         setState(() {
                           selectedEstadoCivil = value;
                         });
@@ -117,21 +120,24 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 8.0),
+                  padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     trabaja,
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Row(
                   children: [
-                    helper.buildRadioButton('Si', 'Yes', selectedOption, (value) {
+                    helper.buildRadioButton('Si', 'Yes', selectedOption,
+                        (value) {
                       setState(() {
                         selectedOption = value;
                       });
                     }),
                     const SizedBox(width: 25),
-                    helper.buildRadioButton('No', 'No', selectedOption, (value) {
+                    helper.buildRadioButton('No', 'No', selectedOption,
+                        (value) {
                       setState(() {
                         selectedOption = value;
                       });
@@ -139,10 +145,11 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 8.0),
+                  padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     yearingreso,
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Container(
@@ -250,7 +257,7 @@ class _DatosGeneralesState extends State<DatosGenerales> {
                           return;
                         }
 
-                        // If none of the above conditions are met, all values are valid
+                    
                         debugPrint(selectedSemester);
                         debugPrint(_nombreCompletoController.text.trim());
                         debugPrint(selectedSexo);

@@ -1,5 +1,4 @@
 import 'package:case_cuestionario/Datos/datosIdioma.dart';
-import 'package:case_cuestionario/Datos/datosIncorporacion.dart';
 import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
@@ -19,7 +18,7 @@ class _IdiomaState extends State<Idioma> {
 
   void rebuild() {
     setState(() {
-      // Perform any necessary state changes
+ 
     });
   }
 
@@ -71,7 +70,7 @@ class _IdiomaState extends State<Idioma> {
                       }),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Padding(

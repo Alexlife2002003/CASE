@@ -27,7 +27,7 @@ class WidgetBuilderHelper {
           ),
         ),
         Text(label, style: const TextStyle(fontSize: 18)),
-        SizedBox(
+        const SizedBox(
           width: 25,
         )
       ],
@@ -101,7 +101,7 @@ class WidgetBuilderHelper {
             }).toList(),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         )
       ],
@@ -115,7 +115,7 @@ class WidgetBuilderHelper {
       child: DataTable(
         dataRowHeight: 60,
         columns: [
-          DataColumn(label: Text('Aspecto')),
+         const  DataColumn(label: Text('Aspecto')),
           for (var label in columnLabels) DataColumn(label: Text(label)),
         ],
         rows: data.map((experiencia) {
