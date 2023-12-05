@@ -73,18 +73,6 @@ class _IncorporacionState extends State<Incorporacion> {
     );
   }
 
-  Widget buildText(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
 
   Widget buildRadioButton(String label, String value, String? groupValue,
       Function(String?) onChanged) {
