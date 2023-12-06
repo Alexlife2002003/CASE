@@ -169,5 +169,26 @@ class WidgetBuilderHelper {
       ],
     );
   }
+
+    DataCell buildRadioCell({
+    required String value,
+    required String groupValue,
+    required ValueChanged<String> onChanged,
+  }) {
+    return DataCell(Radio(
+      value: value,
+      groupValue: groupValue,
+      fillColor: MaterialStateColor.resolveWith((states) {
+        if (states.contains(MaterialState.selected)) {
+          return Theme.of(context).colorScheme.onBackground;
+        } else {
+          return Colors.white;
+        }
+      }),
+      onChanged: (value) {
+        onChanged(value as String);
+      },
+    ));
+  }
   
 }

@@ -103,6 +103,9 @@ class _AreaProfesionalState extends State<AreaProfesional> {
     setState(() {});
   }
 
+  
+
+
   @override
   Widget build(BuildContext context) {
     WidgetBuilderHelper helper = WidgetBuilderHelper(context, rebuild);
@@ -145,7 +148,36 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                   height: 15,
                 ),
                 buildText(pregunta15),
-                helper.buildCustomDataTable(tablapregunta15, respuesta15fila),
+                
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
+                    dataRowHeight: 60,
+                    columns: [
+                      const DataColumn(label: Text('Aspecto')),
+                      for (var label in respuesta15fila)
+                        DataColumn(label: Text(label)),
+                    ],
+                    rows: tablapregunta15.map((experiencia) {
+                      return DataRow(cells: [
+                        DataCell(SizedBox(
+                          width: 150,
+                          child: Text(experiencia.aspect),
+                        )),
+                        for (var label in respuesta15fila)
+                          helper.buildRadioCell(
+                            value: label,
+                            groupValue: experiencia.answer,
+                            onChanged: (value) {
+                              setState(() {
+                                experiencia.answer = value;
+                              });
+                            },
+                          ),
+                      ]);
+                    }).toList(),
+                  ),
+                ),
                 const SizedBox(
                   height: 15,
                 ),
@@ -207,7 +239,36 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                   },
                 ),
                 buildText(pregunta21),
-                helper.buildCustomDataTable(tablapregunta21, respuesta21fila),
+                
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
+                    dataRowHeight: 60,
+                    columns: [
+                      const DataColumn(label: Text('Aspecto')),
+                      for (var label in respuesta21fila)
+                        DataColumn(label: Text(label)),
+                    ],
+                    rows: tablapregunta21.map((experiencia) {
+                      return DataRow(cells: [
+                        DataCell(SizedBox(
+                          width: 150,
+                          child: Text(experiencia.aspect),
+                        )),
+                        for (var label in respuesta21fila)
+                          helper.buildRadioCell(
+                            value: label,
+                            groupValue: experiencia.answer,
+                            onChanged: (value) {
+                              setState(() {
+                                experiencia.answer = value;
+                              });
+                            },
+                          ),
+                      ]);
+                    }).toList(),
+                  ),
+                ),
                 const SizedBox(
                   height: 15,
                 ),
@@ -248,7 +309,45 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                   ],
                 ),
                 buildText(pregunta25),
-                helper.buildCustomDataTable(tablapregunta25, respuesta25fila),
+                
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
+                    dataRowHeight: 60,
+                    columns: [
+                      const DataColumn(label: Text('Aspecto')),
+                      for (var label in respuesta25fila)
+                        DataColumn(label: Text(label)),
+                    ],
+                    rows: tablapregunta25.map((experiencia) {
+                      return DataRow(cells: [
+                        DataCell(SizedBox(
+                          width: 150,
+                          child: Text(experiencia.aspect),
+                        )),
+                        for (var label in respuesta25fila)
+                          DataCell(Radio(
+                            value: label,
+                            groupValue: experiencia.answer,
+                            fillColor: MaterialStateColor.resolveWith(
+                              (states) {
+                                if (states.contains(MaterialState.selected)) {
+                                  return Theme.of(context)
+                                      .colorScheme
+                                      .onBackground;
+                                } else {
+                                  return Colors.white;
+                                }
+                              },
+                            ),
+                            onChanged: (value) {
+                              experiencia.answer = value as String;
+                            },
+                          )),
+                      ]);
+                    }).toList(),
+                  ),
+                ),
                 const SizedBox(
                   height: 15,
                 ),
@@ -275,7 +374,36 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                   ),
 
                 buildText(pregunta27),
-                helper.buildCustomDataTable(tablapregunta27, respuesta27fila),
+                
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
+                    dataRowHeight: 60,
+                    columns: [
+                      const DataColumn(label: Text('Aspecto')),
+                      for (var label in respuesta27fila)
+                        DataColumn(label: Text(label)),
+                    ],
+                    rows: tablapregunta27.map((experiencia) {
+                      return DataRow(cells: [
+                        DataCell(SizedBox(
+                          width: 150,
+                          child: Text(experiencia.aspect),
+                        )),
+                        for (var label in respuesta27fila)
+                          helper.buildRadioCell(
+                            value: label,
+                            groupValue: experiencia.answer,
+                            onChanged: (value) {
+                              setState(() {
+                                experiencia.answer = value;
+                              });
+                            },
+                          ),
+                      ]);
+                    }).toList(),
+                  ),
+                ),
                 const SizedBox(
                   height: 15,
                 ),
@@ -382,7 +510,36 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                   },
                 ),
                 buildText(pregunta37),
-                helper.buildCustomDataTable(tablapregunta37, respuesta37fila),
+                
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
+                    dataRowHeight: 60,
+                    columns: [
+                      const DataColumn(label: Text('Aspecto')),
+                      for (var label in respuesta37fila)
+                        DataColumn(label: Text(label)),
+                    ],
+                    rows: tablapregunta37.map((experiencia) {
+                      return DataRow(cells: [
+                        DataCell(SizedBox(
+                          width: 150,
+                          child: Text(experiencia.aspect),
+                        )),
+                        for (var label in respuesta37fila)
+                          helper.buildRadioCell(
+                            value: label,
+                            groupValue: experiencia.answer,
+                            onChanged: (value) {
+                              setState(() {
+                                experiencia.answer = value;
+                              });
+                            },
+                          ),
+                      ]);
+                    }).toList(),
+                  ),
+                ),
                 const SizedBox(
                   height: 15,
                 ),
@@ -414,11 +571,41 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                   },
                 ),
                 buildText(pregunta41),
-                helper.buildCustomDataTable(tablapregunta41, respuesta41fila),
+                
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
+                    dataRowHeight: 60,
+                    columns: [
+                      const DataColumn(label: Text('Aspecto')),
+                      for (var label in respuesta41fila)
+                        DataColumn(label: Text(label)),
+                    ],
+                    rows: tablapregunta41.map((experiencia) {
+                      return DataRow(cells: [
+                        DataCell(SizedBox(
+                          width: 150,
+                          child: Text(experiencia.aspect),
+                        )),
+                        for (var label in respuesta41fila)
+                          helper.buildRadioCell(
+                            value: label,
+                            groupValue: experiencia.answer,
+                            onChanged: (value) {
+                              setState(() {
+                                experiencia.answer = value;
+                              });
+                            },
+                          ),
+                      ]);
+                    }).toList(),
+                  ),
+                ),
                 const SizedBox(
                   height: 15,
                 ),
                 const SizedBox(height: 25),
+
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 0),
                   child: Container(
@@ -465,6 +652,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                     ),
                   ),
                 ),
+                
               ],
             ),
           ),
