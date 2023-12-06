@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     Color darkblue = const Color.fromARGB(255, 0, 0, 139);
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'CASE',
       theme: ThemeData(
         colorScheme: ColorScheme(
           primary: darkblue, // The primary color for the overall theme
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           brightness:
               Brightness.light, // The overall brightness of the color scheme
         ),
-        // Other ThemeData properties...
+        
       ),
       home: const Login(),
     );

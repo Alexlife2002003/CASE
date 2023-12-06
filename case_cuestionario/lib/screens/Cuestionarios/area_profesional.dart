@@ -601,9 +601,7 @@ class _AreaProfesionalState extends State<AreaProfesional> {
                     }).toList(),
                   ),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
+               
                 const SizedBox(height: 25),
 
                 Padding(
