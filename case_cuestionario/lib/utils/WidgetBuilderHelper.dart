@@ -26,10 +26,14 @@ class WidgetBuilderHelper {
             },
           ),
         ),
-        Text(label, style: const TextStyle(fontSize: 18)),
+        Text(
+          label,
+          style: const TextStyle(fontSize: 18),
+               
+        ),
         const SizedBox(
           width: 25,
-        )
+        ),
       ],
     );
   }
@@ -84,6 +88,8 @@ class WidgetBuilderHelper {
             icon: const Icon(Icons.arrow_drop_down),
             iconSize: 24,
             elevation: 16,
+            isExpanded: true,
+            isDense: true,
             onChanged: (newValue) {
               onChanged(newValue);
               // Trigger the rebuild from the parent widget
@@ -92,10 +98,15 @@ class WidgetBuilderHelper {
             items: items.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
-                child: Text(
-                  value,
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.background),
+                child: Container(
+                  constraints: BoxConstraints(maxWidth: double.infinity),
+                  child: Text(
+                    value,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.background,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               );
             }).toList(),
@@ -115,7 +126,7 @@ class WidgetBuilderHelper {
       child: DataTable(
         dataRowHeight: 60,
         columns: [
-         const  DataColumn(label: Text('Aspecto')),
+          const DataColumn(label: Text('Aspecto')),
           for (var label in columnLabels) DataColumn(label: Text(label)),
         ],
         rows: data.map((experiencia) {
@@ -148,7 +159,10 @@ class WidgetBuilderHelper {
   }
 
   Widget buildCheckboxRow(
-      String label, bool value, ValueChanged<bool?> onChanged) {
+    String label,
+    bool value,
+    ValueChanged<bool?> onChanged,
+  ) {
     return Row(
       children: [
         Checkbox(
@@ -165,12 +179,17 @@ class WidgetBuilderHelper {
             width: 2.0,
           ),
         ),
-        Text(label, style: const TextStyle(fontSize: 18)),
+        Flexible(
+          child: Text(
+            label,
+            style: const TextStyle(fontSize: 18),
+          ),
+        ),
       ],
     );
   }
 
-    DataCell buildRadioCell({
+  DataCell buildRadioCell({
     required String value,
     required String groupValue,
     required ValueChanged<String> onChanged,
@@ -190,5 +209,4 @@ class WidgetBuilderHelper {
       },
     ));
   }
-  
 }

@@ -220,7 +220,7 @@ List<String> respuesta34 = ['Muy buenas', 'Buenas', 'Regulares', 'Malas'];
 
 List<String> respuesta35 = [
   'Notas de clase.',
-  'Bibliografía sugerida física y/o \ndigital (libros, revistas científicas).',
+  'Bibliografía sugerida física y/o digital (libros, revistas científicas).',
   'Guías proporcionadas por el docente.',
   'Consulta general en internet.',
   'Portafolio de evidencias.'
@@ -231,7 +231,7 @@ List<String> respuesta36 = [
   'Diariamente más de 1h',
   'Fin de semana 1 a 2h',
   'Fin de semana más de 2h',
-  'Unas horas o momentos\nantes de cada evaluación.'
+  'Unas horas o momentos antes de cada evaluación.'
 ];
 
 List<String> respuesta37columna = [

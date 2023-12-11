@@ -1,3 +1,4 @@
+import 'package:case_cuestionario/screens/Cuestionarios/abandono_escolar.dart';
 import 'package:case_cuestionario/screens/Cuestionarios/area_profesional.dart';
 import 'package:case_cuestionario/screens/Cuestionarios/datos_generales.dart';
 import 'package:case_cuestionario/screens/Cuestionarios/idioma.dart';
@@ -36,24 +37,17 @@ class AppWithDrawer extends StatelessWidget {
         child: Column(
           children: <Widget>[
             SizedBox(
-              height: screenWidth / 3,
+              height: screenWidth / 2,
               child: DrawerHeader(
                 decoration: const BoxDecoration(),
-                child: InkWell(
-                  onTap: () {},
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'CASE',
-                        style: TextStyle(
-                          fontSize: 40,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'lib/assets/case-logo.png',
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -100,7 +94,7 @@ class AppWithDrawer extends StatelessWidget {
                       },
                     ),
                     ListTile(
-                      title:const Row(
+                      title: const Row(
                         children: [
                           Icon(Icons.check_box_outline_blank),
                           SizedBox(
@@ -113,7 +107,10 @@ class AppWithDrawer extends StatelessWidget {
                         ],
                       ),
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const AreaProfesional()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AreaProfesional()));
                       },
                     ),
                     ListTile(
@@ -130,11 +127,14 @@ class AppWithDrawer extends StatelessWidget {
                         ],
                       ),
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const Idioma()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Idioma()));
                       },
                     ),
                     ListTile(
-                      title:const Row(
+                      title: const Row(
                         children: [
                           Icon(Icons.check_box_outline_blank),
                           SizedBox(
@@ -147,11 +147,14 @@ class AppWithDrawer extends StatelessWidget {
                         ],
                       ),
                       onTap: () {
-                       Navigator.push(context, MaterialPageRoute(builder: (context)=>ServiciosCase()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ServiciosCase()));
                       },
                     ),
                     ListTile(
-                      title:const Row(
+                      title: const Row(
                         children: [
                           Icon(Icons.check_box_outline_blank),
                           SizedBox(
@@ -163,7 +166,9 @@ class AppWithDrawer extends StatelessWidget {
                           ),
                         ],
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const abandonoEscolar()));
+                      },
                     ),
                     ListTile(
                       title: const Row(
@@ -234,8 +239,8 @@ class AppWithDrawer extends StatelessWidget {
                 ],
               ),
               onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => const Login()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Login()));
               },
             ),
           ],
