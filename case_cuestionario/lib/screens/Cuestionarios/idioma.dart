@@ -32,7 +32,7 @@ class _IdiomaState extends State<Idioma> {
 
   Future<Map<String, dynamic>> fetchData() async {
     final response =
-        await http.get(Uri.parse('https://case-api-2.onrender.com/idioma'));
+        await http.get(Uri.parse('https://case-408016.wl.r.appspot.com/idioma'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data =
@@ -54,7 +54,7 @@ class _IdiomaState extends State<Idioma> {
       future: apiDataFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return AppWithDrawer(
+          return const AppWithDrawer(
             title: 'Idioma',
             content: Scaffold(
               body: Center(
@@ -84,8 +84,9 @@ class _IdiomaState extends State<Idioma> {
                       buildText(snapshot.data!['questions']['pregunta42']),
                       Row(
                         children: [
-                          for (var option in snapshot.data!['answers']['respuesta44'])
-                            helper.buildRadioButton(
+                          for (var option in snapshot.data!['answers']
+                              ['respuesta44'])
+                            helper.buildRadioButtonRow(
                                 option, option, _selectedPregunta42, (value) {
                               setState(() {
                                 _selectedPregunta42 = value;
@@ -96,8 +97,9 @@ class _IdiomaState extends State<Idioma> {
                       buildText(snapshot.data!['questions']['pregunta43']),
                       Row(
                         children: [
-                          for (var option in snapshot.data!['answers']['respuesta43'])
-                            helper.buildRadioButton(
+                          for (var option in snapshot.data!['answers']
+                              ['respuesta43'])
+                            helper.buildRadioButtonRow(
                                 option, option, _selectedPregunta43, (value) {
                               setState(() {
                                 _selectedPregunta43 = value;
@@ -108,8 +110,9 @@ class _IdiomaState extends State<Idioma> {
                       buildText(snapshot.data!['questions']['pregunta44']),
                       Row(
                         children: [
-                          for (var option in snapshot.data!['answers']['respuesta44'])
-                            helper.buildRadioButton(
+                          for (var option in snapshot.data!['answers']
+                              ['respuesta44'])
+                            helper.buildRadioButtonRow(
                                 option, option, _selectedPregunta44, (value) {
                               setState(() {
                                 _selectedPregunta44 = value;
@@ -120,45 +123,9 @@ class _IdiomaState extends State<Idioma> {
                       const SizedBox(
                         height: 15,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 0),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width - 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            border: Border.all(color: Colors.white, width: .2),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: Material(
-                              elevation: 5,
-                              borderRadius: BorderRadius.circular(12),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(color: Colors.white, width: 2),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'Guardar',
-                                    style: TextStyle(
-                                      color:
-                                          Theme.of(context).colorScheme.background,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      helper.buildGuardarButton(() {
+                        debugPrint("it works");
+                      }),
                     ],
                   ),
                 ),
@@ -169,6 +136,4 @@ class _IdiomaState extends State<Idioma> {
       },
     );
   }
-
- 
 }

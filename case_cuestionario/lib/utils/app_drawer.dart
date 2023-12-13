@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:case_cuestionario/screens/Users/login.dart';
 
 class AppWithDrawer extends StatelessWidget {
-  final Widget content;
   final String title;
+  final Widget content;
 
-  const AppWithDrawer({super.key, required this.content, required this.title});
+  const AppWithDrawer({super.key, required this.title, required this.content});
 
   @override
   Widget build(BuildContext context) {
@@ -70,49 +70,48 @@ class AppWithDrawer extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const DatosGenerales()));
+                                builder: (context) => const datosGenerales()));
                       },
                     ),
                     ListTile(
-                      title: const Row(
-                        children: [
-                          Icon(Icons.check_box_outline_blank),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Incorporacion, medios \ny recursos',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Incorporacion()));
-                      },
-                    ),
+                        title: const Row(
+                          children: [
+                            Icon(Icons.check_box_outline_blank),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Incorporacion, medios \ny recursos',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Incorporacion()));
+                        }),
                     ListTile(
-                      title: const Row(
-                        children: [
-                          Icon(Icons.check_box_outline_blank),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Area profesional',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const AreaProfesional()));
-                      },
-                    ),
+                        title: const Row(
+                          children: [
+                            Icon(Icons.check_box_outline_blank),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Area profesional',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const areaProfesional()));
+                        }),
                     ListTile(
                       title: const Row(
                         children: [
@@ -134,42 +133,40 @@ class AppWithDrawer extends StatelessWidget {
                       },
                     ),
                     ListTile(
-                      title: const Row(
-                        children: [
-                          Icon(Icons.check_box_outline_blank),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Servicios Case',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const ServiciosCase()));
-                      },
-                    ),
+                        title: const Row(
+                          children: [
+                            Icon(Icons.check_box_outline_blank),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Servicios Case',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const serviciosCase()));
+                        }),
                     ListTile(
-                      title: const Row(
-                        children: [
-                          Icon(Icons.check_box_outline_blank),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Motivos de desercion \ny abandono escolar',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const abandonoEscolar()));
-                      },
-                    ),
+                        title: const Row(
+                          children: [
+                            Icon(Icons.check_box_outline_blank),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Motivos de desercion \ny abandono escolar',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>abandonoEscolar()));
+                        }),
                     ListTile(
                       title: const Row(
                         children: [

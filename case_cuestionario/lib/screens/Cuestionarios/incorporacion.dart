@@ -1,15 +1,9 @@
-import 'package:case_cuestionario/Datos/datosIncorporacion.dart';
 import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
-
-class Experiencia {
-  String aspect;
-  String experiencia;
-
-  Experiencia({required this.aspect, required this.experiencia});
-}
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Incorporacion extends StatefulWidget {
   const Incorporacion({super.key});
@@ -19,9 +13,14 @@ class Incorporacion extends StatefulWidget {
 }
 
 class _IncorporacionState extends State<Incorporacion> {
-  String? selectedModoEnterar;
-  String? selectedImportanciaActividades;
-  String? selectedEspacioEstudiar;
+  late Future<Map<String, dynamic>> apiDataFuture;
+  Map<String, dynamic> answers = {};
+  Map<String, dynamic> questions = {};
+  String valorNoEncontrado = "VALOR NO ENCONTRADO";
+
+  String? selectedRespuesta1;
+  String? selectedRespuesta2;
+  String? SelectedRespuesta3;
   bool escritorio = false;
   bool internet = false;
   bool impresora = false;
@@ -29,519 +28,266 @@ class _IncorporacionState extends State<Incorporacion> {
   bool computadora = false;
   bool tablet = false;
   bool todas = false;
-  String? selectedRecursosEconomicos;
-  String? selectedTransporte;
-  String? selectedTiempo;
-  String? selectedConocesCebuaz;
-  String? selectedUsasCebuaz;
+  String? selectedRespuesta5;
+  String? selectedRespuesta6;
+  String? selectedRespuesta7;
+  String? selectedRespuesta8;
+  String? selectedRespuesta9;
 
-  List<Experiencia> experiencias = [
-    Experiencia(aspect: 'Exigencia académica', experiencia: ''),
-    Experiencia(aspect: 'Ambiente social y cultural', experiencia: ''),
-    Experiencia(aspect: 'Relación con la familia', experiencia: ''),
-    Experiencia(aspect: 'Relación con los maestros', experiencia: ''),
-    Experiencia(aspect: 'Relación con los compañeros', experiencia: ''),
-  ];
-  String? selectedSatisfecha;
+  List<DatosDeTabla> tablapregunta10 = [];
+
+  String? selectedRespuesta11;
 
   void rebuild() {
-    setState(() {
-     
-    });
+    setState(() {});
+  }
+
+  Future<Map<String, dynamic>> fetchData() async {
+    final response = await http.get(
+        Uri.parse('https://case-408016.wl.r.appspot.com/datosIncorporacion'));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data =
+          Map<String, dynamic>.from(json.decode(response.body));
+      setState(() {
+        questions = data['questions'];
+        answers = data['answers'];
+        for (var option in answers['respuesta10columna']) {
+          tablapregunta10.add(DatosDeTabla(aspect: option, answer: ''));
+        }
+      });
+      return data;
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    apiDataFuture = fetchData();
   }
 
   @override
   Widget build(BuildContext context) {
     WidgetBuilderHelper helper = WidgetBuilderHelper(context, rebuild);
-
-    return AppWithDrawer(
-      title: 'Incorporacion',
-      content: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.only(left: 25),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildText(pregunta1),
-                Container(
-                  width: 300,
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: DropdownButtonFormField<String>(
-                    value: selectedModoEnterar,
-                    decoration: const InputDecoration.collapsed(
-                        hintText: 'Seleccione uno'),
-                    dropdownColor: Theme.of(context).colorScheme.onBackground,
-                    icon: const Icon(Icons.arrow_drop_down),
-                    iconSize: 24,
-                    elevation: 16,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedModoEnterar = newValue;
-                      });
-                    },
-                    items: como_se_entero
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.background),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                buildText(pregunta2),
-                Column(
-                  children: [
-                    for (var importancia in nivel_importancia)
-                      helper.buildRadioButton(importancia, importancia,
-                          selectedImportanciaActividades, (value) {
-                        setState(() {
-                          selectedImportanciaActividades = value;
-                        });
+    return FutureBuilder<Map<String, dynamic>>(
+      future: apiDataFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const AppWithDrawer(
+            title: 'Incorporacion',
+            content: Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return AppWithDrawer(
+            title: 'Incorporacion',
+            content: Scaffold(
+              body: Center(child: Text('Error:${snapshot.error}')),
+            ),
+          );
+        } else {
+          return AppWithDrawer(
+            title: 'Incorporacion',
+            content: Scaffold(
+              body: Padding(
+                padding: const EdgeInsets.only(left: 25),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildText(questions['pregunta1'] ?? valorNoEncontrado),
+                      helper.buildDropdownDynamic(
+                          'Seleccione uno',
+                          selectedRespuesta1,
+                          answers['respuesta1'] ?? [], (String? newValue) {
+                        selectedRespuesta1 = newValue;
                       }),
-                  ],
-                ),
-                buildText(pregunta3),
-                Row(
-                  children: [
-                    helper.buildRadioButton('Si', 'Si', selectedEspacioEstudiar,
-                        (value) {
-                      setState(() {
-                        selectedEspacioEstudiar = value;
-                      });
-                    }),
-                    const SizedBox(width: 25),
-                    helper.buildRadioButton('No', 'No', selectedEspacioEstudiar,
-                        (value) {
-                      setState(() {
-                        selectedEspacioEstudiar = value;
-                      });
-                    }),
-                  ],
-                ),
-                buildText(pregunta4),
-                Column(
-                  children: [
-                    helper.buildCheckboxRow('escritorio', escritorio, (value) {
-                      setState(() {
-                        escritorio = value!;
-                      });
-                    }),
-                    helper.buildCheckboxRow('internet', internet, (value) {
-                      setState(() {
-                        internet = value!;
-                      });
-                    }),
-                    helper.buildCheckboxRow('impresora', impresora, (value) {
-                      setState(() {
-                        impresora = value!;
-                      });
-                    }),
-                    helper.buildCheckboxRow('calculadora', calculadora,
-                        (value) {
-                      setState(() {
-                        calculadora = value!;
-                      });
-                    }),
-                    helper.buildCheckboxRow('computadora', computadora,
-                        (value) {
-                      setState(() {
-                        computadora = value!;
-                      });
-                    }),
-                    helper.buildCheckboxRow('tablet', tablet, (value) {
-                      setState(() {
-                        tablet = value!;
-                      });
-                    }),
-                    helper.buildCheckboxRow('todas las anteriores', todas,
-                        (value) {
-                      setState(() {
-                        todas = value!;
-                      });
-                    }),
-                  ],
-                ),
-                buildText(pregunta5),
-                Column(
-                  children: [
-                    for (var option in recursos_economicos)
-                      helper.buildRadioButton(
-                          option, option, selectedRecursosEconomicos, (value) {
-                        setState(() {
-                          selectedRecursosEconomicos = value;
-                        });
+                      buildText(questions['pregunta2'] ?? valorNoEncontrado),
+                      Column(
+                        children: [
+                          for (var option
+                              in answers['respuesta2'] ?? [valorNoEncontrado])
+                            helper.buildRadioButton(
+                                option, option, selectedRespuesta2, (value) {
+                              setState(() {
+                                selectedRespuesta2 = value;
+                              });
+                            }),
+                        ],
+                      ),
+                      buildText(questions['pregunta3'] ?? valorNoEncontrado),
+                      Row(
+                        children: [
+                          for (var option
+                              in answers['respuesta3'] ?? [valorNoEncontrado])
+                            helper.buildRadioButtonRow(
+                                option, option, SelectedRespuesta3, (value) {
+                              setState(() {
+                                SelectedRespuesta3 = value;
+                              });
+                            }),
+                        ],
+                      ),
+                      buildText(questions['pregunta4'] ?? valorNoEncontrado),
+                      Column(
+                        children: [
+                          helper.buildCheckboxRow('escritorio', escritorio,
+                              (value) {
+                            setState(() {
+                              escritorio = value!;
+                            });
+                          }),
+                          helper.buildCheckboxRow('internet', internet,
+                              (value) {
+                            setState(() {
+                              internet = value!;
+                            });
+                          }),
+                          helper.buildCheckboxRow('impresora', impresora,
+                              (value) {
+                            setState(() {
+                              impresora = value!;
+                            });
+                          }),
+                          helper.buildCheckboxRow('calculadora', calculadora,
+                              (value) {
+                            setState(() {
+                              calculadora = value!;
+                            });
+                          }),
+                          helper.buildCheckboxRow('computadora', computadora,
+                              (value) {
+                            setState(() {
+                              computadora = value!;
+                            });
+                          }),
+                          helper.buildCheckboxRow('tablet', tablet, (value) {
+                            setState(() {
+                              tablet = value!;
+                            });
+                          }),
+                          helper.buildCheckboxRow('todas las anteriores', todas,
+                              (value) {
+                            setState(() {
+                              todas = value!;
+                            });
+                          }),
+                        ],
+                      ),
+                      buildText(questions['pregunta5'] ?? valorNoEncontrado),
+                      Column(
+                        children: [
+                          for (var option
+                              in answers['respuesta5'] ?? [valorNoEncontrado])
+                            helper.buildRadioButton(
+                                option, option, selectedRespuesta5, (value) {
+                              setState(() {
+                                selectedRespuesta5 = value;
+                              });
+                            }),
+                        ],
+                      ),
+                      buildText(questions['pregunta6'] ?? valorNoEncontrado),
+                      helper.buildDropdownDynamic(
+                          'Seleccione uno',
+                          selectedRespuesta1,
+                          answers['respuesta6'] ?? [], (String? newValue) {
+                        selectedRespuesta6 = newValue;
                       }),
-                  ],
-                ),
-                buildText(pregunta6),
-                Container(
-                  width: 300,
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: DropdownButtonFormField<String>(
-                    value: selectedTransporte,
-                    decoration: const InputDecoration.collapsed(
-                        hintText: 'Seleccione uno'),
-                    dropdownColor: Theme.of(context).colorScheme.onBackground,
-                    icon: const Icon(Icons.arrow_drop_down),
-                    iconSize: 24,
-                    elevation: 16,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedTransporte = newValue;
-                      });
-                    },
-                    items: transporte
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.background),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                buildText(pregunta7),
-                Container(
-                  width: 300,
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: DropdownButtonFormField<String>(
-                    value: selectedTiempo,
-                    decoration: const InputDecoration.collapsed(
-                        hintText: 'Seleccione uno'),
-                    dropdownColor: Theme.of(context).colorScheme.onBackground,
-                    icon: const Icon(Icons.arrow_drop_down),
-                    iconSize: 24,
-                    elevation: 16,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedTiempo = newValue;
-                      });
-                    },
-                    items: tiempo_transporte
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.background),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                buildText(pregunta8),
-                Row(
-                  children: [
-                    helper.buildRadioButton('Si', 'Si', selectedConocesCebuaz,
-                        (value) {
-                      setState(() {
-                        selectedConocesCebuaz = value;
-                      });
-                    }),
-                    const SizedBox(width: 25),
-                    helper.buildRadioButton('No', 'No', selectedConocesCebuaz,
-                        (value) {
-                      setState(() {
-                        selectedConocesCebuaz = value;
-                      });
-                    }),
-                  ],
-                ),
-                buildText(pregunta9),
-                Row(
-                  children: [
-                    helper.buildRadioButton('Si', 'Si', selectedUsasCebuaz,
-                        (value) {
-                      setState(() {
-                        selectedUsasCebuaz = value;
-                      });
-                    }),
-                    const SizedBox(width: 25),
-                    helper.buildRadioButton('No', 'No', selectedUsasCebuaz,
-                        (value) {
-                      setState(() {
-                        selectedUsasCebuaz = value;
-                      });
-                    }),
-                  ],
-                ),
-                buildText(pregunta10),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: DataTable(
-                    columns: const [
-                      DataColumn(label: Text('Aspecto')),
-                      DataColumn(label: Text('Es mejor')),
-                      DataColumn(label: Text('Es igual')),
-                      DataColumn(label: Text('Es peor')),
-                    ],
-                    rows: experiencias.map((experiencia) {
-                      return DataRow(cells: [
-                        DataCell(SizedBox(
-                          width: 150,
-                          child: Text(experiencia.aspect),
-                        )),
-                        DataCell(Radio(
-                          value: 'Es mejor',
-                          groupValue: experiencia.experiencia,
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              } else {
-                                return Colors.white;
-                              }
-                            },
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              experiencia.experiencia = value as String;
-                            });
-                          },
-                        )),
-                        DataCell(Radio(
-                          value: 'Es igual',
-                          groupValue: experiencia.experiencia,
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              } else {
-                                return Colors.white;
-                              }
-                            },
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              experiencia.experiencia = value as String;
-                            });
-                          },
-                        )),
-                        DataCell(Radio(
-                          value: 'Es peor',
-                          groupValue: experiencia.experiencia,
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return Theme.of(context)
-                                    .colorScheme
-                                    .onBackground;
-                              } else {
-                                return Colors.white;
-                              }
-                            },
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              experiencia.experiencia = value as String;
-                            });
-                          },
-                        )),
-                      ]);
-                    }).toList(),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                buildText(pregunta11),
-                Column(
-                  children: [
-                    for (var option in experiencia_obtenida)
-                      helper.buildRadioButton(
-                          option, option, selectedSatisfecha, (value) {
-                        setState(() {
-                          selectedSatisfecha = value;
-                        });
+                      buildText(questions['pregunta7'] ?? valorNoEncontrado),
+                      helper.buildDropdownDynamic(
+                          'Seleccione uno',
+                          selectedRespuesta1,
+                          answers['respuesta7'] ?? [], (String? newValue) {
+                        selectedRespuesta7 = newValue;
                       }),
-                    const SizedBox(height: 25),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width - 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.onSurface,
-                          border: Border.all(color: Colors.white, width: .2),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            if (selectedModoEnterar == null) {
-                              showSnackbar(
-                                  context,
-                                  '¡Dejaste como te enteraste de la licenciatura sin contestar!',
-                                  Theme.of(context).colorScheme.error);
-                              return;
-                            }
-                            if (selectedImportanciaActividades == null) {
-                              showSnackbar(
-                                  context,
-                                  '¡Dejaste el nivel de importancia sin contestar!',
-                                  Theme.of(context).colorScheme.error);
-                              return;
-                            }
-                            if (selectedEspacioEstudiar == null) {
-                              showSnackbar(
-                                  context,
-                                  '¡Dejaste el espacio para estudiar sin contestar!',
-                                  Theme.of(context).colorScheme.error);
-                              return;
-                            }
-                            debugPrint(selectedModoEnterar);
-                            debugPrint(selectedImportanciaActividades);
-                            debugPrint(selectedEspacioEstudiar);
-                            //En duda
-                            if (escritorio == false &&
-                                internet == false &&
-                                impresora == false &&
-                                calculadora == false &&
-                                computadora == false &&
-                                tablet == false &&
-                                todas == false) {
-                              showSnackbar(
-                                  context,
-                                  '¡Dejaste los medios con los que cuentas sin contestar!',
-                                  Theme.of(context).colorScheme.error);
-                              return;
-                            }
-                            debugPrint("escritorio $escritorio");
-                            debugPrint("internet $internet");
-                            debugPrint("impresora $impresora");
-                            debugPrint("calculadora $calculadora");
-                            debugPrint("computadora $computadora");
-                            debugPrint("tablet $tablet");
-                            debugPrint("todas $todas");
-                            if (selectedRecursosEconomicos == null) {
-                              showSnackbar(
-                                  context,
-                                  '¡Dejaste los recursos economicos sin contestar!',
-                                  Theme.of(context).colorScheme.error);
-                              return;
-                            }
-                            debugPrint(selectedRecursosEconomicos);
-                            if (selectedTransporte == null) {
-                              showSnackbar(
-                                  context,
-                                  '¡Dejaste el medio de transporte sin contestar!',
-                                  Theme.of(context).colorScheme.error);
-                              return;
-                            }
-                            debugPrint(selectedTransporte);
-                            if (selectedTiempo == null) {
-                              showSnackbar(
-                                  context,
-                                  '¡Dejaste el tiempo para llegar a la escuela sin contestar!',
-                                  Theme.of(context).colorScheme.error);
-                              return;
-                            }
-                            debugPrint(selectedTiempo);
-                            if (selectedConocesCebuaz == null) {
-                              showSnackbar(
-                                  context,
-                                  '¡Dejaste si conoces el CEBUAZ sin contestar!',
-                                  Theme.of(context).colorScheme.error);
-                              return;
-                            }
-                            debugPrint(selectedConocesCebuaz);
-                            if (selectedUsasCebuaz == null) {
-                              showSnackbar(
-                                  context,
-                                  '¡Dejaste si usas el CEBUAZ sin contestar!',
-                                  Theme.of(context).colorScheme.error);
-                              return;
-                            }
-                            debugPrint(selectedUsasCebuaz);
-
-                            for (Experiencia experiencia in experiencias) {
-                              debugPrint(
-                                  'Aspect: ${experiencia.aspect}, Experiencia: ${experiencia.experiencia}');
-                              if (experiencia.experiencia.isEmpty) {
-                                showSnackbar(
-                                    context,
-                                    '¡Dejaste incompleto el cuadro de experiencias sin contestar!',
-                                    Theme.of(context).colorScheme.error);
-                                return;
-                              }
-                            }
-                            if (selectedSatisfecha == null) {
-                              showSnackbar(
-                                  context,
-                                  '¡Dejaste si tus expecatitivas al iniciar la carrera fueron satisfechas sin contestar!',
-                                  Theme.of(context).colorScheme.error);
-                            }
-                            debugPrint(selectedSatisfecha);
-                          },
-                          child: Material(
-                            elevation: 5,
-                            borderRadius: BorderRadius.circular(12),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                                border:
-                                    Border.all(color: Colors.white, width: 2),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Guardar',
-                                  style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .background,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
+                      buildText(questions['pregunta8'] ?? valorNoEncontrado),
+                      Row(
+                        children: [
+                          for (var option
+                              in answers['respuesta8'] ?? [valorNoEncontrado])
+                            helper.buildRadioButtonRow(
+                                option, option, selectedRespuesta8, (value) {
+                              setState(() {
+                                selectedRespuesta8 = value;
+                              });
+                            }),
+                        ],
+                      ),
+                      buildText(questions['pregunta9'] ?? valorNoEncontrado),
+                      Row(
+                        children: [
+                          for (var option
+                              in answers['respuesta9'] ?? [valorNoEncontrado])
+                            helper.buildRadioButtonRow(
+                                option, option, selectedRespuesta9, (value) {
+                              setState(() {
+                                selectedRespuesta9 = value;
+                              });
+                            }),
+                        ],
+                      ),
+                      buildText(questions['pregunta10'] ?? valorNoEncontrado),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: DataTable(
+                          dataRowHeight: 60,
+                          columns: [
+                            const DataColumn(label: Text('Aspecto')),
+                            for (var label in answers['respuesta10fila'])
+                              DataColumn(label: Text(label)),
+                          ],
+                          rows: tablapregunta10.map((experiencia) {
+                            return DataRow(cells: [
+                              DataCell(SizedBox(
+                                width: 150,
+                                child: Text(experiencia.aspect),
+                              )),
+                              for (var label in answers['respuesta10fila'])
+                                helper.buildRadioCell(
+                                  value: label,
+                                  groupValue: experiencia.answer,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      experiencia.answer = value;
+                                    });
+                                  },
                                 ),
-                              ),
-                            ),
-                          ),
+                            ]);
+                          }).toList(),
                         ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      buildText(questions['pregunta11'] ?? valorNoEncontrado),
+                      Column(
+                        children: [
+                          for (var option
+                              in answers['respuesta11'] ?? [valorNoEncontrado])
+                            helper.buildRadioButton(
+                                option, option, selectedRespuesta11, (value) {
+                              setState(() {
+                                selectedRespuesta11 = value;
+                              });
+                            }),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      helper.buildGuardarButton(() {})
+                    ],
+                  ),
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
+          );
+        }
+      },
     );
   }
 }
