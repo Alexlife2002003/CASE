@@ -1,5 +1,6 @@
 import 'package:case_cuestionario/screens/Cuestionarios/abandono_escolar.dart';
 import 'package:case_cuestionario/screens/Cuestionarios/area_profesional.dart';
+import 'package:case_cuestionario/screens/Cuestionarios/conectividad.dart';
 import 'package:case_cuestionario/screens/Cuestionarios/datos_generales.dart';
 import 'package:case_cuestionario/screens/Cuestionarios/idioma.dart';
 import 'package:case_cuestionario/screens/Cuestionarios/incorporacion.dart';
@@ -204,7 +205,12 @@ class AppWithDrawer extends StatelessWidget {
                           ),
                         ],
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const conectividad()));
+                      },
                     ),
                     ListTile(
                       title: const Row(
