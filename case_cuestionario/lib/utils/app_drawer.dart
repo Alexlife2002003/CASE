@@ -3,6 +3,7 @@ import 'package:case_cuestionario/screens/Cuestionarios/area_profesional.dart';
 import 'package:case_cuestionario/screens/Cuestionarios/datos_generales.dart';
 import 'package:case_cuestionario/screens/Cuestionarios/idioma.dart';
 import 'package:case_cuestionario/screens/Cuestionarios/incorporacion.dart';
+import 'package:case_cuestionario/screens/Cuestionarios/salud_mental.dart';
 import 'package:case_cuestionario/screens/Cuestionarios/servicios_case.dart';
 import 'package:flutter/material.dart';
 import 'package:case_cuestionario/screens/Users/login.dart';
@@ -165,7 +166,10 @@ class AppWithDrawer extends StatelessWidget {
                           ],
                         ),
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>abandonoEscolar()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => abandonoEscolar()));
                         }),
                     ListTile(
                       title: const Row(
@@ -180,7 +184,12 @@ class AppWithDrawer extends StatelessWidget {
                           ),
                         ],
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => saludMental()));
+                      },
                     ),
                     ListTile(
                       title: const Row(
