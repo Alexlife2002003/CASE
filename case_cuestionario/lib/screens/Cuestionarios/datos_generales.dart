@@ -31,7 +31,7 @@ class _datosGeneralesState extends State<datosGenerales> {
 
   Future<Map<String, dynamic>> fetchData() async {
     final response = await http
-        .get(Uri.parse('https://case-408016.wl.r.appspot.com/datosGenerales'));
+        .get(Uri.parse('http://192.168.1.66:8080/datosGenerales'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data =
