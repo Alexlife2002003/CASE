@@ -67,7 +67,7 @@ class _datosGeneralesState extends State<datosGenerales> {
       required String trabaja,
       required int yearIngreso,
     }) async {
-      final String url = 'https://your-api.com/addDatosGenerales';
+      final String url = 'https://192.168.1.66:3000/addDatosGenerales';
 
       try {
         final response = await http.post(
@@ -214,7 +214,7 @@ class _datosGeneralesState extends State<datosGenerales> {
                           height: 25,
                         ),
                         helper.buildGuardarButton(() {
-                          
+
                         })
                       ],
                     ),

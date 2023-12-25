@@ -1,4 +1,5 @@
 import 'package:case_cuestionario/screens/Users/login.dart';
+import 'package:case_cuestionario/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -18,6 +19,7 @@ class _RegistrarseState extends State<Registrarse> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    final _secureStorage = FlutterSecureStorage();
 
     Widget buildInputField(String hintText, TextEditingController controller,
         bool obscureText, TextInputType inputType, double screenWidth) {
@@ -26,6 +28,7 @@ class _RegistrarseState extends State<Registrarse> {
         child: Padding(
           padding: const EdgeInsets.only(left: 0),
           child: TextField(
+            style: TextStyle(color: Colors.black),
             cursorColor: Theme.of(context).colorScheme.secondary,
             controller: controller,
             obscureText: obscureText,
@@ -63,7 +66,7 @@ class _RegistrarseState extends State<Registrarse> {
 
     Future<void> registerUser(String correo, String password) async {
       final String apiUrl =
-          'http://localhost:3000/register'; // Replace with your server URL
+          'http://192.168.1.66:3000/register'; // Replace with your server URL
 
       try {
         final response = await http.post(
@@ -72,13 +75,19 @@ class _RegistrarseState extends State<Registrarse> {
           body: jsonEncode({'correo': correo, 'password': password}),
         );
 
-        if (response.statusCode == 201) {
+        if (response.statusCode == 200) {
           // Registration successful, extract and store the token
           final Map<String, dynamic> responseData = jsonDecode(response.body);
           final String token = responseData['token'];
+          final String userId = responseData['userId'];
+          await _secureStorage.write(key: 'id', value: userId);
           // Save the token in a secure manner (e.g., using secure storage)
-          await _secureStorage.write(key: 'token', value: token);
+          await _secureStorage.write(
+              key: 'token',
+              value: token); //await secureStorage.read(key: 'token');
+         
           print('Registration successful. Token: $token');
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>const Dashboard()));
         } else {
           // Registration failed, handle the error
           print('Registration failed. Status code: ${response.statusCode}');
@@ -139,7 +148,10 @@ class _RegistrarseState extends State<Registrarse> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () async {
+                await registerUser(_emailController.text.trim(),
+                    _passwordController.text.trim());
+              },
               child: Material(
                 elevation: 5,
                 borderRadius: BorderRadius.circular(12),
@@ -177,10 +189,8 @@ class _RegistrarseState extends State<Registrarse> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Login()),
-                  );
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Login()));
                 },
                 child: const Text(
                   'Iniciar sesión',

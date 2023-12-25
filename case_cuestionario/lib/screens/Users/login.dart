@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:case_cuestionario/screens/dashboard.dart';
 import 'package:case_cuestionario/screens/Users/registro.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 
@@ -19,6 +22,42 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
 
+    Future<void> loginUser() async {
+      final String url = 'http://192.168.1.66:3000/login';
+
+      final response = await http.post(Uri.parse(url),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'username': _emailController.text.trim(),
+            'password': _passwordController.text.trim(),
+          }));
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        
+        final String token = data['token'];
+        final String id = data['userId'].toString();
+        final secureStorage = FlutterSecureStorage();
+        await secureStorage.write(key: 'token', value: token);
+        await secureStorage.write(key: 'id', value: id);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Dashboard()));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.grey.shade500,
+          content: Center(child: Text('Login succesfull!')),
+        ));
+      } else if (response.statusCode == 401) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.grey.shade500,
+          content: Center(child: Text('Failed to login ${response.body}')),
+        ));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.grey.shade500,
+          content: Center(child: Text('Failed to login ${response.body}')),
+        ));
+      }
+    }
+
     Widget buildInputField(String hintText, TextEditingController controller,
         bool obscureText, TextInputType inputType, double screenWidth) {
       return Padding(
@@ -26,6 +65,7 @@ class _LoginState extends State<Login> {
         child: Padding(
           padding: const EdgeInsets.only(left: 0),
           child: TextField(
+            style: TextStyle(color: Colors.black),
             cursorColor: Theme.of(context).colorScheme.secondary,
             controller: controller,
             obscureText: obscureText,
@@ -133,8 +173,7 @@ class _LoginState extends State<Login> {
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: GestureDetector(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Dashboard()));
+               loginUser();
               },
               child: Material(
                 elevation: 5,
