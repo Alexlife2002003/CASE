@@ -1,5 +1,8 @@
 import 'package:case_cuestionario/screens/Users/login.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Registrarse extends StatefulWidget {
   const Registrarse({super.key});
@@ -15,7 +18,7 @@ class _RegistrarseState extends State<Registrarse> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    
+
     Widget buildInputField(String hintText, TextEditingController controller,
         bool obscureText, TextInputType inputType, double screenWidth) {
       return Padding(
@@ -56,6 +59,35 @@ class _RegistrarseState extends State<Registrarse> {
           ),
         ),
       );
+    }
+
+    Future<void> registerUser(String correo, String password) async {
+      final String apiUrl =
+          'http://localhost:3000/register'; // Replace with your server URL
+
+      try {
+        final response = await http.post(
+          Uri.parse(apiUrl),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({'correo': correo, 'password': password}),
+        );
+
+        if (response.statusCode == 201) {
+          // Registration successful, extract and store the token
+          final Map<String, dynamic> responseData = jsonDecode(response.body);
+          final String token = responseData['token'];
+          // Save the token in a secure manner (e.g., using secure storage)
+          await _secureStorage.write(key: 'token', value: token);
+          print('Registration successful. Token: $token');
+        } else {
+          // Registration failed, handle the error
+          print('Registration failed. Status code: ${response.statusCode}');
+          print('Response body: ${response.body}');
+        }
+      } catch (error) {
+        // Handle any network or server errors
+        print('Error during registration: $error');
+      }
     }
 
     return Scaffold(

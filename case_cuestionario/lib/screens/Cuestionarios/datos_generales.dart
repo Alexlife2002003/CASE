@@ -30,8 +30,8 @@ class _datosGeneralesState extends State<datosGenerales> {
   }
 
   Future<Map<String, dynamic>> fetchData() async {
-    final response = await http
-        .get(Uri.parse('http://192.168.1.66:8080/datosGenerales'));
+    final response =
+        await http.get(Uri.parse('http://192.168.1.66:8080/datosGenerales'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data =
@@ -54,6 +54,56 @@ class _datosGeneralesState extends State<datosGenerales> {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> addDatosGenerales({
+      required String authToken,
+      required int userId,
+      required String semestreText,
+      required String nombreCompleto,
+      required String hintNombre,
+      required String sexoGenero,
+      required String municipio,
+      required String hintMunicipio,
+      required String estadoCivil,
+      required String trabaja,
+      required int yearIngreso,
+    }) async {
+      final String url = 'https://your-api.com/addDatosGenerales';
+
+      try {
+        final response = await http.post(
+          Uri.parse(url),
+          headers: {
+            'Authorization':
+                'Bearer $authToken', // Include the JWT token for authentication
+            'Content-Type': 'application/json',
+          },
+          body: jsonEncode({
+            'userId': userId,
+            'semestreText': semestreText,
+            'nombreCompleto': nombreCompleto,
+            'hintNombre': hintNombre,
+            'sexoGenero': sexoGenero,
+            'municipio': municipio,
+            'hintMunicipio': hintMunicipio,
+            'estadoCivil': estadoCivil,
+            'trabaja': trabaja,
+            'yearIngreso': yearIngreso,
+          }),
+        );
+
+        if (response.statusCode == 201) {
+          final Map<String, dynamic> data = json.decode(response.body);
+          print('User answers added successfully. Message: ${data['message']}');
+        } else {
+          // Handle error
+          print('Failed to add user answers: ${response.statusCode}');
+        }
+      } catch (error) {
+        // Handle network or other errors
+        print('Error: $error');
+      }
+    }
+
     WidgetBuilderHelper helper = WidgetBuilderHelper(context, rebuild);
     return FutureBuilder<Map<String, dynamic>>(
         future: apiDataFuture,
@@ -83,7 +133,8 @@ class _datosGeneralesState extends State<datosGenerales> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        buildText(questions['semestretext'] ?? valorNoEncontrado),
+                        buildText(
+                            questions['semestretext'] ?? valorNoEncontrado),
                         Column(
                           children: [
                             for (var option
@@ -123,11 +174,12 @@ class _datosGeneralesState extends State<datosGenerales> {
                         const SizedBox(
                           height: 15,
                         ),
-                        buildText(questions['estadocivil'] ?? valorNoEncontrado),
+                        buildText(
+                            questions['estadocivil'] ?? valorNoEncontrado),
                         Column(
                           children: [
-                            for (var option
-                                in answers['estadoCivil'] ?? [valorNoEncontrado])
+                            for (var option in answers['estadoCivil'] ??
+                                [valorNoEncontrado])
                               helper.buildRadioButton(
                                   option, option, selectedEstadoCivil, (value) {
                                 setState(() {
@@ -149,7 +201,8 @@ class _datosGeneralesState extends State<datosGenerales> {
                               }),
                           ],
                         ),
-                        buildText(questions['yearingreso'] ?? valorNoEncontrado),
+                        buildText(
+                            questions['yearingreso'] ?? valorNoEncontrado),
                         helper.buildDropdownDynamic('Seleccione uno',
                             selectedYear, answers['anio'] ?? valorNoEncontrado,
                             (String? newvalue) {
@@ -160,7 +213,9 @@ class _datosGeneralesState extends State<datosGenerales> {
                         const SizedBox(
                           height: 25,
                         ),
-                        helper.buildGuardarButton(() {})
+                        helper.buildGuardarButton(() {
+                          
+                        })
                       ],
                     ),
                   ),
