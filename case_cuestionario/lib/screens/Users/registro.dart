@@ -85,9 +85,9 @@ class _RegistrarseState extends State<Registrarse> {
           await _secureStorage.write(
               key: 'token',
               value: token); //await secureStorage.read(key: 'token');
-         
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Dashboard()));
           print('Registration successful. Token: $token');
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>const Dashboard()));
         } else {
           // Registration failed, handle the error
           print('Registration failed. Status code: ${response.statusCode}');

@@ -1,7 +1,10 @@
+import 'dart:ffi';
+
 import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -31,7 +34,7 @@ class _datosGeneralesState extends State<datosGenerales> {
 
   Future<Map<String, dynamic>> fetchData() async {
     final response =
-        await http.get(Uri.parse('http://192.168.1.66:8080/datosGenerales'));
+        await http.get(Uri.parse('http://case-408016.wl.r.appspot.com/datosGenerales'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data =
@@ -54,21 +57,23 @@ class _datosGeneralesState extends State<datosGenerales> {
 
   @override
   Widget build(BuildContext context) {
+    String? userId = "";
+    String? token = "";
+    final _secureStorage = FlutterSecureStorage();
+
     Future<void> addDatosGenerales({
       required String authToken,
       required int userId,
       required String semestreText,
       required String nombreCompleto,
-      required String hintNombre,
       required String sexoGenero,
       required String municipio,
-      required String hintMunicipio,
       required String estadoCivil,
       required String trabaja,
-      required int yearIngreso,
+      required String yearIngreso,
     }) async {
-      final String url = 'https://192.168.1.66:3000/addDatosGenerales';
-
+      final String url = 'http://192.168.1.66:3000/addDatosGenerales';
+      
       try {
         final response = await http.post(
           Uri.parse(url),
@@ -81,10 +86,8 @@ class _datosGeneralesState extends State<datosGenerales> {
             'userId': userId,
             'semestreText': semestreText,
             'nombreCompleto': nombreCompleto,
-            'hintNombre': hintNombre,
             'sexoGenero': sexoGenero,
             'municipio': municipio,
-            'hintMunicipio': hintMunicipio,
             'estadoCivil': estadoCivil,
             'trabaja': trabaja,
             'yearIngreso': yearIngreso,
@@ -213,8 +216,19 @@ class _datosGeneralesState extends State<datosGenerales> {
                         const SizedBox(
                           height: 25,
                         ),
-                        helper.buildGuardarButton(() {
-
+                        helper.buildGuardarButton(() async {
+                          token = await _secureStorage.read(key: 'token');
+                          userId = await _secureStorage.read(key: 'id');
+                          addDatosGenerales(
+                              authToken: token!,
+                              userId: int.parse(userId!),
+                              semestreText: selectedSemester!,
+                              nombreCompleto: _nombreCompletoController.text,
+                              sexoGenero: selectedSexo!,
+                              municipio: _municipioController.text,
+                              estadoCivil: selectedEstadoCivil!,
+                              trabaja: selectedTrabaja!,
+                              yearIngreso: selectedYear!);
                         })
                       ],
                     ),

@@ -28,7 +28,7 @@ class _conectividadState extends State<conectividad> {
 
   Future<Map<String, dynamic>> fetchData() async {
     final response = await http
-        .get(Uri.parse('http://192.168.1.66:8080/conectividad'));
+        .get(Uri.parse('http://case-408016.wl.r.appspot.com/conectividad'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data =

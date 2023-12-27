@@ -21,6 +21,15 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    Future<void> createDatabase() async {
+      final String url = 'http://192.168.1.66:3000/createBD';
+       final response = await http.post(Uri.parse(url),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'username': _emailController.text.trim(),
+            'password': _passwordController.text.trim(),
+          }));
+    }
 
     Future<void> loginUser() async {
       final String url = 'http://192.168.1.66:3000/login';
@@ -33,7 +42,7 @@ class _LoginState extends State<Login> {
           }));
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = jsonDecode(response.body);
-        
+
         final String token = data['token'];
         final String id = data['userId'].toString();
         final secureStorage = FlutterSecureStorage();
@@ -173,6 +182,7 @@ class _LoginState extends State<Login> {
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: GestureDetector(
               onTap: () {
+               // createDatabase();
                loginUser();
               },
               child: Material(

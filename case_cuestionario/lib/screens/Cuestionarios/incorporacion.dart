@@ -2,6 +2,7 @@ import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -28,6 +29,12 @@ class _IncorporacionState extends State<Incorporacion> {
   bool computadora = false;
   bool tablet = false;
   bool todas = false;
+  String t_escritorio = "No";
+  String t_internet = "No";
+  String t_impresora = "No";
+  String t_calculadora = "No";
+  String t_computadora = "No";
+  String t_tablet = "No";
   String? selectedRespuesta5;
   String? selectedRespuesta6;
   String? selectedRespuesta7;
@@ -35,11 +42,59 @@ class _IncorporacionState extends State<Incorporacion> {
   String? selectedRespuesta9;
 
   List<DatosDeTabla> tablapregunta10 = [];
+  List<String> respuestapregunta10 = [];
 
   String? selectedRespuesta11;
 
+  String? authToken = "";
+  String? userId = "";
+  final _secureStorage = FlutterSecureStorage();
+
   void rebuild() {
     setState(() {});
+  }
+
+  Future<void> addCorporacion() async {
+    final String url = 'http://192.168.1.66:3000/addIncorporacion';
+
+    try {
+      final response = await http.post(Uri.parse(url),
+          headers: {
+            'Authorization': 'Bearer $authToken',
+            'Content-Type': 'application/json'
+          },
+          body: jsonEncode({
+            'userId': userId,
+            'pregunta1': selectedRespuesta1,
+            'pregunta2': selectedRespuesta2,
+            'pregunta3': SelectedRespuesta3,
+            'pregunta4_escritorio': t_escritorio,
+            'pregunta4_internet': t_internet,
+            'pregunta4_impresora': t_impresora,
+            'pregunta4_calculadora': t_calculadora,
+            'pregunta4_computadora': t_computadora,
+            'pregunta4_tablet': t_tablet,
+            'pregunta5': selectedRespuesta5,
+            'pregunta6': selectedRespuesta6,
+            'pregunta7': selectedRespuesta7,
+            'pregunta8': selectedRespuesta8,
+            'pregunta9': selectedRespuesta9,
+            'pregunta10_exigencia_academica': respuestapregunta10[0],
+            'pregunta10_ambiente_social': respuestapregunta10[1],
+            'pregunta10_relacion_familia': respuestapregunta10[2],
+            'pregunta10_relacion_maestros': respuestapregunta10[3],
+            'pregunta10_relacion_companeros': respuestapregunta10[4],
+            'pregunta11': selectedRespuesta11
+          }));
+      if (response.statusCode == 201) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        print('Users answers added successfully. Message ${data['message']}');
+      } else {
+        print('Failed to add user answers: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error: $error');
+    }
   }
 
   Future<Map<String, dynamic>> fetchData() async {
@@ -193,14 +248,14 @@ class _IncorporacionState extends State<Incorporacion> {
                       buildText(questions['pregunta6'] ?? valorNoEncontrado),
                       helper.buildDropdownDynamic(
                           'Seleccione uno',
-                          selectedRespuesta1,
+                          selectedRespuesta6,
                           answers['respuesta6'] ?? [], (String? newValue) {
                         selectedRespuesta6 = newValue;
                       }),
                       buildText(questions['pregunta7'] ?? valorNoEncontrado),
                       helper.buildDropdownDynamic(
                           'Seleccione uno',
-                          selectedRespuesta1,
+                          selectedRespuesta7,
                           answers['respuesta7'] ?? [], (String? newValue) {
                         selectedRespuesta7 = newValue;
                       }),
@@ -279,7 +334,45 @@ class _IncorporacionState extends State<Incorporacion> {
                       const SizedBox(
                         height: 25,
                       ),
-                      helper.buildGuardarButton(() {})
+                      helper.buildGuardarButton(() async {
+                        authToken = await _secureStorage.read(key: 'token');
+                        userId = await _secureStorage.read(key: 'id');
+                        if (todas) {
+                          t_escritorio = "SI";
+                          t_internet = "Si";
+                          t_impresora = "Si";
+                          t_calculadora = "Si";
+                          t_computadora = "Si";
+                          t_tablet = "Si";
+                        } else {
+                          if (escritorio) {
+                            t_escritorio = "SI";
+                          }
+                          if (internet) {
+                            t_internet = "Si";
+                          }
+                          if (impresora) {
+                            t_impresora = "Si";
+                          }
+                          if (calculadora) {
+                            t_calculadora = "Si";
+                          }
+                          if (computadora) {
+                            t_computadora = "Si";
+                          }
+                          if (tablet) {
+                            t_tablet = "Si";
+                          }
+                        }
+                        for (DatosDeTabla x in tablapregunta10) {
+                          print('valores ${x.answer}');
+                          respuestapregunta10.add(x.answer);
+                        }
+                        
+                        print(' valores ${tablapregunta10.first}');
+
+                         await addCorporacion();
+                      })
                     ],
                   ),
                 ),

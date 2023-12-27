@@ -227,7 +227,10 @@ class AppWithDrawer extends StatelessWidget {
                         ],
                       ),
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>serviciosUnidad()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => serviciosUnidad()));
                       },
                     ),
                   ],
@@ -254,8 +257,10 @@ class AppWithDrawer extends StatelessWidget {
                 ],
               ),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Login()));
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const Login()),
+                  (Route<dynamic> route) => false,
+                );
               },
             ),
           ],
