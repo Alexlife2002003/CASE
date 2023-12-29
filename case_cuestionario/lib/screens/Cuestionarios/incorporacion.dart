@@ -365,11 +365,11 @@ class _IncorporacionState extends State<Incorporacion> {
                           }
                         }
                         for (DatosDeTabla x in tablapregunta10) {
-                          print('valores ${x.answer}');
+                        
                           respuestapregunta10.add(x.answer);
                         }
                         
-                        print(' valores ${tablapregunta10.first}');
+               
 
                          await addCorporacion();
                       })

@@ -2,6 +2,7 @@ import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -50,8 +51,100 @@ class _areaProfesionalState extends State<areaProfesional> {
   String? _selectedPregunta40;
   List<DatosDeTabla> tablapregunta41 = [];
 
+  List<String> respuestapregunta15 = [];
+  List<String> respuestapregunta21 = [];
+  List<String> respuestapregunta25 = [];
+  List<String> respuestapregunta27 = [];
+  List<String> respuestapregunta37 = [];
+  List<String> respuestapregunta41 = [];
+
+  String? authToken = "";
+  String? userId = "";
+  final _secureStorage = FlutterSecureStorage();
+
   void rebuild() {
     setState(() {});
+  }
+
+  Future<void> addAreaProfesional() async {
+    final String url = 'http://192.168.1.66:3000/addAreaProfesional';
+    try {
+      final response = await http.post(Uri.parse(url),
+          headers: {
+            'Authorization': 'Bearer $authToken',
+            'Content-Type': 'application/json'
+          },
+          body: jsonEncode({
+            'userId': userId,
+            'pregunta12': _selected_pregunta12,
+            'pregunta13': _pregunta13Controller.text.trim(),
+            'pregunta14': _pregunta14Controller.text.trim(),
+            'pregunta15_extra': respuestapregunta15[0],
+            'pregunta15_titulo': respuestapregunta15[1],
+            'pregunta16': _selectedPregunta16,
+            'pregunta17': _selectedPregunta17,
+            'pregunta18': _selectedPregunta18,
+            'pregunta19': _selectedPregunta19,
+            'pregunta20': _selectedPregunta20,
+            'pregunta21_maestro_expone': respuestapregunta21[0],
+            'pregunta21_maestro_dicta': respuestapregunta21[1],
+            'pregunta21_dinamicas_grupo': respuestapregunta21[2],
+            'pregunta21_alumnos_exponen': respuestapregunta21[3],
+            'pregunta21_maestro_pregunta': respuestapregunta21[4],
+            'pregunta21_recursos_audiovisuales': respuestapregunta21[5],
+            'pregunta21_recursos_informaticos': respuestapregunta21[6],
+            'pregunta21_entrega_materiales': respuestapregunta21[7],
+            'pregunta22': _selectedPregunta22,
+            'pregunta23': _selectedPregunta23,
+            'pregunta24': _selectedPregunta24,
+            'pregunta25_articulos': respuestapregunta25[0],
+            'pregunta25_bibliografia': respuestapregunta25[1],
+            'pregunta25_internet': respuestapregunta25[2],
+            'pregunta25_libros': respuestapregunta25[3],
+            'pregunta26': _selectedPregunta26,
+            'pregunta27_resumenes': respuestapregunta27[0],
+            'pregunta27_fichas': respuestapregunta27[1],
+            'pregunta27_esquemas': respuestapregunta25[2],
+            'pregunta27_diagramas': respuestapregunta25[3],
+            'pregunta27_cuadros': respuestapregunta25[4],
+            'pregunta27_subrayar': respuestapregunta25[5],
+            'pregunta27_mapa_mental': respuestapregunta25[6],
+            'pregunta27_mapa_conceptual': respuestapregunta25[7],
+            'pregunta28': _selectedPregunta28,
+            'pregunta29': _selectedPregunta29,
+            'pregunta30': _pregunta30Controller.text.trim(),
+            'pregunta31': _selectedPregunta31,
+            'pregunta32': _selectedPregunta32,
+            'pregunta33': _selectedPregunta33,
+            'pregunta34': _selectedPregunta34,
+            'pregunta35': _selectedPregunta35,
+            'pregunta36': _selectedPregunta36,
+            'pregunta37_biblioteca': respuestapregunta37[0],
+            'pregunta37_centro_computo': respuestapregunta37[1],
+            'pregunta37_laboratorio': respuestapregunta37[2],
+            'pregunta37_aulas': respuestapregunta37[3],
+            'pregunta37_banos': respuestapregunta37[4],
+            'pregunta37_comedor': respuestapregunta37[5],
+            'pregunta37_limpieza': respuestapregunta37[6],
+            'pregunta38': _pregunta38Controller.text.trim(),
+            'pregunta39': _pregunta39Controller.text.trim(),
+            'pregunta40': _selectedPregunta40,
+            'pregunta41_diplomado': respuestapregunta41[0],
+            'pregunta41_especialidad': respuestapregunta41[1],
+            'pregunta41_maestria': respuestapregunta41[2],
+            'pregunta41_doctorado': respuestapregunta41[3],
+          }));
+
+      final Map<String, dynamic> data = json.decode(response.body);
+      if (response.statusCode == 201) {
+        print('Users answers added successfully. Message ${data['message']}');
+      } else {
+        print(
+            'Failed to add user answers:${data['message']} ${response.statusCode}');
+      }
+    } catch (error) {
+      print("Error: $error");
+    }
   }
 
   Future<Map<String, dynamic>> fetchData() async {
@@ -403,7 +496,7 @@ class _areaProfesionalState extends State<areaProfesional> {
                             'Seleccione uno',
                             _selectedPregunta28,
                             answers['respuesta28'] ?? [], (String? newValue) {
-                          _selectedPregunta17 = newValue;
+                          _selectedPregunta28 = newValue;
                         }),
                         buildText(questions['pregunta29'] ?? valorNoEncontrado),
                         Row(
@@ -577,7 +670,30 @@ class _areaProfesionalState extends State<areaProfesional> {
                         const SizedBox(
                           height: 25,
                         ),
-                        helper.buildGuardarButton(() {})
+                        helper.buildGuardarButton(() async {
+                          authToken = await _secureStorage.read(key: 'token');
+                          userId = await _secureStorage.read(key: 'id');
+                          for (DatosDeTabla x in tablapregunta15) {
+                            respuestapregunta15.add(x.answer);
+                          }
+                          for (DatosDeTabla x in tablapregunta21) {
+                            respuestapregunta21.add(x.answer);
+                          }
+                          for (DatosDeTabla x in tablapregunta25) {
+                            respuestapregunta25.add(x.answer);
+                          }
+                          for (DatosDeTabla x in tablapregunta27) {
+                            respuestapregunta27.add(x.answer);
+                          }
+                          for (DatosDeTabla x in tablapregunta37) {
+                            respuestapregunta37.add(x.answer);
+                          }
+                          for (DatosDeTabla x in tablapregunta41) {
+                            respuestapregunta41.add(x.answer);
+                          }
+
+                          await addAreaProfesional();
+                        })
                       ],
                     ),
                   ),
