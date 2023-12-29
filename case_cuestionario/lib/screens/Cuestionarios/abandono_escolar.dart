@@ -41,8 +41,10 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
   String? _selected_pregunta53;
   String? _selected_pregunta54;
   String? _selected_pregunta55;
-  String? _selected_pregunta56;
-  String? _selected_pregunta57;
+  List<String> respuestaoregunta56=[];
+  List<String> respuestaoregunta57=[];
+  List<DatosDeTabla> tablapregunta56 = [];
+  List<DatosDeTabla> tablapregunta57 = [];
   String? _selected_pregunta58;
   String? _selected_pregunta59;
   String? _selected_pregunta60;
@@ -69,6 +71,12 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
       setState(() {
         questions = data['questions'];
         answers = data['answers'];
+        for (var option in answers['respuesta56columna']) {
+          tablapregunta56.add(DatosDeTabla(aspect: option, answer: ''));
+        }
+        for (var option in answers['respuesta56columna']) {
+          tablapregunta57.add(DatosDeTabla(aspect: option, answer: ''));
+        }
       });
       return data;
     } else {
@@ -303,7 +311,75 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
                           ],
                         ),
                         buildText(questions['pregunta56'] ?? valorNoEncontrado),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: DataTable(
+                            dataRowHeight: 60,
+                            columns: [
+                              const DataColumn(label: Text('Aspecto')),
+                              for (var label
+                                  in answers['respuesta56fila'] ?? [])
+                                DataColumn(label: Text(label)),
+                            ],
+                            rows: tablapregunta56.map((option) {
+                              return DataRow(cells: [
+                                DataCell(SizedBox(
+                                  width: 150,
+                                  child: Text(option.aspect),
+                                )),
+                                for (var label
+                                    in answers['respuesta56fila'] ?? [])
+                                  helper.buildRadioCell(
+                                    value: label,
+                                    groupValue: option.answer,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        option.answer = value;
+                                      });
+                                    },
+                                  ),
+                              ]);
+                            }).toList(),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
                         buildText(questions['pregunta57'] ?? valorNoEncontrado),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: DataTable(
+                            dataRowHeight: 60,
+                            columns: [
+                              const DataColumn(label: Text('Aspecto')),
+                              for (var label
+                                  in answers['respuesta57fila'] ?? [])
+                                DataColumn(label: Text(label)),
+                            ],
+                            rows: tablapregunta57.map((option) {
+                              return DataRow(cells: [
+                                DataCell(SizedBox(
+                                  width: 150,
+                                  child: Text(option.aspect),
+                                )),
+                                for (var label
+                                    in answers['respuesta57fila'] ?? [])
+                                  helper.buildRadioCell(
+                                    value: label,
+                                    groupValue: option.answer,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        option.answer = value;
+                                      });
+                                    },
+                                  ),
+                              ]);
+                            }).toList(),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
                         buildText(questions['pregunta58'] ?? valorNoEncontrado),
                         Column(
                           children: [
@@ -374,8 +450,17 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
                               }),
                           ],
                         ),
-                        SizedBox(height: 25,),
-                        helper.buildGuardarButton(() { })
+                        SizedBox(
+                          height: 25,
+                        ),
+                        helper.buildGuardarButton(() {
+                          for(DatosDeTabla x in tablapregunta56){
+                            respuestaoregunta56.add(x.answer);
+                          }
+                          for(DatosDeTabla x in tablapregunta57){
+                            respuestaoregunta57.add(x.answer);
+                          }
+                        })
                       ]),
                     ),
                   ),

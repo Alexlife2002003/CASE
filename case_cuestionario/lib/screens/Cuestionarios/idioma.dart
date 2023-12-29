@@ -49,6 +49,7 @@ class _IdiomaState extends State<Idioma> {
             'pregunta43': _selectedPregunta43,
             'pregunta44': _selectedPregunta44
           }));
+      print(response.body);
     } catch (error) {
       print('Error: $error');
     }
