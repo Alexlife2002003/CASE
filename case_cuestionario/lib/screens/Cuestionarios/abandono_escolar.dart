@@ -2,6 +2,7 @@ import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -17,7 +18,7 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
   Map<String, dynamic> answers = {};
   Map<String, dynamic> questions = {};
   String valorNoEncontrado = "VALOR NO ENCONTRADO";
-
+  String resultado50 = "";
   bool horariosComplicados = false;
   bool noVocacion = false;
   bool desempenoAcademico = false;
@@ -41,8 +42,8 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
   String? _selected_pregunta53;
   String? _selected_pregunta54;
   String? _selected_pregunta55;
-  List<String> respuestaoregunta56=[];
-  List<String> respuestaoregunta57=[];
+  List<String> respuestaoregunta56 = [];
+  List<String> respuestaoregunta57 = [];
   List<DatosDeTabla> tablapregunta56 = [];
   List<DatosDeTabla> tablapregunta57 = [];
   String? _selected_pregunta58;
@@ -50,6 +51,10 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
   String? _selected_pregunta60;
   String? _selected_pregunta61;
   String? _selected_pregunta62;
+
+  String? authToken = "";
+  String? userId = "";
+  final _secureStorage = FlutterSecureStorage();
 
   void rebuild() {
     setState(() {});
@@ -59,6 +64,41 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
   void initState() {
     super.initState();
     apiDataFuture = fetchData();
+  }
+
+  Future<void> addAbandonoEscolar() async {
+    final String url = 'http://192.168.1.66:3000/addAbandonoEscolar';
+    try {
+      final response = await http.post(Uri.parse(url),
+          headers: {
+            'Authorization': 'Bearer $authToken',
+            'Content-Type': 'application/json'
+          },
+          body: jsonEncode({
+            'userId': userId,
+            'pregunta50': resultado50,
+            'pregunta51': _selected_pregunta51,
+            'pregunta52': _selected_pregunta52,
+            'pregunta53': _selected_pregunta53,
+            'pregunta54': _selected_pregunta54,
+            'pregunta55': _selected_pregunta55,
+            'pregunta56_diario': respuestaoregunta56[0],
+            'pregunta56_fin_semana': respuestaoregunta56[1],
+            'pregunta56_antes_examen': respuestaoregunta56[2],
+            'pregunta57_uso_conocimientos': respuestaoregunta57[0],
+            'pregunta57_cumplo_metas': respuestaoregunta57[1],
+            'pregunta57_desarrollo_habilidades': respuestaoregunta57[2],
+            'pregunta57_pensamiento_critico': respuestaoregunta57[3],
+            'pregunta58': _selected_pregunta58,
+            'pregunta59': _selected_pregunta59,
+            'pregunta60': _selected_pregunta60,
+            'pregunta61': _selected_pregunta61,
+            'pregunta62': _selected_pregunta62
+          }));
+          resultado50="";
+    } catch (error) {
+      print('Error: $error');
+    }
   }
 
   Future<Map<String, dynamic>> fetchData() async {
@@ -453,13 +493,36 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
                         SizedBox(
                           height: 25,
                         ),
-                        helper.buildGuardarButton(() {
-                          for(DatosDeTabla x in tablapregunta56){
+                        helper.buildGuardarButton(() async {
+                          authToken = await _secureStorage.read(key: 'token');
+                          userId = await _secureStorage.read(key: 'id');
+                          for (DatosDeTabla x in tablapregunta56) {
                             respuestaoregunta56.add(x.answer);
                           }
-                          for(DatosDeTabla x in tablapregunta57){
+                          for (DatosDeTabla x in tablapregunta57) {
                             respuestaoregunta57.add(x.answer);
                           }
+
+                          revisar50(horariosComplicados);
+                          revisar50(noVocacion);
+                          revisar50(desempenoAcademico);
+                          revisar50(noGustaronMaterias);
+                          revisar50(dificultadMaterias);
+                          revisar50(noGustanMetodos);
+                          revisar50(actitudProfesores);
+                          revisar50(situacionEconomica);
+                          revisar50(tenerQueTrabajar);
+                          revisar50(faltaHerramientas);
+                          revisar50(estadoAnimo);
+                          revisar50(dificultadRelacionarse);
+                          revisar50(faltaLaboratorios);
+                          revisar50(lugarDomicilio);
+                          revisar50(influenciaFamilia);
+                          revisar50(aspectosPersonales);
+                          revisar50(aspectosSalud);
+                          revisar50(noMotivosAbandono);
+
+                          await addAbandonoEscolar();
                         })
                       ]),
                     ),
@@ -467,5 +530,13 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
                 ));
           }
         });
+  }
+
+  void revisar50(bool valor) {
+    if (valor) {
+      resultado50 += "Si,";
+    } else {
+      resultado50 += "No,";
+    }
   }
 }
