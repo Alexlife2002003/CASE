@@ -2,6 +2,7 @@ import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -20,6 +21,10 @@ class _IdiomaState extends State<Idioma> {
   String? _selectedPregunta43;
   String? _selectedPregunta44;
 
+  String? authToken = "";
+  String? userId = "";
+  final _secureStorage = FlutterSecureStorage();
+
   void rebuild() {
     setState(() {});
   }
@@ -30,9 +35,28 @@ class _IdiomaState extends State<Idioma> {
     apiDataFuture = fetchData();
   }
 
+  Future<void> addIdioma() async {
+    final String url = 'http://192.168.1.66:3000/addIdioma';
+    try {
+      final response = await http.post(Uri.parse(url),
+          headers: {
+            'Authorization': 'Bearer $authToken',
+            'Content-Type': 'application/json'
+          },
+          body: jsonEncode({
+            'userId': userId,
+            'pregunta42': _selectedPregunta42,
+            'pregunta43': _selectedPregunta43,
+            'pregunta44': _selectedPregunta44
+          }));
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
+
   Future<Map<String, dynamic>> fetchData() async {
-    final response =
-        await http.get(Uri.parse('https://case-408016.wl.r.appspot.com/idioma'));
+    final response = await http
+        .get(Uri.parse('https://case-408016.wl.r.appspot.com/idioma'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data =
@@ -123,8 +147,10 @@ class _IdiomaState extends State<Idioma> {
                       const SizedBox(
                         height: 15,
                       ),
-                      helper.buildGuardarButton(() {
-                        debugPrint("it works");
+                      helper.buildGuardarButton(() async {
+                        authToken = await _secureStorage.read(key: 'token');
+                        userId = await _secureStorage.read(key: 'id');
+                        await addIdioma();
                       }),
                     ],
                   ),
