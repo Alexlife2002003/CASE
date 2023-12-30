@@ -2,6 +2,7 @@ import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -22,8 +23,33 @@ class _conectividadState extends State<conectividad> {
   String? _selectedPregunta66;
   String? _selectedPregunta67;
   String? _selectedPregunta68;
+
+  String? authToken = "";
+  String? userId = "";
+  final _secureStorage = FlutterSecureStorage();
   void rebuild() {
     setState(() {});
+  }
+
+  Future<void> addConectividad() async {
+    final String url = 'http://192.168.1.66:3000/addConectividad';
+    try {
+      final response = await http.post(Uri.parse(url),
+          headers: {
+            'Authorization': 'Bearer $authToken',
+            'Content-Type': 'application/json'
+          },
+          body: jsonEncode({
+            'userId': userId,
+            'pregunta65': _selectedPregunta65,
+            'pregunta66': _selectedPregunta66,
+            'pregunta67': _selectedPregunta67,
+            'pregunta68': _selectedPregunta68
+          }));
+      print(response.body);
+    } catch (error) {
+      print('Error: $error');
+    }
   }
 
   Future<Map<String, dynamic>> fetchData() async {
@@ -138,7 +164,11 @@ class _conectividadState extends State<conectividad> {
                             ],
                           ),
                           SizedBox(height: 25),
-                          helper.buildGuardarButton(() {})
+                          helper.buildGuardarButton(() async {
+                            authToken = await _secureStorage.read(key: 'token');
+                            userId = await _secureStorage.read(key: 'id');
+                            await addConectividad();
+                          })
                         ],
                       ),
                     ),
