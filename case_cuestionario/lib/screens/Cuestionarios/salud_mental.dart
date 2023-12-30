@@ -2,6 +2,7 @@ import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -19,19 +20,43 @@ class _saludMentalState extends State<saludMental> {
   String valorNoEncontrado = "VALOR NO ENCONTRADO";
 
   String? selectedPregunta64;
-  bool pregunta64_0 = false;
-  bool pregunta64_1 = false;
-  bool pregunta64_2 = false;
-  bool pregunta64_3 = false;
-  bool pregunta64_4 = false;
-  bool pregunta64_5 = false;
-  bool pregunta64_6 = false;
-  bool pregunta64_7 = false;
-  bool pregunta64_8 = false;
-  bool pregunta64_9 = false;
+  String resultado63 = "";
+  bool pregunta63_0 = false;
+  bool pregunta63_1 = false;
+  bool pregunta63_2 = false;
+  bool pregunta63_3 = false;
+  bool pregunta63_4 = false;
+  bool pregunta63_5 = false;
+  bool pregunta63_6 = false;
+  bool pregunta63_7 = false;
+  bool pregunta63_8 = false;
+  bool pregunta63_9 = false;
+
+  String? authToken = "";
+  String? userId = "";
+  final _secureStorage = FlutterSecureStorage();
 
   void rebuild() {
     setState(() {});
+  }
+
+  Future<void> addSaludMental() async {
+    final String url = 'http://192.168.1.66:3000/addSaludMental';
+    try {
+      final response = await http.post(Uri.parse(url),
+          headers: {
+            'Authorization': 'Bearer $authToken',
+            'Content-Type': 'application/json'
+          },
+          body: jsonEncode({
+            'userId': userId,
+            'pregunta63': resultado63,
+            'pregunta64': selectedPregunta64
+          }));
+          resultado63="";
+    } catch (error) {
+      print('Error: $error');
+    }
   }
 
   Future<Map<String, dynamic>> fetchData() async {
@@ -93,71 +118,71 @@ class _saludMentalState extends State<saludMental> {
                             children: [
                               helper.buildCheckboxRow(
                                   'Problemas para conciliar el sueño.',
-                                  pregunta64_0, (value) {
+                                  pregunta63_0, (value) {
                                 setState(() {
-                                  pregunta64_0 = value!;
+                                  pregunta63_0 = value!;
                                 });
                               }),
                               helper.buildCheckboxRow(
-                                  'Comportamientos agresivos.', pregunta64_1,
+                                  'Comportamientos agresivos.', pregunta63_1,
                                   (value) {
                                 setState(() {
-                                  pregunta64_1 = value!;
+                                  pregunta63_1 = value!;
                                 });
                               }),
                               helper.buildCheckboxRow(
-                                  'Estar más irritable.', pregunta64_2,
+                                  'Estar más irritable.', pregunta63_2,
                                   (value) {
                                 setState(() {
-                                  pregunta64_2 = value!;
+                                  pregunta63_2 = value!;
                                 });
                               }),
                               helper.buildCheckboxRow(
                                   'Perdida de interés en actividades que antes solía disfrutar.',
-                                  pregunta64_3, (value) {
+                                  pregunta63_3, (value) {
                                 setState(() {
-                                  pregunta64_3 = value!;
+                                  pregunta63_3 = value!;
                                 });
                               }),
                               helper.buildCheckboxRow(
                                   'Pérdida de energía o cansancio excesivo.',
-                                  pregunta64_4, (value) {
+                                  pregunta63_4, (value) {
                                 setState(() {
-                                  pregunta64_4 = value!;
+                                  pregunta63_4 = value!;
                                 });
                               }),
                               helper.buildCheckboxRow(
                                   'Sensación de desesperanza hacia el futuro.',
-                                  pregunta64_5, (value) {
+                                  pregunta63_5, (value) {
                                 setState(() {
-                                  pregunta64_5 = value!;
+                                  pregunta63_5 = value!;
                                 });
                               }),
                               helper.buildCheckboxRow(
-                                  'Actos de autolesión.', pregunta64_6,
+                                  'Actos de autolesión.', pregunta63_6,
                                   (value) {
                                 setState(() {
-                                  pregunta64_6 = value!;
+                                  pregunta63_6 = value!;
                                 });
                               }),
                               helper.buildCheckboxRow(
-                                  'Ideas de suicidio.', pregunta64_7, (value) {
+                                  'Ideas de suicidio.', pregunta63_7, (value) {
                                 setState(() {
-                                  pregunta64_7 = value!;
+                                  pregunta63_7 = value!;
                                 });
                               }),
                               helper.buildCheckboxRow(
                                   'Comportamientos alimentarios de riesgo',
-                                  pregunta64_8, (value) {
+                                  pregunta63_8, (value) {
                                 setState(() {
-                                  pregunta64_8 = value!;
+                                  pregunta63_8 = value!;
                                 });
                               }),
                               helper.buildCheckboxRow(
-                                  'Todas las anteriores', pregunta64_9,
+                                  'Todas las anteriores', pregunta63_9,
                                   (value) {
                                 setState(() {
-                                  pregunta64_9 = value!;
+                                  pregunta63_9 = value!;
                                 });
                               }),
                             ],
@@ -180,7 +205,22 @@ class _saludMentalState extends State<saludMental> {
                           SizedBox(
                             height: 25,
                           ),
-                          helper.buildGuardarButton(() {})
+                          helper.buildGuardarButton(() async {
+                            authToken = await _secureStorage.read(key: 'token');
+                            userId = await _secureStorage.read(key: 'id');
+                            revisar63(pregunta63_0);
+                            revisar63(pregunta63_1);
+                            revisar63(pregunta63_2);
+                            revisar63(pregunta63_3);
+                            revisar63(pregunta63_4);
+                            revisar63(pregunta63_5);
+                            revisar63(pregunta63_6);
+                            revisar63(pregunta63_7);
+                            revisar63(pregunta63_8);
+                            revisar63(pregunta63_9);
+
+                            await addSaludMental();
+                          })
                         ],
                       ),
                     ),
@@ -188,5 +228,13 @@ class _saludMentalState extends State<saludMental> {
                 ));
           }
         });
+  }
+
+  void revisar63(bool valor) {
+    if (valor) {
+      resultado63 += "Si,";
+    } else {
+      resultado63 += "No,";
+    }
   }
 }
