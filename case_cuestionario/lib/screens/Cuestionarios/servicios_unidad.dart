@@ -2,6 +2,7 @@ import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -19,6 +20,7 @@ class _serviciosUnidadState extends State<serviciosUnidad> {
   String valorNoEncontrado = "VALOR NO ENCONTRADO";
 
   List<DatosDeTabla> tablapregunta69 = [];
+  List<String> respuesta69 = [];
   String? _selectedPregunta70;
   String? _selectedPregunta71;
   String? _selectedPregunta72;
@@ -31,8 +33,42 @@ class _serviciosUnidadState extends State<serviciosUnidad> {
   String? _selectedPregunta79;
   String? _selectedPregunta80;
 
+  String? authToken = "";
+  String? userId = "";
+  final _secureStorage = FlutterSecureStorage();
+
   void rebuild() {
     setState(() {});
+  }
+
+  Future<void> addServiciosUnidad() async {
+    final String url = 'http://192.168.1.66:3000/addServiciosUnidad';
+    try {
+      final response = await http.post(Uri.parse(url),
+          headers: {
+            'Authorization': 'Bearer $authToken',
+            'Content-Type': 'application/json'
+          },
+          body: jsonEncode({
+            'userId': userId,
+            'pregunta69_impresion': respuesta69[0],
+            'pregunta69_fotocopiado': respuesta69[1],
+            'pregunta69_digitalizacion': respuesta69[2],
+            'pregunta70': _selectedPregunta70,
+            'pregunta71': _selectedPregunta71,
+            'pregunta72': _selectedPregunta72,
+            'pregunta73': _selectedPregunta73,
+            'pregunta74': _selectedPregunta74,
+            'pregunta75': _selectedPregunta75,
+            'pregunta76': _selectedPregunta76,
+            'pregunta77': _selectedPregunta77Controller.text.trim(),
+            'pregunta78': _selectedPregunta78Controller.text.trim(),
+            'pregunta79': _selectedPregunta79,
+            'pregunta80': _selectedPregunta80
+          }));
+    } catch (error) {
+      print('Error: $error');
+    }
   }
 
   Future<Map<String, dynamic>> fetchData() async {
@@ -243,7 +279,7 @@ class _serviciosUnidadState extends State<serviciosUnidad> {
                                     option, option, _selectedPregunta79,
                                     (value) {
                                   setState(() {
-                                    _selectedPregunta76 = value;
+                                    _selectedPregunta79 = value;
                                   });
                                 }),
                             ],
@@ -266,7 +302,14 @@ class _serviciosUnidadState extends State<serviciosUnidad> {
                           SizedBox(
                             height: 25,
                           ),
-                          helper.buildGuardarButton(() {})
+                          helper.buildGuardarButton(() async {
+                            authToken = await _secureStorage.read(key: 'token');
+                            userId = await _secureStorage.read(key: 'id');
+                            for (DatosDeTabla x in tablapregunta69) {
+                              respuesta69.add(x.answer);
+                            }
+                            await addServiciosUnidad();
+                          })
                         ],
                       ),
                     ),
