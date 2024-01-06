@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:case_cuestionario/screens/dashboard.dart';
 import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
@@ -33,8 +34,8 @@ class _datosGeneralesState extends State<datosGenerales> {
   }
 
   Future<Map<String, dynamic>> fetchData() async {
-    final response =
-        await http.get(Uri.parse('http://case-408016.wl.r.appspot.com/datosGenerales'));
+    final response = await http
+        .get(Uri.parse('http://case-408016.wl.r.appspot.com/datosGenerales'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data =
@@ -59,7 +60,7 @@ class _datosGeneralesState extends State<datosGenerales> {
   Widget build(BuildContext context) {
     String? userId = "";
     String? token = "";
-    final _secureStorage = FlutterSecureStorage();
+    const _secureStorage = FlutterSecureStorage();
 
     Future<void> addDatosGenerales({
       required String authToken,
@@ -72,8 +73,8 @@ class _datosGeneralesState extends State<datosGenerales> {
       required String trabaja,
       required String yearIngreso,
     }) async {
-      final String url = 'http://192.168.1.66:3000/addDatosGenerales';
-      
+      const String url = 'http://192.168.1.76:3000/addDatosGenerales';
+
       try {
         final response = await http.post(
           Uri.parse(url),
@@ -96,10 +97,26 @@ class _datosGeneralesState extends State<datosGenerales> {
 
         if (response.statusCode == 201) {
           final Map<String, dynamic> data = json.decode(response.body);
-          print('User answers added successfully. Message: ${data['message']}');
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: Colors.green,
+            content: Center(
+                child: Text(
+              'Respuestas guardadas con exito',
+              style: TextStyle(fontSize: 18),
+            )),
+          ));
+          Navigator.push(
+              context, MaterialPageRoute(builder: ((context) => Dashboard())));
         } else {
           // Handle error
-          print('Failed to add user answers: ${response.statusCode}');
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: Colors.red,
+            content: Center(
+                child: Text(
+              'Error al agregar las respuestas',
+              style: TextStyle(fontSize: 18),
+            )),
+          ));
         }
       } catch (error) {
         // Handle network or other errors
@@ -112,7 +129,7 @@ class _datosGeneralesState extends State<datosGenerales> {
         future: apiDataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const AppWithDrawer(
+            return  AppWithDrawer(
               title: 'Datos generales',
               content: Scaffold(
                 body: Center(child: CircularProgressIndicator()),
@@ -219,13 +236,105 @@ class _datosGeneralesState extends State<datosGenerales> {
                         helper.buildGuardarButton(() async {
                           token = await _secureStorage.read(key: 'token');
                           userId = await _secureStorage.read(key: 'id');
+                          if (selectedSemester == null) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Center(
+                                  child: Text(
+                                'Semestre se encuentra sin contestar',
+                                style: TextStyle(fontSize: 18),
+                              )),
+                            ));
+                            debugPrint("selected Semestre is empty");
+                            return;
+                          }
+                          if (_nombreCompletoController.text.trim().isEmpty) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Center(
+                                  child: Text(
+                                'Nombre completo sin contestar',
+                                style: TextStyle(fontSize: 18),
+                              )),
+                            ));
+                            debugPrint("nombre completo is empty");
+                            return;
+                          }
+                          if (selectedSexo == null) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Center(
+                                  child: Text(
+                                'Genero se encuentra sin contestar',
+                                style: TextStyle(fontSize: 18),
+                              )),
+                            ));
+                            debugPrint("Selected sexo is empty");
+                            return;
+                          }
+                          if (_municipioController.text.trim().isEmpty) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Center(
+                                  child: Text(
+                                'Municipio se encuentra sin contestar',
+                                style: TextStyle(fontSize: 18),
+                              )),
+                            ));
+                            debugPrint("municiptio esta vacio");
+                            return;
+                          }
+                          if (selectedEstadoCivil == null) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Center(
+                                  child: Text(
+                                'Estado civil se encuentra sin contestar',
+                                style: TextStyle(fontSize: 18),
+                              )),
+                            ));
+                            debugPrint("Selected estado civil is empty");
+                            return;
+                          }
+                          if (selectedTrabaja == null) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Center(
+                                  child: Text(
+                                'Trabaja se encuentra sin contestar',
+                                style: TextStyle(fontSize: 18),
+                              )),
+                            ));
+                            debugPrint("Selected trabajo is empty");
+                            return;
+                          }
+                          if (selectedYear == null) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Center(
+                                  child: Text(
+                                'Anio de ingreso se encuentra sin contestar',
+                                style: TextStyle(fontSize: 18),
+                              )),
+                            ));
+                            debugPrint("Selected year is empty");
+                            return;
+                          }
                           addDatosGenerales(
                               authToken: token!,
                               userId: int.parse(userId!),
                               semestreText: selectedSemester!,
-                              nombreCompleto: _nombreCompletoController.text,
+                              nombreCompleto:
+                                  _nombreCompletoController.text.trim(),
                               sexoGenero: selectedSexo!,
-                              municipio: _municipioController.text,
+                              municipio: _municipioController.text.trim(),
                               estadoCivil: selectedEstadoCivil!,
                               trabaja: selectedTrabaja!,
                               yearIngreso: selectedYear!);

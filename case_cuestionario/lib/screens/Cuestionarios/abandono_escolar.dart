@@ -54,7 +54,7 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
 
   String? authToken = "";
   String? userId = "";
-  final _secureStorage = FlutterSecureStorage();
+  final _secureStorage = const FlutterSecureStorage();
 
   void rebuild() {
     setState(() {});
@@ -67,7 +67,7 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
   }
 
   Future<void> addAbandonoEscolar() async {
-    final String url = 'http://192.168.1.66:3000/addAbandonoEscolar';
+    const String url = 'http://192.168.1.66:3000/addAbandonoEscolar';
     try {
       final response = await http.post(Uri.parse(url),
           headers: {
@@ -131,7 +131,7 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
         future: apiDataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const AppWithDrawer(
+            return  AppWithDrawer(
                 title: 'Abandono Escolar',
                 content: Scaffold(
                     body: Center(
@@ -284,7 +284,7 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
                             }),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         buildText(questions['pregunta51'] ?? valorNoEncontrado),
@@ -490,7 +490,7 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
                               }),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
                         helper.buildGuardarButton(() async {

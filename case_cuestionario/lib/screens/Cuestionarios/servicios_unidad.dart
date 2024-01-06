@@ -35,14 +35,14 @@ class _serviciosUnidadState extends State<serviciosUnidad> {
 
   String? authToken = "";
   String? userId = "";
-  final _secureStorage = FlutterSecureStorage();
+  final _secureStorage = const FlutterSecureStorage();
 
   void rebuild() {
     setState(() {});
   }
 
   Future<void> addServiciosUnidad() async {
-    final String url = 'http://192.168.1.66:3000/addServiciosUnidad';
+    const String url = 'http://192.168.1.66:3000/addServiciosUnidad';
     try {
       final response = await http.post(Uri.parse(url),
           headers: {
@@ -104,7 +104,7 @@ class _serviciosUnidadState extends State<serviciosUnidad> {
         future: apiDataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const AppWithDrawer(
+            return  AppWithDrawer(
                 title: 'Servicios Unidad',
                 content: Scaffold(
                   body: Center(child: CircularProgressIndicator()),
@@ -299,7 +299,7 @@ class _serviciosUnidadState extends State<serviciosUnidad> {
                                 }),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 25,
                           ),
                           helper.buildGuardarButton(() async {

@@ -23,7 +23,7 @@ class _IdiomaState extends State<Idioma> {
 
   String? authToken = "";
   String? userId = "";
-  final _secureStorage = FlutterSecureStorage();
+  final _secureStorage = const FlutterSecureStorage();
 
   void rebuild() {
     setState(() {});
@@ -36,7 +36,7 @@ class _IdiomaState extends State<Idioma> {
   }
 
   Future<void> addIdioma() async {
-    final String url = 'http://192.168.1.66:3000/addIdioma';
+    const String url = 'http://192.168.1.66:3000/addIdioma';
     try {
       final response = await http.post(Uri.parse(url),
           headers: {
@@ -79,7 +79,7 @@ class _IdiomaState extends State<Idioma> {
       future: apiDataFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const AppWithDrawer(
+          return  AppWithDrawer(
             title: 'Idioma',
             content: Scaffold(
               body: Center(

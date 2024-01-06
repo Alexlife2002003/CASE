@@ -26,13 +26,13 @@ class _conectividadState extends State<conectividad> {
 
   String? authToken = "";
   String? userId = "";
-  final _secureStorage = FlutterSecureStorage();
+  final _secureStorage = const FlutterSecureStorage();
   void rebuild() {
     setState(() {});
   }
 
   Future<void> addConectividad() async {
-    final String url = 'http://192.168.1.66:3000/addConectividad';
+    const String url = 'http://192.168.1.66:3000/addConectividad';
     try {
       final response = await http.post(Uri.parse(url),
           headers: {
@@ -82,7 +82,7 @@ class _conectividadState extends State<conectividad> {
         future: apiDataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const AppWithDrawer(
+            return  AppWithDrawer(
                 title: 'Conectividad',
                 content: Scaffold(
                   body: Center(child: CircularProgressIndicator()),
@@ -163,7 +163,7 @@ class _conectividadState extends State<conectividad> {
                                 }),
                             ],
                           ),
-                          SizedBox(height: 25),
+                          const SizedBox(height: 25),
                           helper.buildGuardarButton(() async {
                             authToken = await _secureStorage.read(key: 'token');
                             userId = await _secureStorage.read(key: 'id');

@@ -34,14 +34,14 @@ class _saludMentalState extends State<saludMental> {
 
   String? authToken = "";
   String? userId = "";
-  final _secureStorage = FlutterSecureStorage();
+  final _secureStorage = const FlutterSecureStorage();
 
   void rebuild() {
     setState(() {});
   }
 
   Future<void> addSaludMental() async {
-    final String url = 'http://192.168.1.66:3000/addSaludMental';
+    const String url = 'http://192.168.1.66:3000/addSaludMental';
     try {
       final response = await http.post(Uri.parse(url),
           headers: {
@@ -89,7 +89,7 @@ class _saludMentalState extends State<saludMental> {
         future: apiDataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const AppWithDrawer(
+            return  AppWithDrawer(
                 title: 'Salud mental',
                 content: Scaffold(
                   body: Center(
@@ -202,7 +202,7 @@ class _saludMentalState extends State<saludMental> {
                                 }),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 25,
                           ),
                           helper.buildGuardarButton(() async {

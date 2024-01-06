@@ -19,7 +19,7 @@ class _RegistrarseState extends State<Registrarse> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    final _secureStorage = FlutterSecureStorage();
+    const _secureStorage = FlutterSecureStorage();
 
     Widget buildInputField(String hintText, TextEditingController controller,
         bool obscureText, TextInputType inputType, double screenWidth) {
@@ -28,7 +28,7 @@ class _RegistrarseState extends State<Registrarse> {
         child: Padding(
           padding: const EdgeInsets.only(left: 0),
           child: TextField(
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
             cursorColor: Theme.of(context).colorScheme.secondary,
             controller: controller,
             obscureText: obscureText,
@@ -65,8 +65,7 @@ class _RegistrarseState extends State<Registrarse> {
     }
 
     Future<void> registerUser(String correo, String password) async {
-      final String apiUrl =
-          'http://192.168.1.66:3000/register'; // Replace with your server URL
+      const String apiUrl = 'http://192.168.1.76:3000/register';
 
       try {
         final response = await http.post(
@@ -76,25 +75,30 @@ class _RegistrarseState extends State<Registrarse> {
         );
 
         if (response.statusCode == 200) {
-          // Registration successful, extract and store the token
           final Map<String, dynamic> responseData = jsonDecode(response.body);
           final String token = responseData['token'];
-          final String userId = responseData['userId'];
+          final String userId = responseData['userId'].toString();
           await _secureStorage.write(key: 'id', value: userId);
-          // Save the token in a secure manner (e.g., using secure storage)
-          await _secureStorage.write(
-              key: 'token',
-              value: token); //await secureStorage.read(key: 'token');
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Dashboard()));
+          await _secureStorage.write(key: 'token', value: token);
+
           print('Registration successful. Token: $token');
+          print('Navigating to Dashboard...');
+
+          // Navigate to Dashboard
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Dashboard()),
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.grey.shade500,
+            content: Center(child: const Text('Registration successful!')),
+          ));
         } else {
-          // Registration failed, handle the error
           print('Registration failed. Status code: ${response.statusCode}');
           print('Response body: ${response.body}');
         }
       } catch (error) {
-        // Handle any network or server errors
         print('Error during registration: $error');
       }
     }
@@ -190,7 +194,7 @@ class _RegistrarseState extends State<Registrarse> {
               GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Login()));
+                      MaterialPageRoute(builder: (context) => const Login()));
                 },
                 child: const Text(
                   'Iniciar sesión',

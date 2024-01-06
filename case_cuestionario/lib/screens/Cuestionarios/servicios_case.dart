@@ -27,7 +27,7 @@ class _serviciosCaseState extends State<serviciosCase> {
 
   String? authToken = "";
   String? userId = "";
-  final _secureStorage = FlutterSecureStorage();
+  final _secureStorage = const FlutterSecureStorage();
 
   void rebuild() {
     setState(() {});
@@ -40,7 +40,7 @@ class _serviciosCaseState extends State<serviciosCase> {
   }
 
   Future<void> addServiciosCase() async {
-    final String url = 'http://192.168.1.66:3000/addServiciosCase';
+    const String url = 'http://192.168.1.66:3000/addServiciosCase';
     print(userId);
     try {
       final response = await http.post(Uri.parse(url),
@@ -87,7 +87,7 @@ class _serviciosCaseState extends State<serviciosCase> {
         future: apiDataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const AppWithDrawer(
+            return  AppWithDrawer(
                 title: 'Servicios CASE',
                 content: Scaffold(
                   body: Center(child: CircularProgressIndicator()),

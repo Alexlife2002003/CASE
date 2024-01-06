@@ -48,14 +48,14 @@ class _IncorporacionState extends State<Incorporacion> {
 
   String? authToken = "";
   String? userId = "";
-  final _secureStorage = FlutterSecureStorage();
+  final _secureStorage = const FlutterSecureStorage();
 
   void rebuild() {
     setState(() {});
   }
 
   Future<void> addCorporacion() async {
-    final String url = 'http://192.168.1.66:3000/addIncorporacion';
+    const String url = 'http://192.168.1.66:3000/addIncorporacion';
 
     try {
       final response = await http.post(Uri.parse(url),
@@ -130,7 +130,7 @@ class _IncorporacionState extends State<Incorporacion> {
       future: apiDataFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const AppWithDrawer(
+          return  AppWithDrawer(
             title: 'Incorporacion',
             content: Scaffold(
               body: Center(child: CircularProgressIndicator()),

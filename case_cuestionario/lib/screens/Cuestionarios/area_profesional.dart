@@ -60,14 +60,14 @@ class _areaProfesionalState extends State<areaProfesional> {
 
   String? authToken = "";
   String? userId = "";
-  final _secureStorage = FlutterSecureStorage();
+  final _secureStorage = const FlutterSecureStorage();
 
   void rebuild() {
     setState(() {});
   }
 
   Future<void> addAreaProfesional() async {
-    final String url = 'http://192.168.1.66:3000/addAreaProfesional';
+    const String url = 'http://192.168.1.66:3000/addAreaProfesional';
     try {
       final response = await http.post(Uri.parse(url),
           headers: {
@@ -195,7 +195,7 @@ class _areaProfesionalState extends State<areaProfesional> {
       future: apiDataFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const AppWithDrawer(
+          return  AppWithDrawer(
               title: 'Area profesional',
               content: Scaffold(
                 body: Center(

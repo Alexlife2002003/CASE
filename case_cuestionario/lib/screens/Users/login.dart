@@ -22,7 +22,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     Future<void> createDatabase() async {
-      final String url = 'http://192.168.1.66:3000/createBD';
+      const String url = 'http://192.168.1.66:3000/createBD';
        final response = await http.post(Uri.parse(url),
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode({
@@ -32,7 +32,7 @@ class _LoginState extends State<Login> {
     }
 
     Future<void> loginUser() async {
-      final String url = 'http://192.168.1.66:3000/login';
+      const String url = 'http://192.168.1.76:3000/login';
 
       final response = await http.post(Uri.parse(url),
           headers: {'Content-Type': 'application/json'},
@@ -45,14 +45,14 @@ class _LoginState extends State<Login> {
 
         final String token = data['token'];
         final String id = data['userId'].toString();
-        final secureStorage = FlutterSecureStorage();
+        const secureStorage = FlutterSecureStorage();
         await secureStorage.write(key: 'token', value: token);
         await secureStorage.write(key: 'id', value: id);
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Dashboard()));
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.grey.shade500,
-          content: Center(child: Text('Login succesfull!')),
+          content: const Center(child: Text('Login succesfull!')),
         ));
       } else if (response.statusCode == 401) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -74,7 +74,7 @@ class _LoginState extends State<Login> {
         child: Padding(
           padding: const EdgeInsets.only(left: 0),
           child: TextField(
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
             cursorColor: Theme.of(context).colorScheme.secondary,
             controller: controller,
             obscureText: obscureText,
