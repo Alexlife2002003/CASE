@@ -66,6 +66,7 @@ class _areaProfesionalState extends State<areaProfesional> {
     setState(() {});
   }
 
+  
   Future<void> addAreaProfesional() async {
     const String url = 'http://192.168.1.66:3000/addAreaProfesional';
     try {
@@ -190,12 +191,24 @@ class _areaProfesionalState extends State<areaProfesional> {
 
   @override
   Widget build(BuildContext context) {
+
+    void snackbarRed(String message) {
+    ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+      backgroundColor: Colors.red,
+      content: Center(
+          child: Text(
+        message,
+        style: TextStyle(fontSize: 18),
+      )),
+    ));
+  }
+
     WidgetBuilderHelper helper = WidgetBuilderHelper(context, rebuild);
     return FutureBuilder<Map<String, dynamic>>(
       future: apiDataFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return  AppWithDrawer(
+          return AppWithDrawer(
               title: 'Area profesional',
               content: Scaffold(
                 body: Center(
@@ -673,6 +686,12 @@ class _areaProfesionalState extends State<areaProfesional> {
                         helper.buildGuardarButton(() async {
                           authToken = await _secureStorage.read(key: 'token');
                           userId = await _secureStorage.read(key: 'id');
+                          respuestapregunta15 = [];
+                          respuestapregunta21 = [];
+                          respuestapregunta25 = [];
+                          respuestapregunta27 = [];
+                          respuestapregunta37 = [];
+                          respuestapregunta41 = [];
                           for (DatosDeTabla x in tablapregunta15) {
                             respuestapregunta15.add(x.answer);
                           }
@@ -691,7 +710,235 @@ class _areaProfesionalState extends State<areaProfesional> {
                           for (DatosDeTabla x in tablapregunta41) {
                             respuestapregunta41.add(x.answer);
                           }
+                          if (_selected_pregunta12 == null) {
+                            snackbarRed("Contesta el enfoque que prefieres");
+                            return;
+                          }
 
+                          if (_pregunta13Controller.text.trim().isEmpty) {
+                            snackbarRed("Menciona 1 materia con la que te sientas con mas habilidades");
+                            return;
+                          }
+                          if (_pregunta14Controller.text.trim().isEmpty) {
+                            snackbarRed("Mneciona una materia con la que te sientas con menos habilidades");
+                            return;
+                          }
+                          if (respuestapregunta15[0].isEmpty) {
+                            snackbarRed("Contesta cantidad de examenes extraordinarios");
+                            return;
+                          }
+                          if (respuestapregunta15[1].isEmpty) {
+                            snackbarRed("Contesta la cantidad de examenes de a titulo de suficiencia");
+                            return;
+                          }
+                          if (_selectedPregunta16 == null) {
+                            snackbarRed("Contesta si te encuentras recursando materias");
+                            return;
+                          }
+                          if (_selectedPregunta17 == null) {
+                            snackbarRed("Contesta a que atribuyes el reprobar materias");
+                            return;
+                          }
+                          if (_selectedPregunta18 == null) {
+                            snackbarRed("Contesta las dificultades que encontraste al ingresar a la carrera");
+                            return;
+                          }
+                          if (_selectedPregunta19 == null) {
+                            snackbarRed("Contesta si los docentes entregaron criterios de evaluacion");
+                            return;
+                          }
+                          if (_selectedPregunta20 == null) {
+                            snackbarRed("Escoge el aspecto que comentaron los maestros al inicio del curso");
+                            return;
+                          }
+                          if (respuestapregunta21[0].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Expone el maestro"');
+                            return;
+                          }
+                          if (respuestapregunta21[1].isEmpty) {
+                            snackbarRed('Contesta el aspecto "El maestro dicta"');
+                            return;
+                          }
+                          if (respuestapregunta21[2].isEmpty) {
+                            snackbarRed('Contesta el aspecto de "dinamicas de grupo"');
+                            return;
+                          }
+                          if (respuestapregunta21[3].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Los alumnos exponen"');
+                            return;
+                          }
+                          if (respuestapregunta21[4].isEmpty) {
+                            snackbarRed('Contesta el aspecto "preguntas sobre la lectura"');
+                            return;
+                          }
+                          if (respuestapregunta21[5].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Uso de recursos audiovisuales"');
+                            return;
+                          }
+                          if (respuestapregunta21[6].isEmpty) {
+                             snackbarRed('Contesta el aspecto "Uso de recursos informaticos"');
+                            return;
+                          }
+                          if (respuestapregunta21[7].isEmpty) {
+                             snackbarRed('Contesta el aspecto "Entrega de materiales"');
+                            return;
+                          }
+                          if (_selectedPregunta22 == null) {
+                            snackbarRed("Contesta la frecuencia con la que los maestros impulsan la participacion");
+                            return;
+                          }
+                          if (_selectedPregunta23 == null) {
+                            snackbarRed("Contesta como impulsan los maestros la participacion");
+                            return;
+                          }
+                          if (_selectedPregunta24 == null) {
+                            snackbarRed("Responde si consideras que tus maestros relacionan la teoria con ejemplos");
+                            return;
+                          }
+                          if (respuestapregunta25[0].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Articulos o revistas"');
+                            return;
+                          }
+                          if (respuestapregunta25[1].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Bibliografia del programa"');
+                            return;
+                          }
+                          if (respuestapregunta25[2].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Internet"');
+                            return;
+                          }
+                          if (respuestapregunta25[3].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Libros digitales"');
+                            return;
+                          }
+                          if (_selectedPregunta26 == null) {
+                            snackbarRed("Contesta con quien resuelves tus dudas");
+                            return;
+                          }
+                          if (respuestapregunta27[0].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Resumenes"');
+                            return;
+                          }
+                          if (respuestapregunta27[1].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Fichas o tarjetas"');
+                            return;
+                          }
+                          if (respuestapregunta25[2].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Esquemas"');
+                            return;
+                          }
+                          if (respuestapregunta25[3].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Diagramas"');
+                            return;
+                          }
+                          if (respuestapregunta25[4].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Cuadros comparativos"');
+                            return;
+                          }
+                          if (respuestapregunta25[5].isEmpty) {
+                            snackbarRed('Contesta el aspecto "subrayar"');
+                            return;
+                          }
+                          if (respuestapregunta25[6].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Mapas mentales"');
+                            return;
+                          }
+                          if (respuestapregunta25[7].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Mapas conceptuales"');
+                            return;
+                          }
+                          if (_selectedPregunta28 == null) {
+                            snackbarRed("Responde de donde se obtienen tus materiales de apoyo");
+                            return;
+                          }
+                          if (_selectedPregunta29 == null) {
+                            snackbarRed("Responde si conderas importantes aplicas nuevas tecnologias educativas");
+                            return;
+                          }
+                          if (_pregunta30Controller.text.trim().isEmpty) {
+                            snackbarRed("Responder cual es el material didacto que mas utilizas para estudiar");
+                            return;
+                          }
+                          if (_selectedPregunta31 == null) {
+                            snackbarRed("Responde si acostumbras leer bibliografia adicional");
+                            return;
+                          }
+                          if (_selectedPregunta32 == null) {
+                            snackbarRed("Responde que tipo de bibliografia consultas");
+                            return;
+                          }
+                          if (_selectedPregunta33 == null) {
+                            snackbarRed("Responde que herramienta tecnologica usas con mas frecuencia");
+                            return;
+                          }
+                          if (_selectedPregunta34 == null) {
+                            snackbarRed("Responde como calificarias en general las clases a distancia");
+                            return;
+                          }
+                          if (_selectedPregunta35 == null) {
+                            snackbarRed("Responde cual recurso empleas mas para estudiar");
+                            return;
+                          }
+                          if (_selectedPregunta36 == null) {
+                            snackbarRed("Responde cuantas horas dedicas para estudiar");
+                            return;
+                          }
+                          if (respuestapregunta37[0].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Biblioteca" ');
+                            return;
+                          }
+                          if (respuestapregunta37[1].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Centro de computo" ');
+                            return;
+                          }
+                          if (respuestapregunta37[2].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Laboratorios" ');
+                            return;
+                          }
+                          if (respuestapregunta37[3].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Aulas" ');
+                            return;
+                          }
+                          if (respuestapregunta37[4].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Banos" ');
+                            return;
+                          }
+                          if (respuestapregunta37[5].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Cafeterias o comedor" ');
+                            return;
+                          }
+                          if (respuestapregunta37[6].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Limpieza del programa academico" ');
+                            return;
+                          }
+                          if (_pregunta38Controller.text.trim().isEmpty) {
+                            snackbarRed("Responde la materia donde te sientas mas preparado");
+                            return;
+                          }
+                          if (_pregunta39Controller.text.trim().isEmpty) {
+                            snackbarRed("Responde la materia donde te sientas menos preparado");
+                            return;
+                          }
+                          if (_selectedPregunta40 == null) {
+                            snackbarRed("Responde donde pretendes desarrollarte laboralmente");
+                            return;
+                          }
+                          if (respuestapregunta41[0].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Cursar un diplomado"');
+                            return;
+                          }
+                          if (respuestapregunta41[1].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Realizar una especialidad"');
+                            return;
+                          }
+                          if (respuestapregunta41[2].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Hacer una maestria"');
+                            return;
+                          }
+                          if (respuestapregunta41[3].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Realizar un doctorado"');
+                            return;
+                          }
                           await addAreaProfesional();
                         })
                       ],

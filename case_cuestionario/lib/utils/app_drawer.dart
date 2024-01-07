@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:case_cuestionario/screens/Cuestionarios/abandono_escolar.dart';
 import 'package:case_cuestionario/screens/Cuestionarios/area_profesional.dart';
 import 'package:case_cuestionario/screens/Cuestionarios/conectividad.dart';
