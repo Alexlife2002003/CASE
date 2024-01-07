@@ -1,3 +1,4 @@
+import 'package:case_cuestionario/screens/dashboard.dart';
 import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
@@ -55,7 +56,7 @@ class _IncorporacionState extends State<Incorporacion> {
   }
 
   Future<void> addCorporacion() async {
-    const String url = 'http://192.168.1.66:3000/addIncorporacion';
+    const String url = 'http://192.168.1.76:3000/addIncorporacion';
 
     try {
       final response = await http.post(Uri.parse(url),
@@ -87,8 +88,16 @@ class _IncorporacionState extends State<Incorporacion> {
             'pregunta11': selectedRespuesta11
           }));
       if (response.statusCode == 201) {
-        final Map<String, dynamic> data = json.decode(response.body);
-        print('Users answers added successfully. Message ${data['message']}');
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.green,
+          content: Center(
+              child: Text(
+            'Respuestas guardadas con exito',
+            style: TextStyle(fontSize: 18),
+          )),
+        ));
+        Navigator.push(
+            context, MaterialPageRoute(builder: ((context) => Dashboard())));
       } else {
         print('Failed to add user answers: ${response.statusCode}');
       }
@@ -130,7 +139,7 @@ class _IncorporacionState extends State<Incorporacion> {
       future: apiDataFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return  AppWithDrawer(
+          return AppWithDrawer(
             title: 'Incorporacion',
             content: Scaffold(
               body: Center(child: CircularProgressIndicator()),
@@ -364,14 +373,200 @@ class _IncorporacionState extends State<Incorporacion> {
                             t_tablet = "Si";
                           }
                         }
+                        respuestapregunta10 = [];
                         for (DatosDeTabla x in tablapregunta10) {
-                        
+                          print(x.answer);
                           respuestapregunta10.add(x.answer);
                         }
-                        
-               
+                        if (selectedRespuesta1 == null) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Center(
+                                child: Text(
+                              'Ingresa como te enteraste de la licenciatura',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                          ));
+                          return;
+                        }
+                        if (selectedRespuesta2 == null) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Center(
+                                child: Text(
+                              'Ingresa el nivel de importancia de actividades escolares en tu familia',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                          ));
+                          return;
+                        }
+                        if (SelectedRespuesta3 == null) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Center(
+                                child: Text(
+                              'Contesta si cuentas con un espacio para estudiar',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                          ));
+                          return;
+                        }
 
-                         await addCorporacion();
+                        if (escritorio == false &&
+                            internet == false &&
+                            impresora == false &&
+                            calculadora == false &&
+                            computadora == false &&
+                            tablet == false &&
+                            todas == false) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Center(
+                                child: Text(
+                              'Contesta con cuales medios cuentas',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                          ));
+                          return;
+                        }
+                        if (selectedRespuesta5 == null) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Center(
+                                child: Text(
+                              'Contesta los recursos economicos con los que cuentas',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                          ));
+                          return;
+                        }
+                        if (selectedRespuesta6 == null) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Center(
+                                child: Text(
+                              'Contesta el medio de transporte que utilizas',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                          ));
+                          return;
+                        }
+                        if (selectedRespuesta7 == null) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Center(
+                                child: Text(
+                              'Contesta cuanto tiempo haces a la escuela',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                          ));
+                          return;
+                        }
+                        if (selectedRespuesta8 == null) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Center(
+                                child: Text(
+                              'Responde si conoces al CEBUAZ',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                          ));
+                          return;
+                        }
+                        if (selectedRespuesta9 == null) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Center(
+                                child: Text(
+                              'Responde si usas el CEBUAZ',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                          ));
+                          return;
+                        }
+
+                        if (respuestapregunta10[0].isEmpty) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Center(
+                                child: Text(
+                              'Contesta el aspecto de exigencia academica',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                          ));
+                          return;
+                        }
+                        if (respuestapregunta10[1].isEmpty) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Center(
+                                child: Text(
+                              'Contesta el aspecto de ambiente social',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                          ));
+                          return;
+                        }
+                        if (respuestapregunta10[2].isEmpty) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Center(
+                                child: Text(
+                              'Contesta el aspecto de relacion con la familia',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                          ));
+                          return;
+                        }
+                        if (respuestapregunta10[3].isEmpty) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Center(
+                                child: Text(
+                              'Contesta el aspecto de relacion con los maestros',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                          ));
+                          return;
+                        }
+                        if (respuestapregunta10[4].isEmpty) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Center(
+                                child: Text(
+                              'Contesta el aspecto de relacion con peers',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                          ));
+                          return;
+                        }
+                        if (selectedRespuesta11 == null) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Center(
+                                child: Text(
+                              'Contesta la experiencia obtenida hasta la fecha',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                          ));
+                          return;
+                        }
+                        await addCorporacion();
                       })
                     ],
                   ),

@@ -17,7 +17,6 @@ import 'package:http/http.dart' as http;
 class AppWithDrawer extends StatefulWidget {
   final String title;
   final Widget content;
-  
 
   AppWithDrawer({Key? key, required this.title, required this.content})
       : super(key: key);
@@ -34,13 +33,13 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
   @override
   void initState() {
     super.initState();
-    checkUserData();
+    checkDatosGenerales();
+    checkIncorporacion();
   }
 
-
-  Future<void> checkUserData() async {
+  Future<void> checkDatosGenerales() async {
     final String url = 'http://192.168.1.76:3000/revisarDatosGenerales';
-    userId=await _secureStorage.read(key:'id');
+    userId = await _secureStorage.read(key: 'id');
     try {
       final response = await http.post(Uri.parse(url),
           headers: {'Content-Type': 'application/json'},
@@ -55,6 +54,25 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
       }
     } catch (e) {
       // Handle network or other errors
+    }
+  }
+
+  Future<void> checkIncorporacion() async {
+    final String url = 'http://192.168.1.76:3000/revisarIncorporacion';
+    userId = await _secureStorage.read(key: 'id');
+    try {
+      final response = await http.post(Uri.parse(url),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'userId': userId,
+          }));
+      if (response.statusCode == 200) {
+        setState(() {
+          _incorporacion = true;
+        });
+      }
+    } catch (e) {
+      //Handle network or other errors
     }
   }
 
@@ -118,12 +136,24 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                         ],
                       ),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const datosGenerales(),
-                          ),
-                        );
+                        if (_datosGenerales == false) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const datosGenerales(),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: Colors.grey,
+                            content: Center(
+                                child: Text(
+                              'Ya se encuentra con respuestas',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                          ));
+                        }
                       },
                     ),
                     ListTile(
@@ -131,7 +161,7 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                         children: [
                           Icon(
                             _incorporacion
-                                ? Icons.check_box_outline_blank
+                                ? Icons.check_box
                                 : Icons.check_box_outline_blank,
                           ),
                           SizedBox(
@@ -144,12 +174,24 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                         ],
                       ),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Incorporacion(),
-                          ),
-                        );
+                        if (_incorporacion == false) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Incorporacion(),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            backgroundColor: Colors.grey,
+                            content: Center(
+                                child: Text(
+                              'Ya se encuentra con respuestas',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                          ));
+                        }
                       },
                     ),
                     ListTile(
@@ -344,11 +386,10 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                 ],
               ),
               onTap: () {
-                checkUserData();
-                // Navigator.of(context).pushAndRemoveUntil(
-                //   MaterialPageRoute(builder: (context) => const Login()),
-                //   (Route<dynamic> route) => false,
-                // );
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const Login()),
+                  (Route<dynamic> route) => false,
+                );
               },
             ),
           ],

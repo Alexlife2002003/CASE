@@ -129,7 +129,7 @@ class _datosGeneralesState extends State<datosGenerales> {
         future: apiDataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return  AppWithDrawer(
+            return AppWithDrawer(
               title: 'Datos generales',
               content: Scaffold(
                 body: Center(child: CircularProgressIndicator()),
@@ -246,7 +246,6 @@ class _datosGeneralesState extends State<datosGenerales> {
                                 style: TextStyle(fontSize: 18),
                               )),
                             ));
-                            debugPrint("selected Semestre is empty");
                             return;
                           }
                           if (_nombreCompletoController.text.trim().isEmpty) {
@@ -259,7 +258,6 @@ class _datosGeneralesState extends State<datosGenerales> {
                                 style: TextStyle(fontSize: 18),
                               )),
                             ));
-                            debugPrint("nombre completo is empty");
                             return;
                           }
                           if (selectedSexo == null) {
@@ -272,7 +270,6 @@ class _datosGeneralesState extends State<datosGenerales> {
                                 style: TextStyle(fontSize: 18),
                               )),
                             ));
-                            debugPrint("Selected sexo is empty");
                             return;
                           }
                           if (_municipioController.text.trim().isEmpty) {
@@ -285,7 +282,6 @@ class _datosGeneralesState extends State<datosGenerales> {
                                 style: TextStyle(fontSize: 18),
                               )),
                             ));
-                            debugPrint("municiptio esta vacio");
                             return;
                           }
                           if (selectedEstadoCivil == null) {
@@ -298,7 +294,6 @@ class _datosGeneralesState extends State<datosGenerales> {
                                 style: TextStyle(fontSize: 18),
                               )),
                             ));
-                            debugPrint("Selected estado civil is empty");
                             return;
                           }
                           if (selectedTrabaja == null) {
@@ -311,7 +306,6 @@ class _datosGeneralesState extends State<datosGenerales> {
                                 style: TextStyle(fontSize: 18),
                               )),
                             ));
-                            debugPrint("Selected trabajo is empty");
                             return;
                           }
                           if (selectedYear == null) {
@@ -324,7 +318,6 @@ class _datosGeneralesState extends State<datosGenerales> {
                                 style: TextStyle(fontSize: 18),
                               )),
                             ));
-                            debugPrint("Selected year is empty");
                             return;
                           }
                           addDatosGenerales(
