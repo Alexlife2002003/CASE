@@ -1,3 +1,4 @@
+import 'package:case_cuestionario/screens/dashboard.dart';
 import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
@@ -68,7 +69,7 @@ class _areaProfesionalState extends State<areaProfesional> {
 
   
   Future<void> addAreaProfesional() async {
-    const String url = 'http://192.168.1.66:3000/addAreaProfesional';
+    const String url = 'http://192.168.1.76:3000/addAreaProfesional';
     try {
       final response = await http.post(Uri.parse(url),
           headers: {
@@ -105,12 +106,12 @@ class _areaProfesionalState extends State<areaProfesional> {
             'pregunta26': _selectedPregunta26,
             'pregunta27_resumenes': respuestapregunta27[0],
             'pregunta27_fichas': respuestapregunta27[1],
-            'pregunta27_esquemas': respuestapregunta25[2],
-            'pregunta27_diagramas': respuestapregunta25[3],
-            'pregunta27_cuadros': respuestapregunta25[4],
-            'pregunta27_subrayar': respuestapregunta25[5],
-            'pregunta27_mapa_mental': respuestapregunta25[6],
-            'pregunta27_mapa_conceptual': respuestapregunta25[7],
+            'pregunta27_esquemas': respuestapregunta27[2],
+            'pregunta27_diagramas': respuestapregunta27[3],
+            'pregunta27_cuadros': respuestapregunta27[4],
+            'pregunta27_subrayar': respuestapregunta27[5],
+            'pregunta27_mapa_mental': respuestapregunta27[6],
+            'pregunta27_mapa_conceptual': respuestapregunta27[7],
             'pregunta28': _selectedPregunta28,
             'pregunta29': _selectedPregunta29,
             'pregunta30': _pregunta30Controller.text.trim(),
@@ -138,7 +139,16 @@ class _areaProfesionalState extends State<areaProfesional> {
 
       final Map<String, dynamic> data = json.decode(response.body);
       if (response.statusCode == 201) {
-        print('Users answers added successfully. Message ${data['message']}');
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: Colors.green,
+            content: Center(
+                child: Text(
+              'Respuestas guardadas con exito',
+              style: TextStyle(fontSize: 18),
+            )),
+          ));
+          Navigator.push(
+              context, MaterialPageRoute(builder: ((context) => Dashboard())));
       } else {
         print(
             'Failed to add user answers:${data['message']} ${response.statusCode}');
@@ -823,27 +833,27 @@ class _areaProfesionalState extends State<areaProfesional> {
                             snackbarRed('Contesta el aspecto "Fichas o tarjetas"');
                             return;
                           }
-                          if (respuestapregunta25[2].isEmpty) {
+                          if (respuestapregunta27[2].isEmpty) {
                             snackbarRed('Contesta el aspecto "Esquemas"');
                             return;
                           }
-                          if (respuestapregunta25[3].isEmpty) {
+                          if (respuestapregunta27[3].isEmpty) {
                             snackbarRed('Contesta el aspecto "Diagramas"');
                             return;
                           }
-                          if (respuestapregunta25[4].isEmpty) {
+                          if (respuestapregunta27[4].isEmpty) {
                             snackbarRed('Contesta el aspecto "Cuadros comparativos"');
                             return;
                           }
-                          if (respuestapregunta25[5].isEmpty) {
+                          if (respuestapregunta27[5].isEmpty) {
                             snackbarRed('Contesta el aspecto "subrayar"');
                             return;
                           }
-                          if (respuestapregunta25[6].isEmpty) {
+                          if (respuestapregunta27[6].isEmpty) {
                             snackbarRed('Contesta el aspecto "Mapas mentales"');
                             return;
                           }
-                          if (respuestapregunta25[7].isEmpty) {
+                          if (respuestapregunta27[7].isEmpty) {
                             snackbarRed('Contesta el aspecto "Mapas conceptuales"');
                             return;
                           }

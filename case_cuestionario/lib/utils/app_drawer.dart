@@ -28,6 +28,7 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
   bool _datosGenerales = false;
   bool _incorporacion = false;
   bool _areaProfesional = false;
+  bool _idioma = false;
   final _secureStorage = FlutterSecureStorage();
   String? userId;
   @override
@@ -35,6 +36,8 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
     super.initState();
     checkDatosGenerales();
     checkIncorporacion();
+    checkAreaProfesional();
+    checkIdioma();
   }
 
   Future<void> checkDatosGenerales() async {
@@ -66,6 +69,7 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
           body: jsonEncode({
             'userId': userId,
           }));
+      print("Incorporacion: ${response.statusCode}");
       if (response.statusCode == 200) {
         setState(() {
           _incorporacion = true;
@@ -76,7 +80,7 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
     }
   }
 
-   Future<void> checkAreaProfesional() async {
+  Future<void> checkAreaProfesional() async {
     final String url = 'http://192.168.1.76:3000/revisarAreaProfesional';
     userId = await _secureStorage.read(key: 'id');
     try {
@@ -88,6 +92,25 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
       if (response.statusCode == 200) {
         setState(() {
           _areaProfesional = true;
+        });
+      }
+    } catch (e) {
+      //Handle network or other errors
+    }
+  }
+
+  Future<void> checkIdioma() async {
+    final String url = 'http://192.168.1.76:3000/revisarIdioma';
+    userId = await _secureStorage.read(key: 'id');
+    try {
+      final response = await http.post(Uri.parse(url),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'userId': userId,
+          }));
+      if (response.statusCode == 200) {
+        setState(() {
+          _idioma = true;
         });
       }
     } catch (e) {
@@ -231,19 +254,23 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                         ],
                       ),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const areaProfesional(),
-                          ),
-                        );
+                        if (_areaProfesional == false) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const areaProfesional(),
+                            ),
+                          );
+                        }
                       },
                     ),
                     ListTile(
                       title: Row(
                         children: [
                           Icon(
-                            Icons.check_box_outline_blank,
+                            _idioma
+                                ? Icons.check_box
+                                : Icons.check_box_outline_blank,
                           ),
                           SizedBox(
                             width: 10,
@@ -255,12 +282,14 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                         ],
                       ),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Idioma(),
-                          ),
-                        );
+                        if (_idioma == false) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Idioma(),
+                            ),
+                          );
+                        }
                       },
                     ),
                     ListTile(
