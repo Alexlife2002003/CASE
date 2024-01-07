@@ -27,6 +27,7 @@ class AppWithDrawer extends StatefulWidget {
 class _AppWithDrawerState extends State<AppWithDrawer> {
   bool _datosGenerales = false;
   bool _incorporacion = false;
+  bool _areaProfesional = false;
   final _secureStorage = FlutterSecureStorage();
   String? userId;
   @override
@@ -68,6 +69,25 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
       if (response.statusCode == 200) {
         setState(() {
           _incorporacion = true;
+        });
+      }
+    } catch (e) {
+      //Handle network or other errors
+    }
+  }
+
+   Future<void> checkAreaProfesional() async {
+    final String url = 'http://192.168.1.76:3000/revisarAreaProfesional';
+    userId = await _secureStorage.read(key: 'id');
+    try {
+      final response = await http.post(Uri.parse(url),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'userId': userId,
+          }));
+      if (response.statusCode == 200) {
+        setState(() {
+          _areaProfesional = true;
         });
       }
     } catch (e) {
@@ -197,7 +217,9 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                       title: Row(
                         children: [
                           Icon(
-                            Icons.check_box_outline_blank,
+                            _areaProfesional
+                                ? Icons.check_box
+                                : Icons.check_box_outline_blank,
                           ),
                           SizedBox(
                             width: 10,
