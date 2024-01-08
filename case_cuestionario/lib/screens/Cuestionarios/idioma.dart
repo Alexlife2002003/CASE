@@ -37,7 +37,7 @@ class _IdiomaState extends State<Idioma> {
   }
 
   Future<void> addIdioma() async {
-    const String url = 'http://192.168.1.76:3000/addIdioma';
+    const String url = 'http://192.168.1.66:3000/addIdioma';
     try {
       final response = await http.post(Uri.parse(url),
           headers: {

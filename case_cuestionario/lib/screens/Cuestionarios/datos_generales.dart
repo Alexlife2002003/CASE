@@ -73,7 +73,7 @@ class _datosGeneralesState extends State<datosGenerales> {
       required String trabaja,
       required String yearIngreso,
     }) async {
-      const String url = 'http://192.168.1.76:3000/addDatosGenerales';
+      const String url = 'http://192.168.1.66:3000/addDatosGenerales';
 
       try {
         final response = await http.post(

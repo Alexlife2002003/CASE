@@ -1,7 +1,6 @@
 import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -48,7 +47,6 @@ class _serviciosCaseState extends State<serviciosCase> {
             'Authorization': 'Bearer $authToken',
             'Content-Type': 'application/json'
           },
-          
           body: jsonEncode({
             'userId': userId,
             'pregunta45': _selectedPregunta45,
@@ -87,7 +85,7 @@ class _serviciosCaseState extends State<serviciosCase> {
         future: apiDataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return  AppWithDrawer(
+            return AppWithDrawer(
                 title: 'Servicios CASE',
                 content: Scaffold(
                   body: Center(child: CircularProgressIndicator()),
@@ -172,6 +170,26 @@ class _serviciosCaseState extends State<serviciosCase> {
                           helper.buildGuardarButton(() async {
                             authToken = await _secureStorage.read(key: 'token');
                             userId = await _secureStorage.read(key: 'id');
+                            if (_selectedPregunta45 == null) {
+                              //TODO
+                              return;
+                            }
+                            if (_selectedPregunta46 == null) {
+                              //TODO
+                              return;
+                            }
+                            if (_selectedPregunta47 == null) {
+                              //TODO
+                              return;
+                            }
+                            if (_selectedPregunta48 == null) {
+                              //TODO
+                              return;
+                            }
+                            if (_selectedPregunta49 == null) {
+                              //TODO
+                              return;
+                            }
                             await addServiciosCase();
                           }),
                         ],

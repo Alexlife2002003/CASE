@@ -69,7 +69,7 @@ class _areaProfesionalState extends State<areaProfesional> {
 
   
   Future<void> addAreaProfesional() async {
-    const String url = 'http://192.168.1.76:3000/addAreaProfesional';
+    const String url = 'http://192.168.1.66:3000/addAreaProfesional';
     try {
       final response = await http.post(Uri.parse(url),
           headers: {

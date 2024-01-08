@@ -56,7 +56,7 @@ class _IncorporacionState extends State<Incorporacion> {
   }
 
   Future<void> addCorporacion() async {
-    const String url = 'http://192.168.1.76:3000/addIncorporacion';
+    const String url = 'http://192.168.1.66:3000/addIncorporacion';
 
     try {
       final response = await http.post(Uri.parse(url),
