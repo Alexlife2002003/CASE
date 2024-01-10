@@ -105,8 +105,11 @@ class _datosGeneralesState extends State<datosGenerales> {
               style: TextStyle(fontSize: 18),
             )),
           ));
-          Navigator.push(
-              context, MaterialPageRoute(builder: ((context) => Dashboard())));
+           Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const Dashboard()),
+                  (Route<dynamic> route) => false,
+                );
+
         } else {
           // Handle error
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -131,7 +134,7 @@ class _datosGeneralesState extends State<datosGenerales> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return AppWithDrawer(
               title: 'Datos generales',
-              content: Scaffold(
+              content: const Scaffold(
                 body: Center(child: CircularProgressIndicator()),
               ),
             );

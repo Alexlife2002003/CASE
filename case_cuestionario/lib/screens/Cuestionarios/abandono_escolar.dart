@@ -1,3 +1,4 @@
+import 'package:case_cuestionario/screens/dashboard.dart';
 import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
@@ -66,6 +67,17 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
     apiDataFuture = fetchData();
   }
 
+  void snackbarRed(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: Colors.red,
+      content: Center(
+          child: Text(
+        message,
+        style: const TextStyle(fontSize: 18),
+      )),
+    ));
+  }
+
   Future<void> addAbandonoEscolar() async {
     const String url = 'http://192.168.1.66:3000/addAbandonoEscolar';
     try {
@@ -88,14 +100,37 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
             'pregunta57_uso_conocimientos': respuestaoregunta57[0],
             'pregunta57_cumplo_metas': respuestaoregunta57[1],
             'pregunta57_desarrollo_habilidades': respuestaoregunta57[2],
-            'pregunta57_pensamiento_critico': respuestaoregunta57[3],
+            'pregunta57_pensamiento_critico': respuestaoregunta57[2],
             'pregunta58': _selected_pregunta58,
             'pregunta59': _selected_pregunta59,
             'pregunta60': _selected_pregunta60,
             'pregunta61': _selected_pregunta61,
             'pregunta62': _selected_pregunta62
           }));
-          resultado50="";
+      if (response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.green,
+          content: Center(
+              child: Text(
+            'Respuestas guardadas con exito',
+            style: TextStyle(fontSize: 18),
+          )),
+        ));
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const Dashboard()),
+          (Route<dynamic> route) => false,
+        );
+      } else {
+        // Handle error
+        ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+          backgroundColor: Colors.red,
+          content: Center(
+              child: Text(
+            'Error al agregar las respuestas ',
+            style: TextStyle(fontSize: 18),
+          )),
+        ));
+      }
     } catch (error) {
       print('Error: $error');
     }
@@ -131,9 +166,9 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
         future: apiDataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return  AppWithDrawer(
+            return AppWithDrawer(
                 title: 'Abandono Escolar',
-                content: Scaffold(
+                content: const Scaffold(
                     body: Center(
                   child: CircularProgressIndicator(),
                 )));
@@ -496,13 +531,110 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
                         helper.buildGuardarButton(() async {
                           authToken = await _secureStorage.read(key: 'token');
                           userId = await _secureStorage.read(key: 'id');
+                          resultado50 = "";
+                          respuestaoregunta56 = [];
+                          respuestaoregunta56 = [];
                           for (DatosDeTabla x in tablapregunta56) {
                             respuestaoregunta56.add(x.answer);
                           }
                           for (DatosDeTabla x in tablapregunta57) {
                             respuestaoregunta57.add(x.answer);
                           }
-
+                          if ((horariosComplicados == false) &&
+                              (noVocacion == false) &&
+                              (desempenoAcademico == false) &&
+                              (noGustaronMaterias == false) &&
+                              (dificultadMaterias == false) &&
+                              (noGustanMetodos == false) &&
+                              (actitudProfesores == false) &&
+                              (situacionEconomica == false) &&
+                              (tenerQueTrabajar == false) &&
+                              (faltaHerramientas == false) &&
+                              (estadoAnimo == false) &&
+                              (dificultadRelacionarse == false) &&
+                              (faltaLaboratorios == false) &&
+                              (lugarDomicilio == false) &&
+                              (influenciaFamilia == false) &&
+                              (aspectosPersonales == false) &&
+                              (aspectosSalud == false) &&
+                              (noMotivosAbandono == false)) {
+                            snackbarRed(
+                                "Contesta al menos un motivo de dejar la universidad");
+                            return;
+                          }
+                          if (_selected_pregunta51 == null) {
+                            snackbarRed(
+                                "Contesta si volverias a estudiar en la UAZ");
+                            return;
+                          }
+                          if (_selected_pregunta52 == null) {
+                            snackbarRed(
+                                "Responde si consideras aplicar nuevas tecnologias en tu carrera");
+                            return;
+                          }
+                          if (_selected_pregunta53 == null) {
+                            snackbarRed(
+                                "Contesta si realizas a alguna extra escolar");
+                            return;
+                          }
+                          if (_selected_pregunta54 == null) {
+                            snackbarRed(
+                                "Responde si consideras que las actividades artisticas te ayudan a mejorar");
+                            return;
+                          }
+                          if (_selected_pregunta55 == null) {
+                            snackbarRed("Contesta como usas tu tiempo");
+                            return;
+                          }
+                          if (respuestaoregunta56[0].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Diariamente"');
+                            return;
+                          }
+                          if (respuestaoregunta56[1].isEmpty) {
+                            snackbarRed('Contesta el aspecto "Fin de semana"');
+                            return;
+                          }
+                          if (respuestaoregunta56[2].isEmpty) {
+                            snackbarRed(
+                                'Contesta el aspecto "Antes de un examen"');
+                            return;
+                          }
+                          if (respuestaoregunta57[0].isEmpty) {
+                            //snackbarRed('Contesta el aspecto "diariamente:falso "');
+                          }
+                          if (respuestaoregunta57[1].isEmpty) {
+                            //snackbarRed('Contesta el aspecto "Fin de semana"');
+                          }
+                          if (respuestaoregunta57[2].isEmpty) {
+                            //snackbarRed('Contesta el aspecto "Antes de un examen"');
+                          }
+                          if (respuestaoregunta57[2].isEmpty) {
+                            snackbarRed("Revisar esta discrepancia");
+                          }
+                          if (_selected_pregunta58 == null) {
+                            snackbarRed(
+                                "Responde si preguntas lo que no entiendes");
+                            return;
+                          }
+                          if (_selected_pregunta59 == null) {
+                            snackbarRed(
+                                "Contesta si aplicas estrategias de estudio");
+                            return;
+                          }
+                          if (_selected_pregunta60 == null) {
+                            snackbarRed("Contesta como calificas tu desempeno");
+                            return;
+                          }
+                          if (_selected_pregunta61 == null) {
+                            snackbarRed(
+                                "Responde que requieres para mejorar tu rendimiento academico");
+                            return;
+                          }
+                          if (_selected_pregunta62 == null) {
+                            snackbarRed(
+                                "Responde si la contigencia sanitaria te afecto a nivel emocional");
+                            return;
+                          }
                           revisar50(horariosComplicados);
                           revisar50(noVocacion);
                           revisar50(desempenoAcademico);

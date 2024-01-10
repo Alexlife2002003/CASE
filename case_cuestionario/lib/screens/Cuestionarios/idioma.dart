@@ -59,8 +59,10 @@ class _IdiomaState extends State<Idioma> {
             style: TextStyle(fontSize: 18),
           )),
         ));
-        Navigator.push(
-            context, MaterialPageRoute(builder: ((context) => Dashboard())));
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const Dashboard()),
+          (Route<dynamic> route) => false,
+        );
       } else {
         // Handle error
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -102,7 +104,7 @@ class _IdiomaState extends State<Idioma> {
         content: Center(
             child: Text(
           message,
-          style: TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 18),
         )),
       ));
     }
@@ -114,7 +116,7 @@ class _IdiomaState extends State<Idioma> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return AppWithDrawer(
             title: 'Idioma',
-            content: Scaffold(
+            content: const Scaffold(
               body: Center(
                 child: CircularProgressIndicator(),
               ),

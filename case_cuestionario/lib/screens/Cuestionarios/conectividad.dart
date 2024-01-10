@@ -1,3 +1,4 @@
+import 'package:case_cuestionario/screens/dashboard.dart';
 import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
@@ -46,7 +47,30 @@ class _conectividadState extends State<conectividad> {
             'pregunta67': _selectedPregunta67,
             'pregunta68': _selectedPregunta68
           }));
-      print(response.body);
+       if (response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.green,
+          content: Center(
+              child: Text(
+            'Respuestas guardadas con exito',
+            style: TextStyle(fontSize: 18),
+          )),
+        ));
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const Dashboard()),
+          (Route<dynamic> route) => false,
+        );
+      } else {
+        // Handle error
+        ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+          backgroundColor: Colors.red,
+          content: Center(
+              child: Text(
+            'Error al agregar las respuestas ',
+            style: TextStyle(fontSize: 18),
+          )),
+        ));
+      }
     } catch (error) {
       print('Error: $error');
     }
@@ -77,14 +101,25 @@ class _conectividadState extends State<conectividad> {
 
   @override
   Widget build(BuildContext context) {
+    void snackbarRed(String message) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        content: Center(
+            child: Text(
+          message,
+          style: const TextStyle(fontSize: 18),
+        )),
+      ));
+    }
+
     WidgetBuilderHelper helper = WidgetBuilderHelper(context, rebuild);
     return FutureBuilder<Map<String, dynamic>>(
         future: apiDataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return  AppWithDrawer(
+            return AppWithDrawer(
                 title: 'Conectividad',
-                content: Scaffold(
+                content: const Scaffold(
                   body: Center(child: CircularProgressIndicator()),
                 ));
           } else if (snapshot.hasError) {
@@ -167,6 +202,22 @@ class _conectividadState extends State<conectividad> {
                           helper.buildGuardarButton(() async {
                             authToken = await _secureStorage.read(key: 'token');
                             userId = await _secureStorage.read(key: 'id');
+                            if (_selectedPregunta65 == null) {
+                              snackbarRed("Responde como consideras el servicio de internet de la unidad");
+                              return;
+                            }
+                            if (_selectedPregunta66 == null) {
+                              snackbarRed("Responde como consideras las instalacion de centro de computo");
+                              return;
+                            }
+                            if (_selectedPregunta67 == null) {
+                              snackbarRed("Responde como consideras la higiene y limpieza del servicio de cafeteria");
+                              return;
+                            }
+                            if (_selectedPregunta68 == null) {
+                              snackbarRed("Contesta si precios de los alimentos son accesibles");
+                              return;
+                            }
                             await addConectividad();
                           })
                         ],

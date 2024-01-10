@@ -99,14 +99,25 @@ class _serviciosUnidadState extends State<serviciosUnidad> {
 
   @override
   Widget build(BuildContext context) {
+    void snackbarRed(String message) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        content: Center(
+            child: Text(
+          message,
+          style:const TextStyle(fontSize: 18),
+        )),
+      ));
+    }
+
     WidgetBuilderHelper helper = WidgetBuilderHelper(context, rebuild);
     return FutureBuilder<Map<String, dynamic>>(
         future: apiDataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return  AppWithDrawer(
+            return AppWithDrawer(
                 title: 'Servicios Unidad',
-                content: Scaffold(
+                content: const Scaffold(
                   body: Center(child: CircularProgressIndicator()),
                 ));
           } else if (snapshot.hasError) {
@@ -305,8 +316,70 @@ class _serviciosUnidadState extends State<serviciosUnidad> {
                           helper.buildGuardarButton(() async {
                             authToken = await _secureStorage.read(key: 'token');
                             userId = await _secureStorage.read(key: 'id');
+                            respuesta69 = [];
                             for (DatosDeTabla x in tablapregunta69) {
                               respuesta69.add(x.answer);
+                            }
+
+                            if (respuesta69[0].isEmpty) {
+                              snackbarRed("message");
+                              return;
+                            }
+                            if (respuesta69[1].isEmpty) {
+                              snackbarRed("message");
+                              return;
+                            }
+                            if (respuesta69[2].isEmpty) {
+                              snackbarRed("message");
+                              return;
+                            }
+                            if (_selectedPregunta70 == null) {
+                              snackbarRed("message");
+                              return;
+                            }
+                            if (_selectedPregunta71 == null) {
+                              snackbarRed("message");
+                              return;
+                            }
+                            if (_selectedPregunta72 == null) {
+                              snackbarRed("message");
+                              return;
+                            }
+                            if (_selectedPregunta73 == null) {
+                              snackbarRed("message");
+                              return;
+                            }
+                            if (_selectedPregunta74 == null) {
+                              snackbarRed("message");
+                              return;
+                            }
+                            if (_selectedPregunta75 == null) {
+                              snackbarRed("message");
+                              return;
+                            }
+                            if (_selectedPregunta76 == null) {
+                              snackbarRed("message");
+                              return;
+                            }
+                            if (_selectedPregunta77Controller.text
+                                .trim()
+                                .isEmpty) {
+                              snackbarRed("message");
+                              return;
+                            }
+                            if (_selectedPregunta78Controller.text
+                                .trim()
+                                .isEmpty) {
+                              snackbarRed("message");
+                              return;
+                            }
+                            if (_selectedPregunta79 == null) {
+                              snackbarRed("message");
+                              return;
+                            }
+                            if (_selectedPregunta80 == null) {
+                              snackbarRed("message");
+                              return;
                             }
                             await addServiciosUnidad();
                           })

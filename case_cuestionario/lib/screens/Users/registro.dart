@@ -15,11 +15,22 @@ class Registrarse extends StatefulWidget {
 class _RegistrarseState extends State<Registrarse> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     const _secureStorage = FlutterSecureStorage();
+    void snackbarRed(String message) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        content: Center(
+            child: Text(
+          message,
+          style: const TextStyle(fontSize: 18),
+        )),
+      ));
+    }
 
     Widget buildInputField(String hintText, TextEditingController controller,
         bool obscureText, TextInputType inputType, double screenWidth) {
@@ -65,7 +76,7 @@ class _RegistrarseState extends State<Registrarse> {
     }
 
     Future<void> registerUser(String correo, String password) async {
-      const String apiUrl = 'http://192.168.1.76:3000/register';
+      const String apiUrl = 'http://192.168.1.66:3000/register';
 
       try {
         final response = await http.post(
@@ -80,26 +91,23 @@ class _RegistrarseState extends State<Registrarse> {
           final String userId = responseData['userId'].toString();
           await _secureStorage.write(key: 'id', value: userId);
           await _secureStorage.write(key: 'token', value: token);
-
-          print('Registration successful. Token: $token');
-          print('Navigating to Dashboard...');
-
           // Navigate to Dashboard
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Dashboard()),
+            MaterialPageRoute(builder: (context) => const Dashboard()),
           );
 
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.grey.shade500,
-            content: Center(child: const Text('Registration successful!')),
+            content: const Center(child: Text('Registration successful!')),
           ));
         } else {
           print('Registration failed. Status code: ${response.statusCode}');
-          print('Response body: ${response.body}');
+          
         }
       } catch (error) {
-        print('Error during registration: $error');
+        snackbarRed("Error during registrarion. Try again");
+        
       }
     }
 
@@ -149,10 +157,20 @@ class _RegistrarseState extends State<Registrarse> {
           const SizedBox(
             height: 10,
           ),
+          buildInputField('Confirmar contraseña', _confirmPasswordController,
+              true, TextInputType.text, screenWidth),
+          const SizedBox(
+            height: 10,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: GestureDetector(
               onTap: () async {
+                if (_passwordController.text.trim() !=
+                    _confirmPasswordController.text.trim()) {
+                  snackbarRed("Passwords are different");
+                  return;
+                }
                 await registerUser(_emailController.text.trim(),
                     _passwordController.text.trim());
               },

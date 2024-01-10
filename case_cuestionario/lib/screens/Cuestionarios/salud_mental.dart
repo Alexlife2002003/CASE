@@ -1,3 +1,4 @@
+import 'package:case_cuestionario/screens/dashboard.dart';
 import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
@@ -53,7 +54,30 @@ class _saludMentalState extends State<saludMental> {
             'pregunta63': resultado63,
             'pregunta64': selectedPregunta64
           }));
-          resultado63="";
+        if (response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.green,
+          content: Center(
+              child: Text(
+            'Respuestas guardadas con exito',
+            style: TextStyle(fontSize: 18),
+          )),
+        ));
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const Dashboard()),
+          (Route<dynamic> route) => false,
+        );
+      } else {
+        // Handle error
+        ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+          backgroundColor: Colors.red,
+          content: Center(
+              child: Text(
+            'Error al agregar las respuestas${response.statusCode} ',
+            style: TextStyle(fontSize: 18),
+          )),
+        ));
+      }
     } catch (error) {
       print('Error: $error');
     }
@@ -89,9 +113,9 @@ class _saludMentalState extends State<saludMental> {
         future: apiDataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return  AppWithDrawer(
+            return AppWithDrawer(
                 title: 'Salud mental',
-                content: Scaffold(
+                content: const Scaffold(
                   body: Center(
                     child: CircularProgressIndicator(),
                   ),
@@ -208,6 +232,41 @@ class _saludMentalState extends State<saludMental> {
                           helper.buildGuardarButton(() async {
                             authToken = await _secureStorage.read(key: 'token');
                             userId = await _secureStorage.read(key: 'id');
+
+                            if ((pregunta63_0 == false) &&
+                                (pregunta63_1 == false) &&
+                                (pregunta63_2 == false) &&
+                                (pregunta63_3 == false) &&
+                                (pregunta63_4 == false) &&
+                                (pregunta63_5 == false) &&
+                                (pregunta63_6 == false) &&
+                                (pregunta63_7 == false) &&
+                                (pregunta63_8 == false) &&
+                                (pregunta63_9 == false)) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Center(
+                                    child: Text(
+                                  "Responde al menos una situacion de aislamiento",
+                                  style: const TextStyle(fontSize: 18),
+                                )),
+                              ));
+                              return;
+                            }
+                            if (selectedPregunta64 == null) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Center(
+                                    child: Text(
+                                  "Responde si has pasado por alguna situacion sentimental",
+                                  style: const TextStyle(fontSize: 18),
+                                )),
+                              ));
+                              return;
+                            }
+                            resultado63 = "";
                             revisar63(pregunta63_0);
                             revisar63(pregunta63_1);
                             revisar63(pregunta63_2);

@@ -96,13 +96,29 @@ class _IncorporacionState extends State<Incorporacion> {
             style: TextStyle(fontSize: 18),
           )),
         ));
-        Navigator.push(
-            context, MaterialPageRoute(builder: ((context) => Dashboard())));
+        Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const Dashboard()),
+                  (Route<dynamic> route) => false,
+                );
       } else {
-        print('Failed to add user answers: ${response.statusCode}');
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.red,
+          content: Center(
+              child: Text(
+            'Failed to add user answers',
+            style: TextStyle(fontSize: 18),
+          )),
+        ));
       }
     } catch (error) {
-      print('Error: $error');
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        content: Center(
+            child: Text(
+          ' $error',
+          style: TextStyle(fontSize: 18),
+        )),
+      ));
     }
   }
 
@@ -141,7 +157,7 @@ class _IncorporacionState extends State<Incorporacion> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return AppWithDrawer(
             title: 'Incorporacion',
-            content: Scaffold(
+            content: const Scaffold(
               body: Center(child: CircularProgressIndicator()),
             ),
           );
@@ -375,7 +391,6 @@ class _IncorporacionState extends State<Incorporacion> {
                         }
                         respuestapregunta10 = [];
                         for (DatosDeTabla x in tablapregunta10) {
-                          print(x.answer);
                           respuestapregunta10.add(x.answer);
                         }
                         if (selectedRespuesta1 == null) {

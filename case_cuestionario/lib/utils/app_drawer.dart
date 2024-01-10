@@ -29,7 +29,12 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
   bool _incorporacion = false;
   bool _areaProfesional = false;
   bool _idioma = false;
-  final _secureStorage = FlutterSecureStorage();
+  bool _serviciosCase = false;
+  bool _abandonoEscolar = false;
+  bool _saludMental = false;
+  bool _conectividad = false;
+  bool _serviciosUnidad = false;
+  final _secureStorage = const FlutterSecureStorage();
   String? userId;
   @override
   void initState() {
@@ -38,10 +43,15 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
     checkIncorporacion();
     checkAreaProfesional();
     checkIdioma();
+    checkServiciosCase();
+    checkAbandonoEscolar();
+    checkSaludMental();
+    checkConectividad();
+    checkServiciosUnidad();
   }
 
   Future<void> checkDatosGenerales() async {
-    final String url = 'http://192.168.1.76:3000/revisarDatosGenerales';
+    const String url = 'http://192.168.1.66:3000/revisarDatosGenerales';
     userId = await _secureStorage.read(key: 'id');
     try {
       final response = await http.post(Uri.parse(url),
@@ -61,7 +71,7 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
   }
 
   Future<void> checkIncorporacion() async {
-    final String url = 'http://192.168.1.76:3000/revisarIncorporacion';
+    const String url = 'http://192.168.1.66:3000/revisarIncorporacion';
     userId = await _secureStorage.read(key: 'id');
     try {
       final response = await http.post(Uri.parse(url),
@@ -69,7 +79,7 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
           body: jsonEncode({
             'userId': userId,
           }));
-      print("Incorporacion: ${response.statusCode}");
+
       if (response.statusCode == 200) {
         setState(() {
           _incorporacion = true;
@@ -81,7 +91,7 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
   }
 
   Future<void> checkAreaProfesional() async {
-    final String url = 'http://192.168.1.76:3000/revisarAreaProfesional';
+    const String url = 'http://192.168.1.66:3000/revisarAreaProfesional';
     userId = await _secureStorage.read(key: 'id');
     try {
       final response = await http.post(Uri.parse(url),
@@ -100,7 +110,7 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
   }
 
   Future<void> checkIdioma() async {
-    final String url = 'http://192.168.1.76:3000/revisarIdioma';
+    const String url = 'http://192.168.1.66:3000/revisarIdioma';
     userId = await _secureStorage.read(key: 'id');
     try {
       final response = await http.post(Uri.parse(url),
@@ -111,6 +121,101 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
       if (response.statusCode == 200) {
         setState(() {
           _idioma = true;
+        });
+      }
+    } catch (e) {
+      //Handle network or other errors
+    }
+  }
+
+  Future<void> checkServiciosCase() async {
+    const String url = 'http://192.168.1.66:3000/revisarServiciosCase';
+    userId = await _secureStorage.read(key: 'id');
+    try {
+      final response = await http.post(Uri.parse(url),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'userId': userId,
+          }));
+      if (response.statusCode == 200) {
+        setState(() {
+          _serviciosCase = true;
+        });
+      }
+    } catch (e) {
+      //Handle network or other errors
+    }
+  }
+
+  Future<void> checkAbandonoEscolar() async {
+    const String url = 'http://192.168.1.66:3000/revisarAbandonoEscolar';
+    userId = await _secureStorage.read(key: 'id');
+    try {
+      final response = await http.post(Uri.parse(url),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'userId': userId,
+          }));
+      if (response.statusCode == 200) {
+        setState(() {
+          _abandonoEscolar = true;
+        });
+      }
+    } catch (e) {
+      //Handle network or other errors
+    }
+  }
+
+  Future<void> checkSaludMental() async {
+    const String url = 'http://192.168.1.66:3000/revisarAbandonoEscolar';
+    userId = await _secureStorage.read(key: 'id');
+    try {
+      final response = await http.post(Uri.parse(url),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'userId': userId,
+          }));
+      if (response.statusCode == 200) {
+        setState(() {
+          _saludMental = true;
+        });
+      }
+    } catch (e) {
+      //Handle network or other errors
+    }
+  }
+
+  Future<void> checkConectividad() async {
+    const String url = 'http://192.168.1.66:3000/revisarConectividad';
+    userId = await _secureStorage.read(key: 'id');
+    try {
+      final response = await http.post(Uri.parse(url),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'userId': userId,
+          }));
+      if (response.statusCode == 200) {
+        setState(() {
+          _conectividad = true;
+        });
+      }
+    } catch (e) {
+      //Handle network or other errors
+    }
+  }
+
+  Future<void> checkServiciosUnidad() async {
+    const String url = 'http://192.168.1.66:3000/revisarServiciosUnidad';
+    userId = await _secureStorage.read(key: 'id');
+    try {
+      final response = await http.post(Uri.parse(url),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'userId': userId,
+          }));
+      if (response.statusCode == 200) {
+        setState(() {
+          _serviciosUnidad = true;
         });
       }
     } catch (e) {
@@ -168,10 +273,10 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                                 ? Icons.check_box
                                 : Icons.check_box_outline_blank,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          Text(
+                          const Text(
                             'Datos generales',
                             style: TextStyle(fontSize: 20),
                           ),
@@ -206,10 +311,10 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                                 ? Icons.check_box
                                 : Icons.check_box_outline_blank,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          Text(
+                          const Text(
                             'Incorporacion, medios \ny recursos',
                             style: TextStyle(fontSize: 20),
                           ),
@@ -244,10 +349,10 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                                 ? Icons.check_box
                                 : Icons.check_box_outline_blank,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          Text(
+                          const Text(
                             'Area profesional',
                             style: TextStyle(fontSize: 20),
                           ),
@@ -272,10 +377,10 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                                 ? Icons.check_box
                                 : Icons.check_box_outline_blank,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          Text(
+                          const Text(
                             'Idioma',
                             style: TextStyle(fontSize: 20),
                           ),
@@ -296,31 +401,37 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                       title: Row(
                         children: [
                           Icon(
-                            Icons.check_box_outline_blank,
+                            _serviciosCase
+                                ? Icons.check_box
+                                : Icons.check_box_outline_blank,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          Text(
+                          const Text(
                             'Servicios Case',
                             style: TextStyle(fontSize: 20),
                           ),
                         ],
                       ),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const serviciosCase(),
-                          ),
-                        );
+                        if (_serviciosCase == false) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const serviciosCase(),
+                            ),
+                          );
+                        }
                       },
                     ),
                     ListTile(
                       title: Row(
                         children: [
                           Icon(
-                            Icons.check_box_outline_blank,
+                            _abandonoEscolar
+                                ? Icons.check_box
+                                : Icons.check_box_outline_blank,
                           ),
                           SizedBox(
                             width: 10,
@@ -332,19 +443,23 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                         ],
                       ),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const abandonoEscolar(),
-                          ),
-                        );
+                        if (_abandonoEscolar == false) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const abandonoEscolar(),
+                            ),
+                          );
+                        }
                       },
                     ),
                     ListTile(
                       title: Row(
                         children: [
                           Icon(
-                            Icons.check_box_outline_blank,
+                            _saludMental
+                                ? Icons.check_box
+                                : Icons.check_box_outline_blank,
                           ),
                           SizedBox(
                             width: 10,
@@ -356,48 +471,56 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                         ],
                       ),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const saludMental(),
-                          ),
-                        );
+                        if (_saludMental == false) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const saludMental(),
+                            ),
+                          );
+                        }
                       },
                     ),
                     ListTile(
                       title: Row(
                         children: [
                           Icon(
-                            Icons.check_box_outline_blank,
+                            _conectividad
+                                ? Icons.check_box
+                                : Icons.check_box_outline_blank,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          Text(
+                          const Text(
                             'Conectividad e \ninfraestructura',
                             style: TextStyle(fontSize: 20),
                           ),
                         ],
                       ),
                       onTap: () {
-                        Navigator.push(
+                       if(_conectividad==false){
+                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const conectividad(),
                           ),
                         );
+                       }
                       },
                     ),
                     ListTile(
                       title: Row(
                         children: [
                           Icon(
-                            Icons.check_box_outline_blank,
+                            _serviciosUnidad
+                                ? Icons.check_box
+                                : Icons.check_box_outline_blank,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          Text(
+                          const Text(
                             'Servicios de la \nunidad academica',
                             style: TextStyle(fontSize: 20),
                           ),
@@ -417,7 +540,7 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
               ),
             ),
             ListTile(
-              title: Row(
+              title: const Row(
                 children: [
                   Icon(
                     Icons.exit_to_app,

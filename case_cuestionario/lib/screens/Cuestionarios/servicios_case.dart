@@ -1,3 +1,4 @@
+import 'package:case_cuestionario/screens/dashboard.dart';
 import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
@@ -55,7 +56,30 @@ class _serviciosCaseState extends State<serviciosCase> {
             'pregunta48': _selectedPregunta48,
             'pregunta49': _selectedPregunta49
           }));
-      print(response.body);
+      if (response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.green,
+          content: Center(
+              child: Text(
+            'Respuestas guardadas con exito',
+            style: TextStyle(fontSize: 18),
+          )),
+        ));
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const Dashboard()),
+          (Route<dynamic> route) => false,
+        );
+      } else {
+        // Handle error
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.red,
+          content: Center(
+              child: Text(
+            'Error al agregar las respuestas',
+            style: TextStyle(fontSize: 18),
+          )),
+        ));
+      }
     } catch (error) {
       print('Error: $error');
     }
@@ -80,6 +104,17 @@ class _serviciosCaseState extends State<serviciosCase> {
 
   @override
   Widget build(BuildContext context) {
+    void snackbarRed(String message) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        content: Center(
+            child: Text(
+          message,
+          style: const TextStyle(fontSize: 18),
+        )),
+      ));
+    }
+
     WidgetBuilderHelper helper = WidgetBuilderHelper(context, rebuild);
     return FutureBuilder<Map<String, dynamic>>(
         future: apiDataFuture,
@@ -87,7 +122,7 @@ class _serviciosCaseState extends State<serviciosCase> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return AppWithDrawer(
                 title: 'Servicios CASE',
-                content: Scaffold(
+                content: const Scaffold(
                   body: Center(child: CircularProgressIndicator()),
                 ));
           } else if (snapshot.hasError) {
@@ -171,23 +206,23 @@ class _serviciosCaseState extends State<serviciosCase> {
                             authToken = await _secureStorage.read(key: 'token');
                             userId = await _secureStorage.read(key: 'id');
                             if (_selectedPregunta45 == null) {
-                              //TODO
+                              snackbarRed('message');
                               return;
                             }
                             if (_selectedPregunta46 == null) {
-                              //TODO
+                              snackbarRed('message');
                               return;
                             }
                             if (_selectedPregunta47 == null) {
-                              //TODO
+                              snackbarRed('message');
                               return;
                             }
                             if (_selectedPregunta48 == null) {
-                              //TODO
+                              snackbarRed('message');
                               return;
                             }
                             if (_selectedPregunta49 == null) {
-                              //TODO
+                              snackbarRed('message');
                               return;
                             }
                             await addServiciosCase();

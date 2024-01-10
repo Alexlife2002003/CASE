@@ -32,7 +32,7 @@ class _LoginState extends State<Login> {
     }
 
     Future<void> loginUser() async {
-      const String url = 'http://192.168.1.76:3000/login';
+      const String url = 'http://192.168.1.66:3000/login';
 
       final response = await http.post(Uri.parse(url),
           headers: {'Content-Type': 'application/json'},
@@ -49,7 +49,7 @@ class _LoginState extends State<Login> {
         await secureStorage.write(key: 'token', value: token);
         await secureStorage.write(key: 'id', value: id);
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Dashboard()));
+            context, MaterialPageRoute(builder: (context) => const Dashboard()));
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.grey.shade500,
           content: const Center(child: Text('Login succesfull!')),
