@@ -103,7 +103,7 @@ class _IncorporacionState extends State<Incorporacion> {
           backgroundColor: Colors.green,
           content: Center(
               child: Text(
-            'Respuestas guardadas con exito',
+            'Respuestas guardadas con éxito.',
             style: TextStyle(fontSize: 18),
           )),
         ));
@@ -112,7 +112,8 @@ class _IncorporacionState extends State<Incorporacion> {
           (Route<dynamic> route) => false,
         );
       } else {
-        snackbarRed('Failed to add user answers');
+        snackbarRed("Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
+
       }
     } catch (error) {
       snackbarRed('$error');
@@ -390,97 +391,107 @@ class _IncorporacionState extends State<Incorporacion> {
                         for (DatosDeTabla x in tablapregunta10) {
                           respuestapregunta10.add(x.answer);
                         }
-                        if (selectedRespuesta1 == null) {
-                          snackbarRed(
-                              'Ingresa como te enteraste de la licenciatura');
-                          return;
-                        }
-                        if (selectedRespuesta2 == null) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Center(
-                                child: Text(
-                              'Ingresa el nivel de importancia de actividades escolares en tu familia',
-                              style: TextStyle(fontSize: 18),
-                            )),
-                          ));
-                          return;
-                        }
-                        if (SelectedRespuesta3 == null) {
-                          snackbarRed(
-                              'Contesta si cuentas con un espacio para estudiar');
-                          return;
-                        }
+                       // Verificar si se ha seleccionado la respuesta 1
+if (selectedRespuesta1 == null) {
+  snackbarRed('Por favor, indica cómo te enteraste de la licenciatura.');
+  return;
+}
 
-                        if (escritorio == false &&
-                            internet == false &&
-                            impresora == false &&
-                            calculadora == false &&
-                            computadora == false &&
-                            tablet == false &&
-                            todas == false) {
-                          snackbarRed('Contesta con cuales medios cuentas');
+// Verificar si se ha seleccionado la respuesta 2
+if (selectedRespuesta2 == null) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      backgroundColor: Colors.red,
+      content: Center(
+        child: Text(
+          'Por favor, indica el nivel de importancia de las actividades escolares en tu familia.',
+          style: TextStyle(fontSize: 18),
+        ),
+      ),
+    ),
+  );
+  return;
+}
 
-                          return;
-                        }
-                        if (selectedRespuesta5 == null) {
-                          snackbarRed(
-                              'Contesta los recursos economicos con los que cuentas');
-                          return;
-                        }
-                        if (selectedRespuesta6 == null) {
-                          snackbarRed(
-                              'Contesta el medio de transporte que utilizas');
-                          return;
-                        }
-                        if (selectedRespuesta7 == null) {
-                          snackbarRed(
-                              'Contesta cuanto tiempo haces a la escuela');
-                          return;
-                        }
-                        if (selectedRespuesta8 == null) {
-                          snackbarRed('Responde si conoces al CEBUAZ');
-                          return;
-                        }
-                        if (selectedRespuesta9 == null) {
-                          snackbarRed('Responde si usas el CEBUAZ');
-                          return;
-                        }
+                       // Verificar si se ha seleccionado la respuesta 3
+if (selectedRespuesta3 == null) {
+  snackbarRed('Por favor, responde si cuentas con un espacio para estudiar.');
+  return;
+}
 
-                        if (respuestapregunta10[0].isEmpty) {
-                          snackbarRed(
-                              'Contesta el aspecto de exigencia academica');
+// Verificar si al menos un medio ha sido seleccionado
+if (!escritorio && !internet && !impresora && !calculadora && !computadora && !tablet && !todas) {
+  snackbarRed('Por favor, indica con qué medios cuentas para estudiar.');
+  return;
+}
 
-                          return;
-                        }
-                        if (respuestapregunta10[1].isEmpty) {
-                          snackbarRed('Contesta el aspecto de ambiente social');
+// Verificar si se ha seleccionado la respuesta 5
+if (selectedRespuesta5 == null) {
+  snackbarRed('Por favor, responde sobre los recursos económicos con los que cuentas.');
+  return;
+}
 
-                          return;
-                        }
-                        if (respuestapregunta10[2].isEmpty) {
-                          snackbarRed(
-                              'Contesta el aspecto de relacion con la familia');
-                          return;
-                        }
-                        if (respuestapregunta10[3].isEmpty) {
-                          snackbarRed(
-                              'Contesta el aspecto de relacion con los maestros');
-                          return;
-                        }
-                        if (respuestapregunta10[4].isEmpty) {
-                          snackbarRed(
-                              'Contesta el aspecto de relacion con peers');
+                       // Verificar si se ha seleccionado la respuesta 6
+if (selectedRespuesta6 == null) {
+  snackbarRed('Por favor, indica el medio de transporte que utilizas.');
+  return;
+}
 
-                          return;
-                        }
-                        if (selectedRespuesta11 == null) {
-                          snackbarRed(
-                              'Contesta la experiencia obtenida hasta la fecha');
+// Verificar si se ha seleccionado la respuesta 7
+if (selectedRespuesta7 == null) {
+  snackbarRed('Por favor, indica cuánto tiempo tardas en llegar a la escuela.');
+  return;
+}
 
-                          return;
-                        }
+// Verificar si se ha seleccionado la respuesta 8
+if (selectedRespuesta8 == null) {
+  snackbarRed('Por favor, responde si conoces al CEBUAZ.');
+  return;
+}
+
+// Verificar si se ha seleccionado la respuesta 9
+if (selectedRespuesta9 == null) {
+  snackbarRed('Por favor, responde si utilizas el CEBUAZ.');
+  return;
+}
+
+
+                     // Verificar si la respuesta a la pregunta 10, aspecto de exigencia académica, está vacía
+if (respuestapregunta10[0].isEmpty) {
+  snackbarRed('Por favor, responde al aspecto de exigencia académica.');
+  return;
+}
+
+// Verificar si la respuesta a la pregunta 10, aspecto de ambiente social, está vacía
+if (respuestapregunta10[1].isEmpty) {
+  snackbarRed('Por favor, responde al aspecto de ambiente social.');
+  return;
+}
+
+// Verificar si la respuesta a la pregunta 10, aspecto de relación con la familia, está vacía
+if (respuestapregunta10[2].isEmpty) {
+  snackbarRed('Por favor, responde al aspecto de relación con la familia.');
+  return;
+}
+
+                        // Verificar si la respuesta a la pregunta 10, aspecto de relación con los maestros, está vacía
+if (respuestapregunta10[3].isEmpty) {
+  snackbarRed('Por favor, responde al aspecto de relación con los maestros.');
+  return;
+}
+
+// Verificar si la respuesta a la pregunta 10, aspecto de relación con peers, está vacía
+if (respuestapregunta10[4].isEmpty) {
+  snackbarRed('Por favor, responde al aspecto de relación con compañeros.');
+  return;
+}
+
+// Verificar si se ha seleccionado la respuesta a la pregunta 11
+if (selectedRespuesta11 == null) {
+  snackbarRed('Por favor, responde a la experiencia obtenida hasta la fecha.');
+  return;
+}
+
                         await addCorporacion();
                       })
                     ],

@@ -119,7 +119,7 @@ class _datosGeneralesState extends State<datosGenerales> {
           );
         } else {
           // Handle error
-          snackbarRed("Error al agregar las respuestas");
+         snackbarRed("Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
         }
       } catch (error) {
         // Handle network or other errors
