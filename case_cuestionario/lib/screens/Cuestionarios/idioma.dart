@@ -55,7 +55,7 @@ class _IdiomaState extends State<Idioma> {
           backgroundColor: Colors.green,
           content: Center(
               child: Text(
-            'Respuestas guardadas con exito',
+            'Respuestas guardadas con éxito.',
             style: TextStyle(fontSize: 18),
           )),
         ));
@@ -65,7 +65,7 @@ class _IdiomaState extends State<Idioma> {
         );
       } else {
         // Handle error
-        snackbarRed('Error al agregar las respuestas');
+        snackbarRed("Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
       }
     } catch (error) {
       snackbarRed('Error: $error');
@@ -179,20 +179,24 @@ class _IdiomaState extends State<Idioma> {
                       helper.buildGuardarButton(() async {
                         authToken = await _secureStorage.read(key: 'token');
                         userId = await _secureStorage.read(key: 'id');
-                        if (_selectedPregunta42 == null) {
-                          snackbarRed(
-                              "Contesta si tienes conocimiento del idioma ingles");
-                          return;
-                        }
-                        if (_selectedPregunta43 == null) {
-                          snackbarRed("Conteta si estudias ingles actualmente");
-                          return;
-                        }
-                        if (_selectedPregunta44 == null) {
-                          snackbarRed(
-                              "Contesta si conoces opciones para estudar ingles");
-                          return;
-                        }
+                        // Verificar si se ha seleccionado la respuesta a la pregunta 42
+if (_selectedPregunta42 == null) {
+  snackbarRed("Por favor, responde si tienes conocimiento del idioma inglés.");
+  return;
+}
+
+// Verificar si se ha seleccionado la respuesta a la pregunta 43
+if (_selectedPregunta43 == null) {
+  snackbarRed("Por favor, responde si estudias inglés actualmente.");
+  return;
+}
+
+// Verificar si se ha seleccionado la respuesta a la pregunta 44
+if (_selectedPregunta44 == null) {
+  snackbarRed("Por favor, responde si conoces opciones para estudiar inglés.");
+  return;
+}
+
                         await addIdioma();
                       }),
                     ],
