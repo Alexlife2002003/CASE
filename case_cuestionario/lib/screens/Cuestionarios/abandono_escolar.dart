@@ -112,7 +112,7 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
           backgroundColor: Colors.green,
           content: Center(
               child: Text(
-            'Respuestas guardadas con exito',
+             'Respuestas guardadas con éxito.',
             style: TextStyle(fontSize: 18),
           )),
         ));
@@ -122,7 +122,7 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
         );
       } else {
         // Handle error
-        snackbarRed('Error al agregar las respuestas ');
+        snackbarRed("Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
       }
     } catch (error) {
       snackbarRed('Error: $error');
@@ -551,91 +551,112 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
                               (aspectosPersonales == false) &&
                               (aspectosSalud == false) &&
                               (noMotivosAbandono == false)) {
-                            snackbarRed(
-                                "Contesta al menos un motivo de dejar la universidad");
+                            
+                                snackbarRed("Por favor, responde al menos un motivo de dejar la universidad.");
                             return;
                           }
-                          if (_selected_pregunta51 == null) {
-                            snackbarRed(
-                                "Contesta si volverias a estudiar en la UAZ");
-                            return;
-                          }
-                          if (_selected_pregunta52 == null) {
-                            snackbarRed(
-                                "Responde si consideras aplicar nuevas tecnologias en tu carrera");
-                            return;
-                          }
-                          if (_selected_pregunta53 == null) {
-                            snackbarRed(
-                                "Contesta si realizas a alguna extra escolar");
-                            return;
-                          }
-                          if (_selected_pregunta54 == null) {
-                            snackbarRed(
-                                "Responde si consideras que las actividades artisticas te ayudan a mejorar");
-                            return;
-                          }
-                          if (_selected_pregunta55 == null) {
-                            snackbarRed("Contesta como usas tu tiempo");
-                            return;
-                          }
-                          if (respuestaoregunta56[0].isEmpty) {
-                            snackbarRed('Contesta el aspecto "Diariamente"');
-                            return;
-                          }
-                          if (respuestaoregunta56[1].isEmpty) {
-                            snackbarRed('Contesta el aspecto "Fin de semana"');
-                            return;
-                          }
-                          if (respuestaoregunta56[2].isEmpty) {
-                            snackbarRed(
-                                'Contesta el aspecto "Antes de un examen"');
-                            return;
-                          }
-                          if (respuestaoregunta57[0].isEmpty) {
-                            snackbarRed(
-                                'Contesta el aspecto "Hago uso constante de mis conocimientos"');
-                            return;
-                          }
-                          if (respuestaoregunta57[1].isEmpty) {
-                            snackbarRed(
-                                'Contesta el aspecto "Cumplo mis metas"');
-                            return;
-                          }
-                          if (respuestaoregunta57[2].isEmpty) {
-                            snackbarRed(
-                                'Contesta el aspecto "He desarrollado habilidades referentes a mis estudios"');
-                            return;
-                          }
-                          if (respuestaoregunta57[3].isEmpty) {
-                            snackbarRed(
-                                'Contesta el aspecto "He desarrollado pensamiento critico"');
-                            return;
-                          }
-                          if (_selected_pregunta58 == null) {
-                            snackbarRed(
-                                "Responde si preguntas lo que no entiendes");
-                            return;
-                          }
-                          if (_selected_pregunta59 == null) {
-                            snackbarRed(
-                                "Contesta si aplicas estrategias de estudio");
-                            return;
-                          }
-                          if (_selected_pregunta60 == null) {
-                            snackbarRed("Contesta como calificas tu desempeno");
-                            return;
-                          }
-                          if (_selected_pregunta61 == null) {
-                            snackbarRed(
-                                "Responde que requieres para mejorar tu rendimiento academico");
-                            return;
-                          }
-                          if (_selected_pregunta62 == null) {
-                            snackbarRed(
-                                "Responde si la contigencia sanitaria te afecto a nivel emocional");
-                            return;
-                          }
+                         // Verificar si se ha seleccionado la respuesta a la pregunta 51
+if (_selected_pregunta51 == null) {
+  snackbarRed("Por favor, responde si volverías a estudiar en la UAZ.");
+  return;
+}
+
+// Verificar si se ha seleccionado la respuesta a la pregunta 52
+if (_selected_pregunta52 == null) {
+  snackbarRed("Por favor, responde si consideras aplicar nuevas tecnologías en tu carrera.");
+  return;
+}
+
+// Verificar si se ha seleccionado la respuesta a la pregunta 53
+if (_selected_pregunta53 == null) {
+  snackbarRed("Por favor, responde si realizas alguna actividad extraescolar.");
+  return;
+}
+
+                         // Verificar si se ha seleccionado la respuesta a la pregunta 54
+if (_selected_pregunta54 == null) {
+  snackbarRed("Por favor, responde si consideras que las actividades artísticas te ayudan a mejorar.");
+  return;
+}
+
+// Verificar si se ha seleccionado la respuesta a la pregunta 55
+if (_selected_pregunta55 == null) {
+  snackbarRed("Por favor, responde cómo usas tu tiempo.");
+  return;
+}
+
+// Verificar si la respuesta a la pregunta 56, aspecto "Diariamente", está vacía
+if (respuestaoregunta56[0].isEmpty) {
+  snackbarRed('Por favor, responde al aspecto "Diariamente".');
+  return;
+}
+
+// Verificar si la respuesta a la pregunta 56, aspecto "Fin de semana", está vacía
+if (respuestaoregunta56[1].isEmpty) {
+  snackbarRed('Por favor, responde al aspecto "Fin de semana".');
+  return;
+}
+
+                          // Verificar si la respuesta a la pregunta 56, aspecto "Antes de un examen", está vacía
+if (respuestaoregunta56[2].isEmpty) {
+  snackbarRed('Por favor, responde al aspecto "Antes de un examen".');
+  return;
+}
+
+// Verificar si la respuesta a la pregunta 57, aspecto "Hago uso constante de mis conocimientos", está vacía
+if (respuestaoregunta57[0].isEmpty) {
+  snackbarRed('Por favor, responde al aspecto "Hago uso constante de mis conocimientos".');
+  return;
+}
+
+// Verificar si la respuesta a la pregunta 57, aspecto "Cumplo mis metas", está vacía
+if (respuestaoregunta57[1].isEmpty) {
+  snackbarRed('Por favor, responde al aspecto "Cumplo mis metas".');
+  return;
+}
+
+                          // Verificar si la respuesta a la pregunta 57, aspecto "He desarrollado habilidades referentes a mis estudios", está vacía
+if (respuestaoregunta57[2].isEmpty) {
+  snackbarRed('Por favor, responde al aspecto "He desarrollado habilidades referentes a mis estudios".');
+  return;
+}
+
+// Verificar si la respuesta a la pregunta 57, aspecto "He desarrollado pensamiento crítico", está vacía
+if (respuestaoregunta57[3].isEmpty) {
+  snackbarRed('Por favor, responde al aspecto "He desarrollado pensamiento crítico".');
+  return;
+}
+
+// Verificar si se ha seleccionado la respuesta a la pregunta 58
+if (_selected_pregunta58 == null) {
+  snackbarRed("Por favor, responde si preguntas lo que no entiendes.");
+  return;
+}
+
+// Verificar si se ha seleccionado la respuesta a la pregunta 59
+if (_selected_pregunta59 == null) {
+  snackbarRed("Por favor, responde si aplicas estrategias de estudio.");
+  return;
+}
+
+                          // Verificar si se ha seleccionado la respuesta a la pregunta 60
+if (_selected_pregunta60 == null) {
+  snackbarRed("Por favor, responde cómo calificas tu desempeño.");
+  return;
+}
+
+// Verificar si se ha seleccionado la respuesta a la pregunta 61
+if (_selected_pregunta61 == null) {
+  snackbarRed("Por favor, responde qué requieres para mejorar tu rendimiento académico.");
+  return;
+}
+
+// Verificar si se ha seleccionado la respuesta a la pregunta 62
+if (_selected_pregunta62 == null) {
+  snackbarRed("Por favor, responde si la contingencia sanitaria te afectó a nivel emocional.");
+  return;
+}
+
                           revisar50(horariosComplicados);
                           revisar50(noVocacion);
                           revisar50(desempenoAcademico);
