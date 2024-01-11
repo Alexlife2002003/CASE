@@ -59,7 +59,7 @@ class _saludMentalState extends State<saludMental> {
           backgroundColor: Colors.green,
           content: Center(
               child: Text(
-            'Respuestas guardadas con exito',
+            'Respuestas guardadas con éxito.',
             style: TextStyle(fontSize: 18),
           )),
         ));
@@ -69,7 +69,7 @@ class _saludMentalState extends State<saludMental> {
         );
       } else {
         // Handle error
-        snackbarRed('Error al agregar las respuestas${response.statusCode} ');
+        snackbarRed("Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
       }
     } catch (error) {
       snackbarRed('Error: $error');
@@ -237,26 +237,18 @@ class _saludMentalState extends State<saludMental> {
                             authToken = await _secureStorage.read(key: 'token');
                             userId = await _secureStorage.read(key: 'id');
 
-                            if ((pregunta63_0 == false) &&
-                                (pregunta63_1 == false) &&
-                                (pregunta63_2 == false) &&
-                                (pregunta63_3 == false) &&
-                                (pregunta63_4 == false) &&
-                                (pregunta63_5 == false) &&
-                                (pregunta63_6 == false) &&
-                                (pregunta63_7 == false) &&
-                                (pregunta63_8 == false) &&
-                                (pregunta63_9 == false)) {
-                              snackbarRed(
-                                  "Responde al menos una situacion de aislamiento");
-                              return;
-                            }
-                            if (selectedPregunta64 == null) {
-                              snackbarRed(
-                                  "Responde si has pasado por alguna situacion sentimental");
+                           // Verificar si ninguna situación de aislamiento ha sido seleccionada en la pregunta 63
+if (!(pregunta63_0 || pregunta63_1 || pregunta63_2 || pregunta63_3 || pregunta63_4 || pregunta63_5 || pregunta63_6 || pregunta63_7 || pregunta63_8 || pregunta63_9)) {
+  snackbarRed("Por favor, responde al menos una situación de aislamiento.");
+  return;
+}
 
-                              return;
-                            }
+// Verificar si se ha seleccionado la respuesta a la pregunta 64
+if (selectedPregunta64 == null) {
+  snackbarRed("Por favor, responde si has pasado por alguna situación sentimental.");
+  return;
+}
+
                             resultado63 = "";
                             revisar63(pregunta63_0);
                             revisar63(pregunta63_1);
