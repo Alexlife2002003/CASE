@@ -109,7 +109,7 @@ class _datosGeneralesState extends State<datosGenerales> {
             backgroundColor: Colors.green,
             content: Center(
                 child: Text(
-              'Respuestas guardadas con exito',
+              'Respuestas guardadas con éxito.',
               style: TextStyle(fontSize: 18),
             )),
           ));
@@ -239,23 +239,30 @@ class _datosGeneralesState extends State<datosGenerales> {
                         helper.buildGuardarButton(() async {
                           token = await _secureStorage.read(key: 'token');
                           userId = await _secureStorage.read(key: 'id');
-                          if (selectedSemester == null) {
-                            snackbarRed("Semestre se encuentra sin contestar");
-                            return;
-                          }
-                          if (_nombreCompletoController.text.trim().isEmpty) {
-                            snackbarRed('Nombre completo sin contestar');
-                            return;
-                          }
-                          if (selectedSexo == null) {
-                            snackbarRed('Genero se encuentra sin contestar');
+                          // Verificar si se ha seleccionado un semestre
+if (selectedSemester == null) {
+  snackbarRed("Por favor, selecciona un semestre.");
+  return;
+}
 
-                            return;
-                          }
-                          if (_municipioController.text.trim().isEmpty) {
-                            snackbarRed('Municipio se encuentra sin contestar');
-                            return;
-                          }
+// Verificar si se ha proporcionado un nombre completo
+if (_nombreCompletoController.text.trim().isEmpty) {
+  snackbarRed('Por favor, ingresa tu nombre completo.');
+  return;
+}
+
+// Verificar si se ha seleccionado un género
+if (selectedSexo == null) {
+  snackbarRed('Por favor, selecciona tu género.');
+  return;
+}
+
+// Verificar si se ha proporcionado un municipio
+if (_municipioController.text.trim().isEmpty) {
+  snackbarRed('Por favor, ingresa tu municipio.');
+  return;
+}
+
                           if (selectedEstadoCivil == null) {
                             snackbarRed(
                                 'Estado civil se encuentra sin contestar');
