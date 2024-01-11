@@ -52,20 +52,23 @@ class _LoginState extends State<Login> {
         await secureStorage.write(key: 'id', value: id);
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const Dashboard()));
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: Colors.grey.shade500,
-          content: const Center(child: Text('Login succesfull!')),
-        ));
+       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  backgroundColor: Colors.grey.shade500,
+  content: const Center(child: Text('Inicio de sesión exitoso')),
+));
+
       } else if (response.statusCode == 401) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: Colors.grey.shade500,
-          content: Center(child: Text('Failed to login ${response.body}')),
-        ));
+  backgroundColor: Colors.grey.shade500,
+  content: Center(child: Text('Inicio de sesión fallido ${response.body}')),
+));
+
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: Colors.grey.shade500,
-          content: Center(child: Text('Failed to login ${response.body}')),
-        ));
+       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  backgroundColor: Colors.grey.shade500,
+  content: Center(child: Text('Error al iniciar sesión: ${response.body}')),
+));
+
       }
     }
 
@@ -185,13 +188,14 @@ class _LoginState extends State<Login> {
             child: GestureDetector(
               onTap: () {
                 if (_emailController.text.trim().isEmpty) {
-                  snackbarRed("Ingrese su correo");
-                  return;
-                }
-                if (_passwordController.text.trim().isEmpty) {
-                  snackbarRed("Ingrese su password");
-                  return;
-                }
+  snackbarRed("Por favor, ingrese su correo electrónico");
+  return;
+}
+if (_passwordController.text.trim().isEmpty) {
+  snackbarRed("Por favor, ingrese su contraseña");
+  return;
+}
+
                 loginUser();
               },
               child: Material(

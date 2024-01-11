@@ -112,13 +112,13 @@ class _RegistrarseState extends State<Registrarse> {
 
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.grey.shade500,
-            content: const Center(child: Text('Registration successful!')),
+            content: const Center(child: Text('Registro exitoso!')),
           ));
         } else {
-          snackbarRed('Registration failed. Status code: ${response.statusCode}');
+          snackbarRed('Registro fallido. ${response.statusCode}');
         }
       } catch (error) {
-        snackbarRed("Error during registrarion. Try again");
+        snackbarRed("Registro fallido, vuelve a intentarlo.");
       }
     }
 
@@ -177,23 +177,24 @@ class _RegistrarseState extends State<Registrarse> {
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: GestureDetector(
               onTap: () async {
-                if (_emailController.text.trim().isEmpty) {
-                  snackbarRed("El correo se encuentra vacio");
-                  return;
-                }
-                if (!isValidEmail(_emailController.text.trim())) {
-                  snackbarRed('Ingresa un correo válido');
-                  return;
-                }
-                if ((_passwordController.text.trim().isEmpty) ||
-                    (_confirmPasswordController.text.trim().isEmpty)) {
-                  snackbarRed("Password cannot be empty");
-                }
-                if (_passwordController.text.trim() !=
-                    _confirmPasswordController.text.trim()) {
-                  snackbarRed("Passwords are different");
-                  return;
-                }
+               if (_emailController.text.trim().isEmpty) {
+  snackbarRed("El correo electrónico no puede estar vacío");
+  return;
+}
+if (!isValidEmail(_emailController.text.trim())) {
+  snackbarRed('Ingresa un correo electrónico válido');
+  return;
+}
+if ((_passwordController.text.trim().isEmpty) ||
+    (_confirmPasswordController.text.trim().isEmpty)) {
+  snackbarRed("La contraseña no puede estar vacía");
+  return;
+}
+if (_passwordController.text.trim() != _confirmPasswordController.text.trim()) {
+  snackbarRed("Las contraseñas no coinciden");
+  return;
+}
+
                 await registerUser(_emailController.text.trim(),
                     _passwordController.text.trim());
               },
