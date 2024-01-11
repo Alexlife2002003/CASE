@@ -52,7 +52,7 @@ class _conectividadState extends State<conectividad> {
           backgroundColor: Colors.green,
           content: Center(
               child: Text(
-           'Respuestas guardadas con éxito.',
+            'Respuestas guardadas con éxito.',
             style: TextStyle(fontSize: 18),
           )),
         ));
@@ -62,7 +62,8 @@ class _conectividadState extends State<conectividad> {
         );
       } else {
         // Handle error
-        snackbarRed("Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
+        snackbarRed(
+            "Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
       }
     } catch (error) {
       snackbarRed('Error: $error');
@@ -195,29 +196,33 @@ class _conectividadState extends State<conectividad> {
                           helper.buildGuardarButton(() async {
                             authToken = await _secureStorage.read(key: 'token');
                             userId = await _secureStorage.read(key: 'id');
-                           // Verificar si se ha seleccionado la respuesta a la pregunta 65
-if (_selectedPregunta65 == null) {
-  snackbarRed("Por favor, responde cómo consideras el servicio de internet de la unidad.");
-  return;
-}
+                            // Verificar si se ha seleccionado la respuesta a la pregunta 65
+                            if (_selectedPregunta65 == null) {
+                              snackbarRed(
+                                  "Por favor, responde cómo consideras el servicio de internet de la unidad.");
+                              return;
+                            }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 66
-if (_selectedPregunta66 == null) {
-  snackbarRed("Por favor, responde cómo consideras las instalaciones del centro de cómputo.");
-  return;
-}
+                            if (_selectedPregunta66 == null) {
+                              snackbarRed(
+                                  "Por favor, responde cómo consideras las instalaciones del centro de cómputo.");
+                              return;
+                            }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 67
-if (_selectedPregunta67 == null) {
-  snackbarRed("Por favor, responde cómo consideras la higiene y limpieza del servicio de cafetería.");
-  return;
-}
+                            if (_selectedPregunta67 == null) {
+                              snackbarRed(
+                                  "Por favor, responde cómo consideras la higiene y limpieza del servicio de cafetería.");
+                              return;
+                            }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 68
-if (_selectedPregunta68 == null) {
-  snackbarRed("Por favor, responde si consideras accesibles los precios de los alimentos.");
-  return;
-}
+                            if (_selectedPregunta68 == null) {
+                              snackbarRed(
+                                  "Por favor, responde si consideras accesibles los precios de los alimentos.");
+                              return;
+                            }
 
                             await addConectividad();
                           })

@@ -151,7 +151,8 @@ class _areaProfesionalState extends State<areaProfesional> {
           (Route<dynamic> route) => false,
         );
       } else {
-snackbarRed("Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
+        snackbarRed(
+            "Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
       }
     } catch (error) {
       snackbarRed("Error: $error");
@@ -719,345 +720,402 @@ snackbarRed("Hubo un problema al agregar las respuestas. Por favor, inténtalo d
                           for (DatosDeTabla x in tablapregunta41) {
                             respuestapregunta41.add(x.answer);
                           }
-                       // Verificar si se ha seleccionado la respuesta a la pregunta 12
-if (_selected_pregunta12 == null) {
-  snackbarRed("Por favor, responde al enfoque que prefieres.");
-  return;
-}
+                          // Verificar si se ha seleccionado la respuesta a la pregunta 12
+                          if (_selected_pregunta12 == null) {
+                            snackbarRed(
+                                "Por favor, responde al enfoque que prefieres.");
+                            return;
+                          }
 
 // Verificar si el campo de la pregunta 13 está vacío
-if (_pregunta13Controller.text.trim().isEmpty) {
-  snackbarRed("Por favor, menciona una materia en la que te sientas más habilidoso/a.");
-  return;
-}
+                          if (_pregunta13Controller.text.trim().isEmpty) {
+                            snackbarRed(
+                                "Por favor, menciona una materia en la que te sientas más habilidoso/a.");
+                            return;
+                          }
 
 // Verificar si el campo de la pregunta 14 está vacío
-if (_pregunta14Controller.text.trim().isEmpty) {
-  snackbarRed("Por favor, menciona una materia en la que te sientas menos habilidoso/a.");
-  return;
-}
+                          if (_pregunta14Controller.text.trim().isEmpty) {
+                            snackbarRed(
+                                "Por favor, menciona una materia en la que te sientas menos habilidoso/a.");
+                            return;
+                          }
 
-                         // Verificar si la respuesta a la pregunta 15, cantidad de exámenes extraordinarios, está vacía
-if (respuestapregunta15[0].isEmpty) {
-  snackbarRed("Por favor, responde a la cantidad de exámenes extraordinarios.");
-  return;
-}
+                          // Verificar si la respuesta a la pregunta 15, cantidad de exámenes extraordinarios, está vacía
+                          if (respuestapregunta15[0].isEmpty) {
+                            snackbarRed(
+                                "Por favor, responde a la cantidad de exámenes extraordinarios.");
+                            return;
+                          }
 
 // Verificar si la respuesta a la pregunta 15, cantidad de exámenes de a título de suficiencia, está vacía
-if (respuestapregunta15[1].isEmpty) {
-  snackbarRed("Por favor, responde a la cantidad de exámenes de a título de suficiencia.");
-  return;
-}
+                          if (respuestapregunta15[1].isEmpty) {
+                            snackbarRed(
+                                "Por favor, responde a la cantidad de exámenes de a título de suficiencia.");
+                            return;
+                          }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 16
-if (_selectedPregunta16 == null) {
-  snackbarRed("Por favor, responde si te encuentras recursando materias.");
-  return;
-}
+                          if (_selectedPregunta16 == null) {
+                            snackbarRed(
+                                "Por favor, responde si te encuentras recursando materias.");
+                            return;
+                          }
 
-                         // Verificar si se ha seleccionado la respuesta a la pregunta 17
-if (_selectedPregunta17 == null) {
-  snackbarRed("Por favor, responde a qué atribuyes el reprobar materias.");
-  return;
-}
+                          // Verificar si se ha seleccionado la respuesta a la pregunta 17
+                          if (_selectedPregunta17 == null) {
+                            snackbarRed(
+                                "Por favor, responde a qué atribuyes el reprobar materias.");
+                            return;
+                          }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 18
-if (_selectedPregunta18 == null) {
-  snackbarRed("Por favor, responde a las dificultades que encontraste al ingresar a la carrera.");
-  return;
-}
+                          if (_selectedPregunta18 == null) {
+                            snackbarRed(
+                                "Por favor, responde a las dificultades que encontraste al ingresar a la carrera.");
+                            return;
+                          }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 19
-if (_selectedPregunta19 == null) {
-  snackbarRed("Por favor, responde si los docentes entregaron criterios de evaluación.");
-  return;
-}
+                          if (_selectedPregunta19 == null) {
+                            snackbarRed(
+                                "Por favor, responde si los docentes entregaron criterios de evaluación.");
+                            return;
+                          }
 
-                         // Verificar si se ha seleccionado la respuesta a la pregunta 20
-if (_selectedPregunta20 == null) {
-  snackbarRed("Por favor, escoge el aspecto que comentaron los maestros al inicio del curso.");
-  return;
-}
+                          // Verificar si se ha seleccionado la respuesta a la pregunta 20
+                          if (_selectedPregunta20 == null) {
+                            snackbarRed(
+                                "Por favor, escoge el aspecto que comentaron los maestros al inicio del curso.");
+                            return;
+                          }
 
 // Verificar si la respuesta a la pregunta 21, aspecto "Expone el maestro", está vacía
-if (respuestapregunta21[0].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Expone el maestro".');
-  return;
-}
+                          if (respuestapregunta21[0].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Expone el maestro".');
+                            return;
+                          }
 
 // Verificar si la respuesta a la pregunta 21, aspecto "El maestro dicta", está vacía
-if (respuestapregunta21[1].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "El maestro dicta".');
-  return;
-}
+                          if (respuestapregunta21[1].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "El maestro dicta".');
+                            return;
+                          }
 
                           // Verificar si la respuesta a la pregunta 21, aspecto "Dinámicas de grupo", está vacía
-if (respuestapregunta21[2].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Dinámicas de grupo".');
-  return;
-}
+                          if (respuestapregunta21[2].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Dinámicas de grupo".');
+                            return;
+                          }
 
 // Verificar si la respuesta a la pregunta 21, aspecto "Los alumnos exponen", está vacía
-if (respuestapregunta21[3].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Los alumnos exponen".');
-  return;
-}
+                          if (respuestapregunta21[3].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Los alumnos exponen".');
+                            return;
+                          }
 
 // Verificar si la respuesta a la pregunta 21, aspecto "Preguntas sobre la lectura", está vacía
-if (respuestapregunta21[4].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Preguntas sobre la lectura".');
-  return;
-}
+                          if (respuestapregunta21[4].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Preguntas sobre la lectura".');
+                            return;
+                          }
 
                           // Verificar si la respuesta a la pregunta 21, aspecto "Uso de recursos audiovisuales", está vacía
-if (respuestapregunta21[5].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Uso de recursos audiovisuales".');
-  return;
-}
+                          if (respuestapregunta21[5].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Uso de recursos audiovisuales".');
+                            return;
+                          }
 
 // Verificar si la respuesta a la pregunta 21, aspecto "Uso de recursos informáticos", está vacía
-if (respuestapregunta21[6].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Uso de recursos informáticos".');
-  return;
-}
+                          if (respuestapregunta21[6].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Uso de recursos informáticos".');
+                            return;
+                          }
 
 // Verificar si la respuesta a la pregunta 21, aspecto "Entrega de materiales", está vacía
-if (respuestapregunta21[7].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Entrega de materiales".');
-  return;
-}
+                          if (respuestapregunta21[7].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Entrega de materiales".');
+                            return;
+                          }
 
-                         // Verificar si se ha seleccionado la respuesta a la pregunta 22
-if (_selectedPregunta22 == null) {
-  snackbarRed("Por favor, responde a la frecuencia con la que los maestros impulsan la participación.");
-  return;
-}
+                          // Verificar si se ha seleccionado la respuesta a la pregunta 22
+                          if (_selectedPregunta22 == null) {
+                            snackbarRed(
+                                "Por favor, responde a la frecuencia con la que los maestros impulsan la participación.");
+                            return;
+                          }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 23
-if (_selectedPregunta23 == null) {
-  snackbarRed("Por favor, responde a cómo impulsan los maestros la participación.");
-  return;
-}
+                          if (_selectedPregunta23 == null) {
+                            snackbarRed(
+                                "Por favor, responde a cómo impulsan los maestros la participación.");
+                            return;
+                          }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 24
-if (_selectedPregunta24 == null) {
-  snackbarRed("Por favor, responde si consideras que tus maestros relacionan la teoría con ejemplos.");
-  return;
-}
+                          if (_selectedPregunta24 == null) {
+                            snackbarRed(
+                                "Por favor, responde si consideras que tus maestros relacionan la teoría con ejemplos.");
+                            return;
+                          }
 
                           // Verificar si la respuesta a la pregunta 25, aspecto "Artículos o revistas", está vacía
-if (respuestapregunta25[0].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Artículos o revistas".');
-  return;
-}
+                          if (respuestapregunta25[0].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Artículos o revistas".');
+                            return;
+                          }
 
 // Verificar si la respuesta a la pregunta 25, aspecto "Bibliografía del programa", está vacía
-if (respuestapregunta25[1].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Bibliografía del programa".');
-  return;
-}
+                          if (respuestapregunta25[1].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Bibliografía del programa".');
+                            return;
+                          }
 
 // Verificar si la respuesta a la pregunta 25, aspecto "Internet", está vacía
-if (respuestapregunta25[2].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Internet".');
-  return;
-}
+                          if (respuestapregunta25[2].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Internet".');
+                            return;
+                          }
 
-                         // Verificar si la respuesta a la pregunta 25, aspecto "Libros digitales", está vacía
-if (respuestapregunta25[3].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Libros digitales".');
-  return;
-}
+                          // Verificar si la respuesta a la pregunta 25, aspecto "Libros digitales", está vacía
+                          if (respuestapregunta25[3].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Libros digitales".');
+                            return;
+                          }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 26
-if (_selectedPregunta26 == null) {
-  snackbarRed("Por favor, responde con quién resuelves tus dudas.");
-  return;
-}
+                          if (_selectedPregunta26 == null) {
+                            snackbarRed(
+                                "Por favor, responde con quién resuelves tus dudas.");
+                            return;
+                          }
 
 // Verificar si la respuesta a la pregunta 27, aspecto "Resúmenes", está vacía
-if (respuestapregunta27[0].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Resúmenes".');
-  return;
-}
+                          if (respuestapregunta27[0].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Resúmenes".');
+                            return;
+                          }
 
-                         // Verificar si la respuesta a la pregunta 27, aspecto "Fichas o tarjetas", está vacía
-if (respuestapregunta27[1].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Fichas o tarjetas".');
-  return;
-}
+                          // Verificar si la respuesta a la pregunta 27, aspecto "Fichas o tarjetas", está vacía
+                          if (respuestapregunta27[1].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Fichas o tarjetas".');
+                            return;
+                          }
 
 // Verificar si la respuesta a la pregunta 27, aspecto "Esquemas", está vacía
-if (respuestapregunta27[2].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Esquemas".');
-  return;
-}
+                          if (respuestapregunta27[2].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Esquemas".');
+                            return;
+                          }
 
 // Verificar si la respuesta a la pregunta 27, aspecto "Diagramas", está vacía
-if (respuestapregunta27[3].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Diagramas".');
-  return;
-}
+                          if (respuestapregunta27[3].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Diagramas".');
+                            return;
+                          }
 
                           // Verificar si la respuesta a la pregunta 27, aspecto "Cuadros comparativos", está vacía
-if (respuestapregunta27[4].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Cuadros comparativos".');
-  return;
-}
+                          if (respuestapregunta27[4].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Cuadros comparativos".');
+                            return;
+                          }
 
 // Verificar si la respuesta a la pregunta 27, aspecto "Subrayar", está vacía
-if (respuestapregunta27[5].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Subrayar".');
-  return;
-}
+                          if (respuestapregunta27[5].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Subrayar".');
+                            return;
+                          }
 
 // Verificar si la respuesta a la pregunta 27, aspecto "Mapas mentales", está vacía
-if (respuestapregunta27[6].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Mapas mentales".');
-  return;
-}
+                          if (respuestapregunta27[6].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Mapas mentales".');
+                            return;
+                          }
 
                           // Verificar si la respuesta a la pregunta 27, aspecto "Mapas conceptuales", está vacía
-if (respuestapregunta27[7].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Mapas conceptuales".');
-  return;
-}
+                          if (respuestapregunta27[7].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Mapas conceptuales".');
+                            return;
+                          }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 28
-if (_selectedPregunta28 == null) {
-  snackbarRed("Por favor, responde de dónde obtienes tus materiales de apoyo.");
-  return;
-}
+                          if (_selectedPregunta28 == null) {
+                            snackbarRed(
+                                "Por favor, responde de dónde obtienes tus materiales de apoyo.");
+                            return;
+                          }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 29
-if (_selectedPregunta29 == null) {
-  snackbarRed("Por favor, responde si consideras importante aplicar nuevas tecnologías educativas.");
-  return;
-}
+                          if (_selectedPregunta29 == null) {
+                            snackbarRed(
+                                "Por favor, responde si consideras importante aplicar nuevas tecnologías educativas.");
+                            return;
+                          }
 
                           // Verificar si el campo de la pregunta 30 está vacío
-if (_pregunta30Controller.text.trim().isEmpty) {
-  snackbarRed("Por favor, responde cuál es el material didáctico que más utilizas para estudiar.");
-  return;
-}
+                          if (_pregunta30Controller.text.trim().isEmpty) {
+                            snackbarRed(
+                                "Por favor, responde cuál es el material didáctico que más utilizas para estudiar.");
+                            return;
+                          }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 31
-if (_selectedPregunta31 == null) {
-  snackbarRed("Por favor, responde si acostumbras leer bibliografía adicional.");
-  return;
-}
+                          if (_selectedPregunta31 == null) {
+                            snackbarRed(
+                                "Por favor, responde si acostumbras leer bibliografía adicional.");
+                            return;
+                          }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 32
-if (_selectedPregunta32 == null) {
-  snackbarRed("Por favor, responde qué tipo de bibliografía consultas.");
-  return;
-}
+                          if (_selectedPregunta32 == null) {
+                            snackbarRed(
+                                "Por favor, responde qué tipo de bibliografía consultas.");
+                            return;
+                          }
 
-                         // Verificar si se ha seleccionado la respuesta a la pregunta 33
-if (_selectedPregunta33 == null) {
-  snackbarRed("Por favor, responde qué herramienta tecnológica usas con más frecuencia.");
-  return;
-}
+                          // Verificar si se ha seleccionado la respuesta a la pregunta 33
+                          if (_selectedPregunta33 == null) {
+                            snackbarRed(
+                                "Por favor, responde qué herramienta tecnológica usas con más frecuencia.");
+                            return;
+                          }
 
-// Verificar si se ha seleccionado la respuesta a la pregunta 34
-if (_selectedPregunta34 == null) {
-  snackbarRed("Por favor, responde cómo calificarías en general las clases a distancia.");
-  return;
-}
+                        // Verificar si se ha seleccionado la respuesta a la pregunta 34
+                          if (_selectedPregunta34 == null) {
+                            snackbarRed(
+                                "Por favor, responde cómo calificarías en general las clases a distancia.");
+                            return;
+                          }
 
-// Verificar si se ha seleccionado la respuesta a la pregunta 35
-if (_selectedPregunta35 == null) {
-  snackbarRed("Por favor, responde qué recurso empleas más para estudiar.");
-  return;
-}
-// Verificar si se ha seleccionado la respuesta a la pregunta 36
-if (_selectedPregunta36 == null) {
-  snackbarRed("Por favor, responde cuántas horas dedicas para estudiar.");
-  return;
-}
+                          // Verificar si se ha seleccionado la respuesta a la pregunta 35
+                          if (_selectedPregunta35 == null) {
+                            snackbarRed(
+                                "Por favor, responde qué recurso empleas más para estudiar.");
+                            return;
+                          }
+                          // Verificar si se ha seleccionado la respuesta a la pregunta 36
+                          if (_selectedPregunta36 == null) {
+                            snackbarRed(
+                                "Por favor, responde cuántas horas dedicas para estudiar.");
+                            return;
+                          }
 
-// Verificar si la respuesta a la pregunta 37, aspecto "Biblioteca", está vacía
-if (respuestapregunta37[0].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Biblioteca".');
-  return;
-}
+                          // Verificar si la respuesta a la pregunta 37, aspecto "Biblioteca", está vacía
+                          if (respuestapregunta37[0].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Biblioteca".');
+                            return;
+                          }
 
-// Verificar si la respuesta a la pregunta 37, aspecto "Centro de cómputo", está vacía
-if (respuestapregunta37[1].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Centro de cómputo".');
-  return;
-}
+                          // Verificar si la respuesta a la pregunta 37, aspecto "Centro de cómputo", está vacía
+                          if (respuestapregunta37[1].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Centro de cómputo".');
+                            return;
+                          }
 
-// Verificar si la respuesta a la pregunta 37, aspecto "Laboratorios", está vacía
-if (respuestapregunta37[2].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Laboratorios".');
-  return;
-}
+                          // Verificar si la respuesta a la pregunta 37, aspecto "Laboratorios", está vacía
+                          if (respuestapregunta37[2].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Laboratorios".');
+                            return;
+                          }
 
-                         // Verificar si la respuesta a la pregunta 37, aspecto "Aulas", está vacía
-if (respuestapregunta37[3].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Aulas".');
-  return;
-}
+                          // Verificar si la respuesta a la pregunta 37, aspecto "Aulas", está vacía
+                          if (respuestapregunta37[3].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Aulas".');
+                            return;
+                          }
 
-// Verificar si la respuesta a la pregunta 37, aspecto "Baños", está vacía
-if (respuestapregunta37[4].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Baños".');
-  return;
-}
+                          // Verificar si la respuesta a la pregunta 37, aspecto "Baños", está vacía
+                          if (respuestapregunta37[4].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Baños".');
+                            return;
+                          }
 
-// Verificar si la respuesta a la pregunta 37, aspecto "Cafeterías o comedor", está vacía
-if (respuestapregunta37[5].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Cafeterías o comedor".');
-  return;
-}
+                          // Verificar si la respuesta a la pregunta 37, aspecto "Cafeterías o comedor", está vacía
+                          if (respuestapregunta37[5].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Cafeterías o comedor".');
+                            return;
+                          }
 
-// Verificar si la respuesta a la pregunta 37, aspecto "Limpieza del programa académico", está vacía
-if (respuestapregunta37[6].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Limpieza del programa académico".');
-  return;
-}
+                          // Verificar si la respuesta a la pregunta 37, aspecto "Limpieza del programa académico", está vacía
+                          if (respuestapregunta37[6].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Limpieza del programa académico".');
+                            return;
+                          }
 
                           // Verificar si el campo de la pregunta 38 está vacío
-if (_pregunta38Controller.text.trim().isEmpty) {
-  snackbarRed("Por favor, responde la materia donde te sientas más preparado.");
-  return;
-}
+                          if (_pregunta38Controller.text.trim().isEmpty) {
+                            snackbarRed(
+                                "Por favor, responde la materia donde te sientas más preparado.");
+                            return;
+                          }
 
-// Verificar si el campo de la pregunta 39 está vacío
-if (_pregunta39Controller.text.trim().isEmpty) {
-  snackbarRed("Por favor, responde la materia donde te sientas menos preparado.");
-  return;
-}
+                          // Verificar si el campo de la pregunta 39 está vacío
+                          if (_pregunta39Controller.text.trim().isEmpty) {
+                            snackbarRed(
+                                "Por favor, responde la materia donde te sientas menos preparado.");
+                            return;
+                          }
 
-// Verificar si se ha seleccionado la respuesta a la pregunta 40
-if (_selectedPregunta40 == null) {
-  snackbarRed("Por favor, responde donde pretendes desarrollarte laboralmente.");
-  return;
-}
+                          // Verificar si se ha seleccionado la respuesta a la pregunta 40
+                          if (_selectedPregunta40 == null) {
+                            snackbarRed(
+                                "Por favor, responde donde pretendes desarrollarte laboralmente.");
+                            return;
+                          }
 
-// Verificar si la respuesta a la pregunta 41, aspecto "Cursar un diplomado", está vacía
-if (respuestapregunta41[0].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Cursar un diplomado".');
-  return;
-}
-// Verificar si la respuesta a la pregunta 41, aspecto "Realizar una especialidad", está vacía
-if (respuestapregunta41[1].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Realizar una especialidad".');
-  return;
-}
+                          // Verificar si la respuesta a la pregunta 41, aspecto "Cursar un diplomado", está vacía
+                          if (respuestapregunta41[0].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Cursar un diplomado".');
+                            return;
+                          }
+                          // Verificar si la respuesta a la pregunta 41, aspecto "Realizar una especialidad", está vacía
+                          if (respuestapregunta41[1].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Realizar una especialidad".');
+                            return;
+                          }
 
-// Verificar si la respuesta a la pregunta 41, aspecto "Hacer una maestría", está vacía
-if (respuestapregunta41[2].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Hacer una maestría".');
-  return;
-}
+                          // Verificar si la respuesta a la pregunta 41, aspecto "Hacer una maestría", está vacía
+                          if (respuestapregunta41[2].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Hacer una maestría".');
+                            return;
+                          }
 
-// Verificar si la respuesta a la pregunta 41, aspecto "Realizar un doctorado", está vacía
-if (respuestapregunta41[3].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Realizar un doctorado".');
-  return;
-}
+                          // Verificar si la respuesta a la pregunta 41, aspecto "Realizar un doctorado", está vacía
+                          if (respuestapregunta41[3].isEmpty) {
+                            snackbarRed(
+                                'Por favor, responde al aspecto "Realizar un doctorado".');
+                            return;
+                          }
 
                           await addAreaProfesional();
                         })

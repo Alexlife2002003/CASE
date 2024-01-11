@@ -119,7 +119,8 @@ class _datosGeneralesState extends State<datosGenerales> {
           );
         } else {
           // Handle error
-         snackbarRed("Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
+          snackbarRed(
+              "Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
         }
       } catch (error) {
         // Handle network or other errors
@@ -240,28 +241,29 @@ class _datosGeneralesState extends State<datosGenerales> {
                           token = await _secureStorage.read(key: 'token');
                           userId = await _secureStorage.read(key: 'id');
                           // Verificar si se ha seleccionado un semestre
-if (selectedSemester == null) {
-  snackbarRed("Por favor, selecciona un semestre.");
-  return;
-}
+                          if (selectedSemester == null) {
+                            snackbarRed("Por favor, selecciona un semestre.");
+                            return;
+                          }
 
 // Verificar si se ha proporcionado un nombre completo
-if (_nombreCompletoController.text.trim().isEmpty) {
-  snackbarRed('Por favor, ingresa tu nombre completo.');
-  return;
-}
+                          if (_nombreCompletoController.text.trim().isEmpty) {
+                            snackbarRed(
+                                'Por favor, ingresa tu nombre completo.');
+                            return;
+                          }
 
 // Verificar si se ha seleccionado un género
-if (selectedSexo == null) {
-  snackbarRed('Por favor, selecciona tu género.');
-  return;
-}
+                          if (selectedSexo == null) {
+                            snackbarRed('Por favor, selecciona tu género.');
+                            return;
+                          }
 
 // Verificar si se ha proporcionado un municipio
-if (_municipioController.text.trim().isEmpty) {
-  snackbarRed('Por favor, ingresa tu municipio.');
-  return;
-}
+                          if (_municipioController.text.trim().isEmpty) {
+                            snackbarRed('Por favor, ingresa tu municipio.');
+                            return;
+                          }
 
                           if (selectedEstadoCivil == null) {
                             snackbarRed(

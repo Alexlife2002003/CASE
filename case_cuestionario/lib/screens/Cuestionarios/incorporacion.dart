@@ -112,8 +112,8 @@ class _IncorporacionState extends State<Incorporacion> {
           (Route<dynamic> route) => false,
         );
       } else {
-        snackbarRed("Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
-
+        snackbarRed(
+            "Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
       }
     } catch (error) {
       snackbarRed('$error');
@@ -391,106 +391,125 @@ class _IncorporacionState extends State<Incorporacion> {
                         for (DatosDeTabla x in tablapregunta10) {
                           respuestapregunta10.add(x.answer);
                         }
-                       // Verificar si se ha seleccionado la respuesta 1
-if (selectedRespuesta1 == null) {
-  snackbarRed('Por favor, indica cómo te enteraste de la licenciatura.');
-  return;
-}
+                        // Verificar si se ha seleccionado la respuesta 1
+                        if (selectedRespuesta1 == null) {
+                          snackbarRed(
+                              'Por favor, indica cómo te enteraste de la licenciatura.');
+                          return;
+                        }
 
 // Verificar si se ha seleccionado la respuesta 2
-if (selectedRespuesta2 == null) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(
-      backgroundColor: Colors.red,
-      content: Center(
-        child: Text(
-          'Por favor, indica el nivel de importancia de las actividades escolares en tu familia.',
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
-    ),
-  );
-  return;
-}
+                        if (selectedRespuesta2 == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Center(
+                                child: Text(
+                                  'Por favor, indica el nivel de importancia de las actividades escolares en tu familia.',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ),
+                            ),
+                          );
+                          return;
+                        }
 
-                       // Verificar si se ha seleccionado la respuesta 3
-if (selectedRespuesta3 == null) {
-  snackbarRed('Por favor, responde si cuentas con un espacio para estudiar.');
-  return;
-}
+                        // Verificar si se ha seleccionado la respuesta 3
+                        if (SelectedRespuesta3 == null) {
+                          snackbarRed(
+                              'Por favor, responde si cuentas con un espacio para estudiar.');
+                          return;
+                        }
 
 // Verificar si al menos un medio ha sido seleccionado
-if (!escritorio && !internet && !impresora && !calculadora && !computadora && !tablet && !todas) {
-  snackbarRed('Por favor, indica con qué medios cuentas para estudiar.');
-  return;
-}
+                        if (!escritorio &&
+                            !internet &&
+                            !impresora &&
+                            !calculadora &&
+                            !computadora &&
+                            !tablet &&
+                            !todas) {
+                          snackbarRed(
+                              'Por favor, indica con qué medios cuentas para estudiar.');
+                          return;
+                        }
 
 // Verificar si se ha seleccionado la respuesta 5
-if (selectedRespuesta5 == null) {
-  snackbarRed('Por favor, responde sobre los recursos económicos con los que cuentas.');
-  return;
-}
+                        if (selectedRespuesta5 == null) {
+                          snackbarRed(
+                              'Por favor, responde sobre los recursos económicos con los que cuentas.');
+                          return;
+                        }
 
-                       // Verificar si se ha seleccionado la respuesta 6
-if (selectedRespuesta6 == null) {
-  snackbarRed('Por favor, indica el medio de transporte que utilizas.');
-  return;
-}
+                        // Verificar si se ha seleccionado la respuesta 6
+                        if (selectedRespuesta6 == null) {
+                          snackbarRed(
+                              'Por favor, indica el medio de transporte que utilizas.');
+                          return;
+                        }
 
 // Verificar si se ha seleccionado la respuesta 7
-if (selectedRespuesta7 == null) {
-  snackbarRed('Por favor, indica cuánto tiempo tardas en llegar a la escuela.');
-  return;
-}
+                        if (selectedRespuesta7 == null) {
+                          snackbarRed(
+                              'Por favor, indica cuánto tiempo tardas en llegar a la escuela.');
+                          return;
+                        }
 
 // Verificar si se ha seleccionado la respuesta 8
-if (selectedRespuesta8 == null) {
-  snackbarRed('Por favor, responde si conoces al CEBUAZ.');
-  return;
-}
+                        if (selectedRespuesta8 == null) {
+                          snackbarRed(
+                              'Por favor, responde si conoces al CEBUAZ.');
+                          return;
+                        }
 
 // Verificar si se ha seleccionado la respuesta 9
-if (selectedRespuesta9 == null) {
-  snackbarRed('Por favor, responde si utilizas el CEBUAZ.');
-  return;
-}
+                        if (selectedRespuesta9 == null) {
+                          snackbarRed(
+                              'Por favor, responde si utilizas el CEBUAZ.');
+                          return;
+                        }
 
-
-                     // Verificar si la respuesta a la pregunta 10, aspecto de exigencia académica, está vacía
-if (respuestapregunta10[0].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto de exigencia académica.');
-  return;
-}
+                        // Verificar si la respuesta a la pregunta 10, aspecto de exigencia académica, está vacía
+                        if (respuestapregunta10[0].isEmpty) {
+                          snackbarRed(
+                              'Por favor, responde al aspecto de exigencia académica.');
+                          return;
+                        }
 
 // Verificar si la respuesta a la pregunta 10, aspecto de ambiente social, está vacía
-if (respuestapregunta10[1].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto de ambiente social.');
-  return;
-}
+                        if (respuestapregunta10[1].isEmpty) {
+                          snackbarRed(
+                              'Por favor, responde al aspecto de ambiente social.');
+                          return;
+                        }
 
 // Verificar si la respuesta a la pregunta 10, aspecto de relación con la familia, está vacía
-if (respuestapregunta10[2].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto de relación con la familia.');
-  return;
-}
+                        if (respuestapregunta10[2].isEmpty) {
+                          snackbarRed(
+                              'Por favor, responde al aspecto de relación con la familia.');
+                          return;
+                        }
 
                         // Verificar si la respuesta a la pregunta 10, aspecto de relación con los maestros, está vacía
-if (respuestapregunta10[3].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto de relación con los maestros.');
-  return;
-}
+                        if (respuestapregunta10[3].isEmpty) {
+                          snackbarRed(
+                              'Por favor, responde al aspecto de relación con los maestros.');
+                          return;
+                        }
 
 // Verificar si la respuesta a la pregunta 10, aspecto de relación con peers, está vacía
-if (respuestapregunta10[4].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto de relación con compañeros.');
-  return;
-}
+                        if (respuestapregunta10[4].isEmpty) {
+                          snackbarRed(
+                              'Por favor, responde al aspecto de relación con compañeros.');
+                          return;
+                        }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 11
-if (selectedRespuesta11 == null) {
-  snackbarRed('Por favor, responde a la experiencia obtenida hasta la fecha.');
-  return;
-}
+                        if (selectedRespuesta11 == null) {
+                          snackbarRed(
+                              'Por favor, responde a la experiencia obtenida hasta la fecha.');
+                          return;
+                        }
 
                         await addCorporacion();
                       })

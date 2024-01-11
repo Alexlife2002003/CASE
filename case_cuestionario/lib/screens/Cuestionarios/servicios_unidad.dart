@@ -73,7 +73,7 @@ class _serviciosUnidadState extends State<serviciosUnidad> {
           backgroundColor: Colors.green,
           content: Center(
               child: Text(
-         'Respuestas guardadas con éxito.',
+            'Respuestas guardadas con éxito.',
             style: TextStyle(fontSize: 18),
           )),
         ));
@@ -83,7 +83,8 @@ class _serviciosUnidadState extends State<serviciosUnidad> {
         );
       } else {
         // Handle error
-        snackbarRed("Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
+        snackbarRed(
+            "Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
       }
     } catch (error) {
       snackbarRed('Error: $error');
@@ -341,88 +342,106 @@ class _serviciosUnidadState extends State<serviciosUnidad> {
                             }
 
                             // Verificar si la respuesta a la pregunta 69, aspecto "Impresión", está vacía
-if (respuesta69[0].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Impresión".');
-  return;
-}
+                            if (respuesta69[0].isEmpty) {
+                              snackbarRed(
+                                  'Por favor, responde al aspecto "Impresión".');
+                              return;
+                            }
 
 // Verificar si la respuesta a la pregunta 69, aspecto "Fotocopiado", está vacía
-if (respuesta69[1].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Fotocopiado".');
-  return;
-}
+                            if (respuesta69[1].isEmpty) {
+                              snackbarRed(
+                                  'Por favor, responde al aspecto "Fotocopiado".');
+                              return;
+                            }
 
 // Verificar si la respuesta a la pregunta 69, aspecto "Digitalización", está vacía
-if (respuesta69[2].isEmpty) {
-  snackbarRed('Por favor, responde al aspecto "Digitalización".');
-  return;
-}
+                            if (respuesta69[2].isEmpty) {
+                              snackbarRed(
+                                  'Por favor, responde al aspecto "Digitalización".');
+                              return;
+                            }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 70
-if (_selectedPregunta70 == null) {
-  snackbarRed('Por favor, responde cómo calificas la biblioteca.');
-  return;
-}
+                            if (_selectedPregunta70 == null) {
+                              snackbarRed(
+                                  'Por favor, responde cómo calificas la biblioteca.');
+                              return;
+                            }
 
-                           // Verificar si se ha seleccionado la respuesta a la pregunta 71
-if (_selectedPregunta71 == null) {
-  snackbarRed("Por favor, califica el mobiliario de la unidad.");
-  return;
-}
+                            // Verificar si se ha seleccionado la respuesta a la pregunta 71
+                            if (_selectedPregunta71 == null) {
+                              snackbarRed(
+                                  "Por favor, califica el mobiliario de la unidad.");
+                              return;
+                            }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 72
-if (_selectedPregunta72 == null) {
-  snackbarRed("Por favor, indica el área que requiere atención.");
-  return;
-}
+                            if (_selectedPregunta72 == null) {
+                              snackbarRed(
+                                  "Por favor, indica el área que requiere atención.");
+                              return;
+                            }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 73
-if (_selectedPregunta73 == null) {
-  snackbarRed("Por favor, indica cómo calificarías a la planta docente.");
-  return;
-}
+                            if (_selectedPregunta73 == null) {
+                              snackbarRed(
+                                  "Por favor, indica cómo calificarías a la planta docente.");
+                              return;
+                            }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 74
-if (_selectedPregunta74 == null) {
-  snackbarRed("Por favor, responde cómo calificarías el sistema de enseñanza-aprendizaje.");
-  return;
-}
+                            if (_selectedPregunta74 == null) {
+                              snackbarRed(
+                                  "Por favor, responde cómo calificarías el sistema de enseñanza-aprendizaje.");
+                              return;
+                            }
 
-                           // Verificar si se ha seleccionado la respuesta a la pregunta 75
-if (_selectedPregunta75 == null) {
-  snackbarRed("Por favor, responde cómo calificarías los servicios educativos.");
-  return;
-}
+                            // Verificar si se ha seleccionado la respuesta a la pregunta 75
+                            if (_selectedPregunta75 == null) {
+                              snackbarRed(
+                                  "Por favor, responde cómo calificarías los servicios educativos.");
+                              return;
+                            }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 76
-if (_selectedPregunta76 == null) {
-  snackbarRed("Por favor, indica si consideras reestructurar materias.");
-  return;
-}
+                            if (_selectedPregunta76 == null) {
+                              snackbarRed(
+                                  "Por favor, indica si consideras reestructurar materias.");
+                              return;
+                            }
 
 // Verificar si el campo de texto de la pregunta 77 está vacío
-if (_selectedPregunta77Controller.text.trim().isEmpty) {
-  snackbarRed("Por favor, indica las materias que no son tan indispensables.");
-  return;
-}
+                            if (_selectedPregunta77Controller.text
+                                .trim()
+                                .isEmpty) {
+                              snackbarRed(
+                                  "Por favor, indica las materias que no son tan indispensables.");
+                              return;
+                            }
 
 // Verificar si el campo de texto de la pregunta 78 está vacío
-if (_selectedPregunta78Controller.text.trim().isEmpty) {
-  snackbarRed("Por favor, indica qué materias agregarías.");
-  return;
-}
+                            if (_selectedPregunta78Controller.text
+                                .trim()
+                                .isEmpty) {
+                              snackbarRed(
+                                  "Por favor, indica qué materias agregarías.");
+                              return;
+                            }
 
-                           // Verificar si se ha seleccionado la respuesta a la pregunta 79
-if (_selectedPregunta79 == null) {
-  snackbarRed("Por favor, responde si agregarías materias.");
-  return;
-}
+                            // Verificar si se ha seleccionado la respuesta a la pregunta 79
+                            if (_selectedPregunta79 == null) {
+                              snackbarRed(
+                                  "Por favor, responde si agregarías materias.");
+                              return;
+                            }
 
 // Verificar si se ha seleccionado la respuesta a la pregunta 80
-if (_selectedPregunta80 == null) {
-  snackbarRed("Por favor, indica si actualizarías alguna materia.");
-  return;
-}
+                            if (_selectedPregunta80 == null) {
+                              snackbarRed(
+                                  "Por favor, indica si actualizarías alguna materia.");
+                              return;
+                            }
 
                             await addServiciosUnidad();
                           })
