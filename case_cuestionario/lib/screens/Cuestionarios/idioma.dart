@@ -65,17 +65,10 @@ class _IdiomaState extends State<Idioma> {
         );
       } else {
         // Handle error
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: Colors.red,
-          content: Center(
-              child: Text(
-            'Error al agregar las respuestas',
-            style: TextStyle(fontSize: 18),
-          )),
-        ));
+        snackbarRed('Error al agregar las respuestas');
       }
     } catch (error) {
-      print('Error: $error');
+      snackbarRed('Error: $error');
     }
   }
 
@@ -96,19 +89,19 @@ class _IdiomaState extends State<Idioma> {
     }
   }
 
+  void snackbarRed(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: Colors.red,
+      content: Center(
+          child: Text(
+        message,
+        style: const TextStyle(fontSize: 18),
+      )),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
-    void snackbarRed(String message) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Colors.red,
-        content: Center(
-            child: Text(
-          message,
-          style: const TextStyle(fontSize: 18),
-        )),
-      ));
-    }
-
     WidgetBuilderHelper helper = WidgetBuilderHelper(context, rebuild);
     return FutureBuilder<Map<String, dynamic>>(
       future: apiDataFuture,

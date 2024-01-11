@@ -55,6 +55,17 @@ class _IncorporacionState extends State<Incorporacion> {
     setState(() {});
   }
 
+  void snackbarRed(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: Colors.red,
+      content: Center(
+          child: Text(
+        message,
+        style: const TextStyle(fontSize: 18),
+      )),
+    ));
+  }
+
   Future<void> addCorporacion() async {
     const String url = 'http://192.168.1.66:3000/addIncorporacion';
 
@@ -97,28 +108,14 @@ class _IncorporacionState extends State<Incorporacion> {
           )),
         ));
         Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const Dashboard()),
-                  (Route<dynamic> route) => false,
-                );
+          MaterialPageRoute(builder: (context) => const Dashboard()),
+          (Route<dynamic> route) => false,
+        );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: Colors.red,
-          content: Center(
-              child: Text(
-            'Failed to add user answers',
-            style: TextStyle(fontSize: 18),
-          )),
-        ));
+        snackbarRed('Failed to add user answers');
       }
     } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Colors.red,
-        content: Center(
-            child: Text(
-          ' $error',
-          style: TextStyle(fontSize: 18),
-        )),
-      ));
+      snackbarRed('$error');
     }
   }
 
@@ -394,15 +391,8 @@ class _IncorporacionState extends State<Incorporacion> {
                           respuestapregunta10.add(x.answer);
                         }
                         if (selectedRespuesta1 == null) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Center(
-                                child: Text(
-                              'Ingresa como te enteraste de la licenciatura',
-                              style: TextStyle(fontSize: 18),
-                            )),
-                          ));
+                          snackbarRed(
+                              'Ingresa como te enteraste de la licenciatura');
                           return;
                         }
                         if (selectedRespuesta2 == null) {
@@ -418,15 +408,8 @@ class _IncorporacionState extends State<Incorporacion> {
                           return;
                         }
                         if (SelectedRespuesta3 == null) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Center(
-                                child: Text(
-                              'Contesta si cuentas con un espacio para estudiar',
-                              style: TextStyle(fontSize: 18),
-                            )),
-                          ));
+                          snackbarRed(
+                              'Contesta si cuentas con un espacio para estudiar');
                           return;
                         }
 
@@ -437,148 +420,65 @@ class _IncorporacionState extends State<Incorporacion> {
                             computadora == false &&
                             tablet == false &&
                             todas == false) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Center(
-                                child: Text(
-                              'Contesta con cuales medios cuentas',
-                              style: TextStyle(fontSize: 18),
-                            )),
-                          ));
+                          snackbarRed('Contesta con cuales medios cuentas');
+
                           return;
                         }
                         if (selectedRespuesta5 == null) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Center(
-                                child: Text(
-                              'Contesta los recursos economicos con los que cuentas',
-                              style: TextStyle(fontSize: 18),
-                            )),
-                          ));
+                          snackbarRed(
+                              'Contesta los recursos economicos con los que cuentas');
                           return;
                         }
                         if (selectedRespuesta6 == null) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Center(
-                                child: Text(
-                              'Contesta el medio de transporte que utilizas',
-                              style: TextStyle(fontSize: 18),
-                            )),
-                          ));
+                          snackbarRed(
+                              'Contesta el medio de transporte que utilizas');
                           return;
                         }
                         if (selectedRespuesta7 == null) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Center(
-                                child: Text(
-                              'Contesta cuanto tiempo haces a la escuela',
-                              style: TextStyle(fontSize: 18),
-                            )),
-                          ));
+                          snackbarRed(
+                              'Contesta cuanto tiempo haces a la escuela');
                           return;
                         }
                         if (selectedRespuesta8 == null) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Center(
-                                child: Text(
-                              'Responde si conoces al CEBUAZ',
-                              style: TextStyle(fontSize: 18),
-                            )),
-                          ));
+                          snackbarRed('Responde si conoces al CEBUAZ');
                           return;
                         }
                         if (selectedRespuesta9 == null) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Center(
-                                child: Text(
-                              'Responde si usas el CEBUAZ',
-                              style: TextStyle(fontSize: 18),
-                            )),
-                          ));
+                          snackbarRed('Responde si usas el CEBUAZ');
                           return;
                         }
 
                         if (respuestapregunta10[0].isEmpty) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Center(
-                                child: Text(
-                              'Contesta el aspecto de exigencia academica',
-                              style: TextStyle(fontSize: 18),
-                            )),
-                          ));
+                          snackbarRed(
+                              'Contesta el aspecto de exigencia academica');
+
                           return;
                         }
                         if (respuestapregunta10[1].isEmpty) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Center(
-                                child: Text(
-                              'Contesta el aspecto de ambiente social',
-                              style: TextStyle(fontSize: 18),
-                            )),
-                          ));
+                          snackbarRed('Contesta el aspecto de ambiente social');
+
                           return;
                         }
                         if (respuestapregunta10[2].isEmpty) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Center(
-                                child: Text(
-                              'Contesta el aspecto de relacion con la familia',
-                              style: TextStyle(fontSize: 18),
-                            )),
-                          ));
+                          snackbarRed(
+                              'Contesta el aspecto de relacion con la familia');
                           return;
                         }
                         if (respuestapregunta10[3].isEmpty) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Center(
-                                child: Text(
-                              'Contesta el aspecto de relacion con los maestros',
-                              style: TextStyle(fontSize: 18),
-                            )),
-                          ));
+                          snackbarRed(
+                              'Contesta el aspecto de relacion con los maestros');
                           return;
                         }
                         if (respuestapregunta10[4].isEmpty) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Center(
-                                child: Text(
-                              'Contesta el aspecto de relacion con peers',
-                              style: TextStyle(fontSize: 18),
-                            )),
-                          ));
+                          snackbarRed(
+                              'Contesta el aspecto de relacion con peers');
+
                           return;
                         }
                         if (selectedRespuesta11 == null) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Center(
-                                child: Text(
-                              'Contesta la experiencia obtenida hasta la fecha',
-                              style: TextStyle(fontSize: 18),
-                            )),
-                          ));
+                          snackbarRed(
+                              'Contesta la experiencia obtenida hasta la fecha');
+
                           return;
                         }
                         await addCorporacion();

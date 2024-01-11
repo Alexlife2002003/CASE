@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:case_cuestionario/screens/dashboard.dart';
 import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
@@ -31,6 +29,17 @@ class _datosGeneralesState extends State<datosGenerales> {
 
   void rebuild() {
     setState(() {});
+  }
+
+  void snackbarRed(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: Colors.red,
+      content: Center(
+          child: Text(
+        message,
+        style: const TextStyle(fontSize: 18),
+      )),
+    ));
   }
 
   Future<Map<String, dynamic>> fetchData() async {
@@ -96,7 +105,6 @@ class _datosGeneralesState extends State<datosGenerales> {
         );
 
         if (response.statusCode == 201) {
-          final Map<String, dynamic> data = json.decode(response.body);
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             backgroundColor: Colors.green,
             content: Center(
@@ -105,25 +113,17 @@ class _datosGeneralesState extends State<datosGenerales> {
               style: TextStyle(fontSize: 18),
             )),
           ));
-           Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const Dashboard()),
-                  (Route<dynamic> route) => false,
-                );
-
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const Dashboard()),
+            (Route<dynamic> route) => false,
+          );
         } else {
           // Handle error
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            backgroundColor: Colors.red,
-            content: Center(
-                child: Text(
-              'Error al agregar las respuestas',
-              style: TextStyle(fontSize: 18),
-            )),
-          ));
+          snackbarRed("Error al agregar las respuestas");
         }
       } catch (error) {
         // Handle network or other errors
-        print('Error: $error');
+        snackbarRed('Error: $error');
       }
     }
 
@@ -240,87 +240,34 @@ class _datosGeneralesState extends State<datosGenerales> {
                           token = await _secureStorage.read(key: 'token');
                           userId = await _secureStorage.read(key: 'id');
                           if (selectedSemester == null) {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              backgroundColor: Colors.red,
-                              content: Center(
-                                  child: Text(
-                                'Semestre se encuentra sin contestar',
-                                style: TextStyle(fontSize: 18),
-                              )),
-                            ));
+                            snackbarRed("Semestre se encuentra sin contestar");
                             return;
                           }
                           if (_nombreCompletoController.text.trim().isEmpty) {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              backgroundColor: Colors.red,
-                              content: Center(
-                                  child: Text(
-                                'Nombre completo sin contestar',
-                                style: TextStyle(fontSize: 18),
-                              )),
-                            ));
+                            snackbarRed('Nombre completo sin contestar');
                             return;
                           }
                           if (selectedSexo == null) {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              backgroundColor: Colors.red,
-                              content: Center(
-                                  child: Text(
-                                'Genero se encuentra sin contestar',
-                                style: TextStyle(fontSize: 18),
-                              )),
-                            ));
+                            snackbarRed('Genero se encuentra sin contestar');
+
                             return;
                           }
                           if (_municipioController.text.trim().isEmpty) {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              backgroundColor: Colors.red,
-                              content: Center(
-                                  child: Text(
-                                'Municipio se encuentra sin contestar',
-                                style: TextStyle(fontSize: 18),
-                              )),
-                            ));
+                            snackbarRed('Municipio se encuentra sin contestar');
                             return;
                           }
                           if (selectedEstadoCivil == null) {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              backgroundColor: Colors.red,
-                              content: Center(
-                                  child: Text(
-                                'Estado civil se encuentra sin contestar',
-                                style: TextStyle(fontSize: 18),
-                              )),
-                            ));
+                            snackbarRed(
+                                'Estado civil se encuentra sin contestar');
                             return;
                           }
                           if (selectedTrabaja == null) {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              backgroundColor: Colors.red,
-                              content: Center(
-                                  child: Text(
-                                'Trabaja se encuentra sin contestar',
-                                style: TextStyle(fontSize: 18),
-                              )),
-                            ));
+                            snackbarRed('Trabaja se encuentra sin contestar');
                             return;
                           }
                           if (selectedYear == null) {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              backgroundColor: Colors.red,
-                              content: Center(
-                                  child: Text(
-                                'Anio de ingreso se encuentra sin contestar',
-                                style: TextStyle(fontSize: 18),
-                              )),
-                            ));
+                            snackbarRed(
+                                'Anio de ingreso se encuentra sin contestar');
                             return;
                           }
                           addDatosGenerales(

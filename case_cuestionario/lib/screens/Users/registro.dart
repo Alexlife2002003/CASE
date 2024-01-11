@@ -32,6 +32,19 @@ class _RegistrarseState extends State<Registrarse> {
       ));
     }
 
+    bool isValidEmail(String email) {
+      // A more robust regular expression for validating email addresses.
+      final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[a-z]{2,})$');
+
+      // Additional check to exclude email addresses like "5@5.5".
+      final validEmail = emailRegex.hasMatch(email);
+
+      // Check if the email has the "@uaz.edu.mx"  domain.
+      final isUazEmail = email.endsWith("@uaz.edu.mx");
+
+      return validEmail || isUazEmail;
+    }
+
     Widget buildInputField(String hintText, TextEditingController controller,
         bool obscureText, TextInputType inputType, double screenWidth) {
       return Padding(
@@ -102,12 +115,10 @@ class _RegistrarseState extends State<Registrarse> {
             content: const Center(child: Text('Registration successful!')),
           ));
         } else {
-          print('Registration failed. Status code: ${response.statusCode}');
-          
+          snackbarRed('Registration failed. Status code: ${response.statusCode}');
         }
       } catch (error) {
         snackbarRed("Error during registrarion. Try again");
-        
       }
     }
 
@@ -166,6 +177,18 @@ class _RegistrarseState extends State<Registrarse> {
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: GestureDetector(
               onTap: () async {
+                if (_emailController.text.trim().isEmpty) {
+                  snackbarRed("El correo se encuentra vacio");
+                  return;
+                }
+                if (!isValidEmail(_emailController.text.trim())) {
+                  snackbarRed('Ingresa un correo válido');
+                  return;
+                }
+                if ((_passwordController.text.trim().isEmpty) ||
+                    (_confirmPasswordController.text.trim().isEmpty)) {
+                  snackbarRed("Password cannot be empty");
+                }
                 if (_passwordController.text.trim() !=
                     _confirmPasswordController.text.trim()) {
                   snackbarRed("Passwords are different");

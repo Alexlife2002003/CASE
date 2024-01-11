@@ -41,7 +41,6 @@ class _serviciosCaseState extends State<serviciosCase> {
 
   Future<void> addServiciosCase() async {
     const String url = 'http://192.168.1.66:3000/addServiciosCase';
-    print(userId);
     try {
       final response = await http.post(Uri.parse(url),
           headers: {
@@ -71,17 +70,10 @@ class _serviciosCaseState extends State<serviciosCase> {
         );
       } else {
         // Handle error
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: Colors.red,
-          content: Center(
-              child: Text(
-            'Error al agregar las respuestas',
-            style: TextStyle(fontSize: 18),
-          )),
-        ));
+        snackbarRed('Error al agregar las respuestas');
       }
     } catch (error) {
-      print('Error: $error');
+      snackbarRed('Error: $error');
     }
   }
 
@@ -102,19 +94,19 @@ class _serviciosCaseState extends State<serviciosCase> {
     }
   }
 
+  void snackbarRed(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: Colors.red,
+      content: Center(
+          child: Text(
+        message,
+        style: const TextStyle(fontSize: 18),
+      )),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
-    void snackbarRed(String message) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Colors.red,
-        content: Center(
-            child: Text(
-          message,
-          style: const TextStyle(fontSize: 18),
-        )),
-      ));
-    }
-
     WidgetBuilderHelper helper = WidgetBuilderHelper(context, rebuild);
     return FutureBuilder<Map<String, dynamic>>(
         future: apiDataFuture,

@@ -433,10 +433,10 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                                 ? Icons.check_box
                                 : Icons.check_box_outline_blank,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          Text(
+                          const Text(
                             'Motivos de desercion \ny abandono escolar',
                             style: TextStyle(fontSize: 20),
                           ),
@@ -461,10 +461,10 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                                 ? Icons.check_box
                                 : Icons.check_box_outline_blank,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          Text(
+                          const Text(
                             'Salud mental',
                             style: TextStyle(fontSize: 20),
                           ),
@@ -527,12 +527,14 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                         ],
                       ),
                       onTap: () {
-                        Navigator.push(
+                       if(_serviciosUnidad==false){
+                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const serviciosUnidad(),
                           ),
                         );
+                       }
                       },
                     ),
                   ],

@@ -100,7 +100,7 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
             'pregunta57_uso_conocimientos': respuestaoregunta57[0],
             'pregunta57_cumplo_metas': respuestaoregunta57[1],
             'pregunta57_desarrollo_habilidades': respuestaoregunta57[2],
-            'pregunta57_pensamiento_critico': respuestaoregunta57[2],
+            'pregunta57_pensamiento_critico': respuestaoregunta57[3],
             'pregunta58': _selected_pregunta58,
             'pregunta59': _selected_pregunta59,
             'pregunta60': _selected_pregunta60,
@@ -122,17 +122,10 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
         );
       } else {
         // Handle error
-        ScaffoldMessenger.of(context).showSnackBar( SnackBar(
-          backgroundColor: Colors.red,
-          content: Center(
-              child: Text(
-            'Error al agregar las respuestas ',
-            style: TextStyle(fontSize: 18),
-          )),
-        ));
+        snackbarRed('Error al agregar las respuestas ');
       }
     } catch (error) {
-      print('Error: $error');
+      snackbarRed('Error: $error');
     }
   }
 
@@ -149,7 +142,7 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
         for (var option in answers['respuesta56columna']) {
           tablapregunta56.add(DatosDeTabla(aspect: option, answer: ''));
         }
-        for (var option in answers['respuesta56columna']) {
+        for (var option in answers['respuesta57columna']) {
           tablapregunta57.add(DatosDeTabla(aspect: option, answer: ''));
         }
       });
@@ -533,7 +526,7 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
                           userId = await _secureStorage.read(key: 'id');
                           resultado50 = "";
                           respuestaoregunta56 = [];
-                          respuestaoregunta56 = [];
+                          respuestaoregunta57 = [];
                           for (DatosDeTabla x in tablapregunta56) {
                             respuestaoregunta56.add(x.answer);
                           }
@@ -600,16 +593,24 @@ class _abandonoEscolarState extends State<abandonoEscolar> {
                             return;
                           }
                           if (respuestaoregunta57[0].isEmpty) {
-                            //snackbarRed('Contesta el aspecto "diariamente:falso "');
+                            snackbarRed(
+                                'Contesta el aspecto "Hago uso constante de mis conocimientos"');
+                            return;
                           }
                           if (respuestaoregunta57[1].isEmpty) {
-                            //snackbarRed('Contesta el aspecto "Fin de semana"');
+                            snackbarRed(
+                                'Contesta el aspecto "Cumplo mis metas"');
+                            return;
                           }
                           if (respuestaoregunta57[2].isEmpty) {
-                            //snackbarRed('Contesta el aspecto "Antes de un examen"');
+                            snackbarRed(
+                                'Contesta el aspecto "He desarrollado habilidades referentes a mis estudios"');
+                            return;
                           }
-                          if (respuestaoregunta57[2].isEmpty) {
-                            snackbarRed("Revisar esta discrepancia");
+                          if (respuestaoregunta57[3].isEmpty) {
+                            snackbarRed(
+                                'Contesta el aspecto "He desarrollado pensamiento critico"');
+                            return;
                           }
                           if (_selected_pregunta58 == null) {
                             snackbarRed(

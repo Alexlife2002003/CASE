@@ -21,14 +21,16 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    Future<void> createDatabase() async {
-      const String url = 'http://192.168.1.66:3000/createBD';
-       final response = await http.post(Uri.parse(url),
-          headers: {'Content-Type': 'application/json'},
-          body: jsonEncode({
-            'username': _emailController.text.trim(),
-            'password': _passwordController.text.trim(),
-          }));
+
+    void snackbarRed(String message) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        content: Center(
+            child: Text(
+          message,
+          style: const TextStyle(fontSize: 18),
+        )),
+      ));
     }
 
     Future<void> loginUser() async {
@@ -48,8 +50,8 @@ class _LoginState extends State<Login> {
         const secureStorage = FlutterSecureStorage();
         await secureStorage.write(key: 'token', value: token);
         await secureStorage.write(key: 'id', value: id);
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const Dashboard()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const Dashboard()));
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.grey.shade500,
           content: const Center(child: Text('Login succesfull!')),
@@ -182,8 +184,15 @@ class _LoginState extends State<Login> {
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: GestureDetector(
               onTap: () {
-               // createDatabase();
-               loginUser();
+                if (_emailController.text.trim().isEmpty) {
+                  snackbarRed("Ingrese su correo");
+                  return;
+                }
+                if (_passwordController.text.trim().isEmpty) {
+                  snackbarRed("Ingrese su password");
+                  return;
+                }
+                loginUser();
               },
               child: Material(
                 elevation: 5,

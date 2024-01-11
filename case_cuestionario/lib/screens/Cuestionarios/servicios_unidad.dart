@@ -1,3 +1,4 @@
+import 'package:case_cuestionario/screens/dashboard.dart';
 import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
@@ -66,8 +67,26 @@ class _serviciosUnidadState extends State<serviciosUnidad> {
             'pregunta79': _selectedPregunta79,
             'pregunta80': _selectedPregunta80
           }));
+
+      if (response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.green,
+          content: Center(
+              child: Text(
+            'Respuestas guardadas con exito',
+            style: TextStyle(fontSize: 18),
+          )),
+        ));
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const Dashboard()),
+          (Route<dynamic> route) => false,
+        );
+      } else {
+        // Handle error
+        snackbarRed('Error al agregar las respuestas ');
+      }
     } catch (error) {
-      print('Error: $error');
+      snackbarRed('Error: $error');
     }
   }
 
@@ -97,19 +116,19 @@ class _serviciosUnidadState extends State<serviciosUnidad> {
     apiDataFuture = fetchData();
   }
 
+  void snackbarRed(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: Colors.red,
+      content: Center(
+          child: Text(
+        message,
+        style: const TextStyle(fontSize: 18),
+      )),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
-    void snackbarRed(String message) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Colors.red,
-        content: Center(
-            child: Text(
-          message,
-          style:const TextStyle(fontSize: 18),
-        )),
-      ));
-    }
-
     WidgetBuilderHelper helper = WidgetBuilderHelper(context, rebuild);
     return FutureBuilder<Map<String, dynamic>>(
         future: apiDataFuture,
@@ -322,63 +341,73 @@ class _serviciosUnidadState extends State<serviciosUnidad> {
                             }
 
                             if (respuesta69[0].isEmpty) {
-                              snackbarRed("message");
+                              snackbarRed('Responde el aspecto "Impresion"');
                               return;
                             }
                             if (respuesta69[1].isEmpty) {
-                              snackbarRed("message");
+                              snackbarRed('Responde el aspecto "Fotocopiado"');
                               return;
                             }
                             if (respuesta69[2].isEmpty) {
-                              snackbarRed("message");
+                              snackbarRed(
+                                  'Responde el aspecto "Digitalizacion"');
                               return;
                             }
                             if (_selectedPregunta70 == null) {
-                              snackbarRed("message");
+                              snackbarRed(
+                                  'Responde como calificas la biblioteca ');
                               return;
                             }
                             if (_selectedPregunta71 == null) {
-                              snackbarRed("message");
+                              snackbarRed(
+                                  "Califica el mobiliario de la unidad");
                               return;
                             }
                             if (_selectedPregunta72 == null) {
-                              snackbarRed("message");
+                              snackbarRed(
+                                  "Indica el area que requiere atencion");
                               return;
                             }
                             if (_selectedPregunta73 == null) {
-                              snackbarRed("message");
+                              snackbarRed(
+                                  "Indica como calificarias la planta docente");
                               return;
                             }
                             if (_selectedPregunta74 == null) {
-                              snackbarRed("message");
+                              snackbarRed(
+                                  "Responde como calificarias el sistema de ensenanza-aprendizaje");
                               return;
                             }
                             if (_selectedPregunta75 == null) {
-                              snackbarRed("message");
+                              snackbarRed(
+                                  "Contesta como calificarias los servicios educativos");
                               return;
                             }
                             if (_selectedPregunta76 == null) {
-                              snackbarRed("message");
+                              snackbarRed(
+                                  "Indica si consideras restructurar materias");
                               return;
                             }
                             if (_selectedPregunta77Controller.text
                                 .trim()
                                 .isEmpty) {
-                              snackbarRed("message");
+                              snackbarRed(
+                                  "Indica las materias que no son tan indispensables");
                               return;
                             }
                             if (_selectedPregunta78Controller.text
                                 .trim()
                                 .isEmpty) {
-                              snackbarRed("message");
+                              snackbarRed("Indica que materias agregarias");
                               return;
                             }
                             if (_selectedPregunta79 == null) {
-                              snackbarRed("message");
+                              snackbarRed("Responde si agregarias materias");
                               return;
                             }
                             if (_selectedPregunta80 == null) {
-                              snackbarRed("message");
+                              snackbarRed(
+                                  "Indica si actualizarias alguna materia");
                               return;
                             }
                             await addServiciosUnidad();
