@@ -60,7 +60,7 @@ class _serviciosCaseState extends State<serviciosCase> {
           backgroundColor: Colors.green,
           content: Center(
               child: Text(
-             'Respuestas guardadas con éxito.',
+            'Respuestas guardadas con éxito.',
             style: TextStyle(fontSize: 18),
           )),
         ));
@@ -70,7 +70,8 @@ class _serviciosCaseState extends State<serviciosCase> {
         );
       } else {
         // Handle error
-        snackbarRed("Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
+        snackbarRed(
+            "Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
       }
     } catch (error) {
       snackbarRed('Error: $error');
@@ -198,25 +199,31 @@ class _serviciosCaseState extends State<serviciosCase> {
                             authToken = await _secureStorage.read(key: 'token');
                             userId = await _secureStorage.read(key: 'id');
                             if (_selectedPregunta45 == null) {
-                              snackbarRed('message');
+                              snackbarRed(
+                                  'Por favor, responde si sabes lo que es el CASE');
                               return;
                             }
                             if (_selectedPregunta46 == null) {
-                              snackbarRed('message');
+                              snackbarRed(
+                                  'Por favor, indica qué tipos de servicios has recibido por parte del CASE');
                               return;
                             }
                             if (_selectedPregunta47 == null) {
-                              snackbarRed('message');
+                              snackbarRed(
+                                  'Por favor, indica en qué áreas requieres apoyo para que tu tránsito por la universidad sea óptimo');
                               return;
                             }
                             if (_selectedPregunta48 == null) {
-                              snackbarRed('message');
+                              snackbarRed(
+                                  'Por favor, responde si cuentas con beca');
                               return;
                             }
                             if (_selectedPregunta49 == null) {
-                              snackbarRed('message');
+                              snackbarRed(
+                                  'Por favor, responde si te apoyas en las mentorías que ofrece el programa académico');
                               return;
                             }
+
                             await addServiciosCase();
                           }),
                         ],
