@@ -3,6 +3,7 @@ import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -37,7 +38,9 @@ class _IdiomaState extends State<Idioma> {
   }
 
   Future<void> addIdioma() async {
-    const String url = 'http://192.168.1.66:3000/addIdioma';
+    String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
+    String Endpoint = dotenv.env['ADD_IDIOMA'] ?? "/defaultEndpoint1";
+    String url = baseUrl + Endpoint;
     try {
       final response = await http.post(Uri.parse(url),
           headers: {
@@ -74,8 +77,10 @@ class _IdiomaState extends State<Idioma> {
   }
 
   Future<Map<String, dynamic>> fetchData() async {
-    final response = await http
-        .get(Uri.parse('https://case-408016.wl.r.appspot.com/idioma'));
+    String baseUrl = dotenv.env['BASE_URL'] ?? "default_base_url";
+    String idioma_endpoint = dotenv.env['IDIOMA'] ?? "/defaultEndpoint1";
+
+    final response = await http.get(Uri.parse(baseUrl + idioma_endpoint));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data =

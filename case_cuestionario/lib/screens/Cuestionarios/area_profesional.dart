@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class areaProfesional extends StatefulWidget {
   const areaProfesional({super.key});
@@ -68,7 +69,10 @@ class _areaProfesionalState extends State<areaProfesional> {
   }
 
   Future<void> addAreaProfesional() async {
-    const String url = 'http://192.168.1.66:3000/addAreaProfesional';
+    String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
+    String loginEndpoint =
+        dotenv.env['ADD_AREA_PROFESIONAL'] ?? "/defaultEndpoint1";
+    String url = baseUrl + loginEndpoint;
     try {
       final response = await http.post(Uri.parse(url),
           headers: {
@@ -160,8 +164,12 @@ class _areaProfesionalState extends State<areaProfesional> {
   }
 
   Future<Map<String, dynamic>> fetchData() async {
+    String baseUrl = dotenv.env['BASE_URL'] ?? "default_base_url";
+    String area_profesional_endpoint =
+        dotenv.env['AREA_PROFESIONAL'] ?? "/defaultEndpoint1";
+
     final response = await http
-        .get(Uri.parse('https://case-408016.wl.r.appspot.com/areaProfesional'));
+        .get(Uri.parse(baseUrl+area_profesional_endpoint));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data =
@@ -1000,7 +1008,7 @@ class _areaProfesionalState extends State<areaProfesional> {
                             return;
                           }
 
-                        // Verificar si se ha seleccionado la respuesta a la pregunta 34
+                          // Verificar si se ha seleccionado la respuesta a la pregunta 34
                           if (_selectedPregunta34 == null) {
                             snackbarRed(
                                 "Por favor, responde cómo calificarías en general las clases a distancia.");

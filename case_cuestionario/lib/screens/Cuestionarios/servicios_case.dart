@@ -3,6 +3,7 @@ import 'package:case_cuestionario/utils/WidgetBuilderHelper.dart';
 import 'package:case_cuestionario/utils/app_drawer.dart';
 import 'package:case_cuestionario/utils/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -40,7 +41,10 @@ class _serviciosCaseState extends State<serviciosCase> {
   }
 
   Future<void> addServiciosCase() async {
-    const String url = 'http://192.168.1.66:3000/addServiciosCase';
+    String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
+    String loginEndpoint =
+        dotenv.env['ADD_SERVICIOS_CASE'] ?? "/defaultEndpoint1";
+    String url = baseUrl + loginEndpoint;
     try {
       final response = await http.post(Uri.parse(url),
           headers: {
@@ -79,8 +83,10 @@ class _serviciosCaseState extends State<serviciosCase> {
   }
 
   Future<Map<String, dynamic>> fetchData() async {
-    final response = await http
-        .get(Uri.parse('https://case-408016.wl.r.appspot.com/serviciosCase'));
+    String baseUrl = dotenv.env['BASE_URL'] ?? "default_base_url";
+    String servicios_endpoint =
+        dotenv.env['SERVICIOS_CASE'] ?? "/defaultEndpoint1";
+    final response = await http.get(Uri.parse(baseUrl + servicios_endpoint));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data =

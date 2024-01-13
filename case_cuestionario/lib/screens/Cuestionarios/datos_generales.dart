@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class datosGenerales extends StatefulWidget {
   const datosGenerales({super.key});
@@ -43,8 +44,11 @@ class _datosGeneralesState extends State<datosGenerales> {
   }
 
   Future<Map<String, dynamic>> fetchData() async {
-    final response = await http
-        .get(Uri.parse('http://case-408016.wl.r.appspot.com/datosGenerales'));
+    String baseUrl = dotenv.env['BASE_URL'] ?? "default_base_url";
+    String datosgenerales_endpoint = dotenv.env['DATOS_GENERALES_ENDPOINT'] ?? "/defaultEndpoint1";
+
+   final response = await http
+        .get(Uri.parse(baseUrl+datosgenerales_endpoint));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data =
@@ -82,7 +86,12 @@ class _datosGeneralesState extends State<datosGenerales> {
       required String trabaja,
       required String yearIngreso,
     }) async {
-      const String url = 'http://192.168.1.66:3000/addDatosGenerales';
+
+      String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
+      String loginEndpoint =
+          dotenv.env['ADD_DATOS_GENERALES_ENDPOINT'] ?? "/defaultEndpoint1";
+      String url = baseUrl + loginEndpoint;
+
 
       try {
         final response = await http.post(

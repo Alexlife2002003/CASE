@@ -4,8 +4,8 @@ import 'package:case_cuestionario/screens/dashboard.dart';
 import 'package:case_cuestionario/screens/Users/registro.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -34,7 +34,11 @@ class _LoginState extends State<Login> {
     }
 
     Future<void> loginUser() async {
-      const String url = 'http://192.168.1.66:3000/login';
+      String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
+      String loginEndpoint =
+          dotenv.env['LOGIN_ENDPOINT'] ?? "/defaultEndpoint1";
+      String url = baseUrl + loginEndpoint;
+      print(url);
 
       final response = await http.post(Uri.parse(url),
           headers: {'Content-Type': 'application/json'},
@@ -52,23 +56,22 @@ class _LoginState extends State<Login> {
         await secureStorage.write(key: 'id', value: id);
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const Dashboard()));
-       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  backgroundColor: Colors.grey.shade500,
-  content: const Center(child: Text('Inicio de sesión exitoso')),
-));
-
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.grey.shade500,
+          content: const Center(child: Text('Inicio de sesión exitoso')),
+        ));
       } else if (response.statusCode == 401) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  backgroundColor: Colors.grey.shade500,
-  content: Center(child: Text('Inicio de sesión fallido ${response.body}')),
-));
-
+          backgroundColor: Colors.grey.shade500,
+          content:
+              Center(child: Text('Inicio de sesión fallido ${response.body}')),
+        ));
       } else {
-       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  backgroundColor: Colors.grey.shade500,
-  content: Center(child: Text('Error al iniciar sesión: ${response.body}')),
-));
-
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.grey.shade500,
+          content:
+              Center(child: Text('Error al iniciar sesión: ${response.body}')),
+        ));
       }
     }
 
@@ -188,13 +191,13 @@ class _LoginState extends State<Login> {
             child: GestureDetector(
               onTap: () {
                 if (_emailController.text.trim().isEmpty) {
-  snackbarRed("Por favor, ingrese su correo electrónico");
-  return;
-}
-if (_passwordController.text.trim().isEmpty) {
-  snackbarRed("Por favor, ingrese su contraseña");
-  return;
-}
+                  snackbarRed("Por favor, ingrese su correo electrónico");
+                  return;
+                }
+                if (_passwordController.text.trim().isEmpty) {
+                  snackbarRed("Por favor, ingrese su contraseña");
+                  return;
+                }
 
                 loginUser();
               },

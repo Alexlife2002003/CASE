@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Incorporacion extends StatefulWidget {
   const Incorporacion({super.key});
@@ -67,7 +68,10 @@ class _IncorporacionState extends State<Incorporacion> {
   }
 
   Future<void> addCorporacion() async {
-    const String url = 'http://192.168.1.66:3000/addIncorporacion';
+    String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
+    String loginEndpoint =
+        dotenv.env['ADD_INCORPORACION_ENDPOINT'] ?? "/defaultEndpoint1";
+    String url = baseUrl + loginEndpoint;
 
     try {
       final response = await http.post(Uri.parse(url),
@@ -121,8 +125,12 @@ class _IncorporacionState extends State<Incorporacion> {
   }
 
   Future<Map<String, dynamic>> fetchData() async {
-    final response = await http.get(
-        Uri.parse('https://case-408016.wl.r.appspot.com/datosIncorporacion'));
+    String baseUrl = dotenv.env['BASE_URL'] ?? "default_base_url";
+    String incorporacion_endpoint =
+        dotenv.env['INCORPORACION_ENDPOINT'] ?? "/defaultEndpoint1";
+   
+    final response =
+        await http.get(Uri.parse(baseUrl + incorporacion_endpoint));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data =

@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:case_cuestionario/screens/Users/login.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AppWithDrawer extends StatefulWidget {
   final String title;
@@ -51,7 +52,10 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
   }
 
   Future<void> checkDatosGenerales() async {
-    const String url = 'http://192.168.1.66:3000/revisarDatosGenerales';
+    String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
+    String Endpoint =
+        dotenv.env['REVISAR_DATOS_GENERALES'] ?? "/defaultEndpoint1";
+    String url = baseUrl + Endpoint;
     userId = await _secureStorage.read(key: 'id');
     try {
       final response = await http.post(Uri.parse(url),
@@ -71,7 +75,10 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
   }
 
   Future<void> checkIncorporacion() async {
-    const String url = 'http://192.168.1.66:3000/revisarIncorporacion';
+    String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
+    String Endpoint =
+        dotenv.env['REVISAR_INCORPORACION'] ?? "/defaultEndpoint1";
+    String url = baseUrl + Endpoint;
     userId = await _secureStorage.read(key: 'id');
     try {
       final response = await http.post(Uri.parse(url),
@@ -91,7 +98,10 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
   }
 
   Future<void> checkAreaProfesional() async {
-    const String url = 'http://192.168.1.66:3000/revisarAreaProfesional';
+    String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
+    String Endpoint =
+        dotenv.env['REVISAR_AREA_PROFESIONAL'] ?? "/defaultEndpoint1";
+    String url = baseUrl + Endpoint;
     userId = await _secureStorage.read(key: 'id');
     try {
       final response = await http.post(Uri.parse(url),
@@ -110,7 +120,9 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
   }
 
   Future<void> checkIdioma() async {
-    const String url = 'http://192.168.1.66:3000/revisarIdioma';
+    String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
+    String Endpoint = dotenv.env['REVISAR_IDIOMA'] ?? "/defaultEndpoint1";
+    String url = baseUrl + Endpoint;
     userId = await _secureStorage.read(key: 'id');
     try {
       final response = await http.post(Uri.parse(url),
@@ -129,7 +141,10 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
   }
 
   Future<void> checkServiciosCase() async {
-    const String url = 'http://192.168.1.66:3000/revisarServiciosCase';
+    String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
+    String Endpoint =
+        dotenv.env['REVISAR_SERVICIOS_CASE'] ?? "/defaultEndpoint1";
+    String url = baseUrl + Endpoint;
     userId = await _secureStorage.read(key: 'id');
     try {
       final response = await http.post(Uri.parse(url),
@@ -148,7 +163,10 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
   }
 
   Future<void> checkAbandonoEscolar() async {
-    const String url = 'http://192.168.1.66:3000/revisarAbandonoEscolar';
+    String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
+    String Endpoint =
+        dotenv.env['REVISAR_ABANDONO_ESCOLAR'] ?? "/defaultEndpoint1";
+    String url = baseUrl + Endpoint;
     userId = await _secureStorage.read(key: 'id');
     try {
       final response = await http.post(Uri.parse(url),
@@ -167,7 +185,9 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
   }
 
   Future<void> checkSaludMental() async {
-    const String url = 'http://192.168.1.66:3000/revisarAbandonoEscolar';
+    String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
+    String Endpoint = dotenv.env['REVISAR_SALUD_MENTAL'] ?? "/defaultEndpoint1";
+    String url = baseUrl + Endpoint;
     userId = await _secureStorage.read(key: 'id');
     try {
       final response = await http.post(Uri.parse(url),
@@ -499,14 +519,14 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                         ],
                       ),
                       onTap: () {
-                       if(_conectividad==false){
-                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const conectividad(),
-                          ),
-                        );
-                       }
+                        if (_conectividad == false) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const conectividad(),
+                            ),
+                          );
+                        }
                       },
                     ),
                     ListTile(
@@ -527,14 +547,14 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                         ],
                       ),
                       onTap: () {
-                       if(_serviciosUnidad==false){
-                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const serviciosUnidad(),
-                          ),
-                        );
-                       }
+                        if (_serviciosUnidad == false) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const serviciosUnidad(),
+                            ),
+                          );
+                        }
                       },
                     ),
                   ],
