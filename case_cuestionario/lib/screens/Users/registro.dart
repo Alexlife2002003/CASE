@@ -1,6 +1,7 @@
 import 'package:case_cuestionario/screens/Users/login.dart';
 import 'package:case_cuestionario/screens/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -89,7 +90,10 @@ class _RegistrarseState extends State<Registrarse> {
     }
 
     Future<void> registerUser(String correo, String password) async {
-      const String apiUrl = 'http://192.168.1.66:3000/register';
+      String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
+      String loginEndpoint =
+          dotenv.env['REGISTER_ENDPOINT'] ?? "/defaultEndpoint1";
+      String apiUrl = baseUrl + loginEndpoint;
 
       try {
         final response = await http.post(
@@ -177,23 +181,24 @@ class _RegistrarseState extends State<Registrarse> {
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: GestureDetector(
               onTap: () async {
-               if (_emailController.text.trim().isEmpty) {
-  snackbarRed("El correo electrónico no puede estar vacío");
-  return;
-}
-if (!isValidEmail(_emailController.text.trim())) {
-  snackbarRed('Ingresa un correo electrónico válido');
-  return;
-}
-if ((_passwordController.text.trim().isEmpty) ||
-    (_confirmPasswordController.text.trim().isEmpty)) {
-  snackbarRed("La contraseña no puede estar vacía");
-  return;
-}
-if (_passwordController.text.trim() != _confirmPasswordController.text.trim()) {
-  snackbarRed("Las contraseñas no coinciden");
-  return;
-}
+                if (_emailController.text.trim().isEmpty) {
+                  snackbarRed("El correo electrónico no puede estar vacío");
+                  return;
+                }
+                if (!isValidEmail(_emailController.text.trim())) {
+                  snackbarRed('Ingresa un correo electrónico válido');
+                  return;
+                }
+                if ((_passwordController.text.trim().isEmpty) ||
+                    (_confirmPasswordController.text.trim().isEmpty)) {
+                  snackbarRed("La contraseña no puede estar vacía");
+                  return;
+                }
+                if (_passwordController.text.trim() !=
+                    _confirmPasswordController.text.trim()) {
+                  snackbarRed("Las contraseñas no coinciden");
+                  return;
+                }
 
                 await registerUser(_emailController.text.trim(),
                     _passwordController.text.trim());

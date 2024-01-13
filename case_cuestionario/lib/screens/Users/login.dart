@@ -38,7 +38,7 @@ class _LoginState extends State<Login> {
       String loginEndpoint =
           dotenv.env['LOGIN_ENDPOINT'] ?? "/defaultEndpoint1";
       String url = baseUrl + loginEndpoint;
-      print(url);
+    
 
       final response = await http.post(Uri.parse(url),
           headers: {'Content-Type': 'application/json'},

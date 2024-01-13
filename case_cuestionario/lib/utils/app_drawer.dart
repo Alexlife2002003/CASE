@@ -206,7 +206,9 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
   }
 
   Future<void> checkConectividad() async {
-    const String url = 'http://192.168.1.66:3000/revisarConectividad';
+    String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
+    String Endpoint = dotenv.env['REVISAR_CONECTIVIDAD'] ?? "/defaultEndpoint1";
+    String url = baseUrl + Endpoint;
     userId = await _secureStorage.read(key: 'id');
     try {
       final response = await http.post(Uri.parse(url),
@@ -225,7 +227,9 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
   }
 
   Future<void> checkServiciosUnidad() async {
-    const String url = 'http://192.168.1.66:3000/revisarServiciosUnidad';
+      String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
+    String Endpoint = dotenv.env['REVISAR_SERVICIOS_UNIDAD'] ?? "/defaultEndpoint1";
+    String url = baseUrl + Endpoint;
     userId = await _secureStorage.read(key: 'id');
     try {
       final response = await http.post(Uri.parse(url),
