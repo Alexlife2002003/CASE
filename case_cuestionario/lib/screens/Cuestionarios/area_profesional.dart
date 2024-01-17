@@ -69,6 +69,17 @@ class _areaProfesionalState extends State<areaProfesional> {
   }
 
   Future<void> addAreaProfesional() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(
+                0xff927249), // The color to use for text and icons on the background color
+          ),
+        );
+      },
+    );
     String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
     String loginEndpoint =
         dotenv.env['ADD_AREA_PROFESIONAL'] ?? "/defaultEndpoint1";
@@ -142,6 +153,7 @@ class _areaProfesionalState extends State<areaProfesional> {
 
       final Map<String, dynamic> data = json.decode(response.body);
       if (response.statusCode == 201) {
+        Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: Colors.green,
           content: Center(
@@ -155,10 +167,12 @@ class _areaProfesionalState extends State<areaProfesional> {
           (Route<dynamic> route) => false,
         );
       } else {
+        Navigator.pop(context);
         snackbarRed(
             "Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
       }
     } catch (error) {
+      Navigator.pop(context);
       snackbarRed("Error: $error");
     }
   }
@@ -168,8 +182,8 @@ class _areaProfesionalState extends State<areaProfesional> {
     String area_profesional_endpoint =
         dotenv.env['AREA_PROFESIONAL'] ?? "/defaultEndpoint1";
 
-    final response = await http
-        .get(Uri.parse(baseUrl+area_profesional_endpoint));
+    final response =
+        await http.get(Uri.parse(baseUrl + area_profesional_endpoint));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data =
@@ -230,7 +244,8 @@ class _areaProfesionalState extends State<areaProfesional> {
               title: 'Area profesional',
               content: const Scaffold(
                 body: Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator( color: Color(
+                0xff927249)),
                 ),
               ));
         } else if (snapshot.hasError) {

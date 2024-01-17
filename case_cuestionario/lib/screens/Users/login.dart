@@ -38,8 +38,18 @@ class _LoginState extends State<Login> {
       String loginEndpoint =
           dotenv.env['LOGIN_ENDPOINT'] ?? "/defaultEndpoint1";
       String url = baseUrl + loginEndpoint;
-    
-
+      // Show the CircularProgressIndicator when starting the login process
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Color(
+                  0xff927249), // The color to use for text and icons on the background color
+            ),
+          );
+        },
+      );
       final response = await http.post(Uri.parse(url),
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode({
@@ -48,25 +58,29 @@ class _LoginState extends State<Login> {
           }));
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = jsonDecode(response.body);
-
         final String token = data['token'];
         final String id = data['userId'].toString();
         const secureStorage = FlutterSecureStorage();
         await secureStorage.write(key: 'token', value: token);
         await secureStorage.write(key: 'id', value: id);
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const Dashboard()));
+        Navigator.pop(context);
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const Dashboard()),
+          (Route<dynamic> route) => false,
+        );
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.grey.shade500,
           content: const Center(child: Text('Inicio de sesión exitoso')),
         ));
       } else if (response.statusCode == 401) {
+        Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.grey.shade500,
           content:
               Center(child: Text('Inicio de sesión fallido ${response.body}')),
         ));
       } else {
+        Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.grey.shade500,
           content:

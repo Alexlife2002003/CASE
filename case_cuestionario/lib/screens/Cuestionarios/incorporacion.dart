@@ -68,6 +68,17 @@ class _IncorporacionState extends State<Incorporacion> {
   }
 
   Future<void> addCorporacion() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(
+                0xff927249), // The color to use for text and icons on the background color
+          ),
+        );
+      },
+    );
     String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
     String loginEndpoint =
         dotenv.env['ADD_INCORPORACION_ENDPOINT'] ?? "/defaultEndpoint1";
@@ -103,6 +114,7 @@ class _IncorporacionState extends State<Incorporacion> {
             'pregunta11': selectedRespuesta11
           }));
       if (response.statusCode == 201) {
+        Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: Colors.green,
           content: Center(
@@ -116,10 +128,12 @@ class _IncorporacionState extends State<Incorporacion> {
           (Route<dynamic> route) => false,
         );
       } else {
+        Navigator.pop(context);
         snackbarRed(
             "Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
       }
     } catch (error) {
+      Navigator.pop(context);
       snackbarRed('$error');
     }
   }
@@ -128,7 +142,7 @@ class _IncorporacionState extends State<Incorporacion> {
     String baseUrl = dotenv.env['BASE_URL'] ?? "default_base_url";
     String incorporacion_endpoint =
         dotenv.env['INCORPORACION_ENDPOINT'] ?? "/defaultEndpoint1";
-   
+
     final response =
         await http.get(Uri.parse(baseUrl + incorporacion_endpoint));
 
@@ -164,7 +178,8 @@ class _IncorporacionState extends State<Incorporacion> {
           return AppWithDrawer(
             title: 'Incorporacion',
             content: const Scaffold(
-              body: Center(child: CircularProgressIndicator()),
+              body: Center(
+                  child: CircularProgressIndicator(color: Color(0xff927249))),
             ),
           );
         } else if (snapshot.hasError) {

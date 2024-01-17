@@ -38,6 +38,17 @@ class _IdiomaState extends State<Idioma> {
   }
 
   Future<void> addIdioma() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(
+                0xff927249), // The color to use for text and icons on the background color
+          ),
+        );
+      },
+    );
     String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
     String Endpoint = dotenv.env['ADD_IDIOMA'] ?? "/defaultEndpoint1";
     String url = baseUrl + Endpoint;
@@ -54,6 +65,7 @@ class _IdiomaState extends State<Idioma> {
             'pregunta44': _selectedPregunta44
           }));
       if (response.statusCode == 201) {
+        Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: Colors.green,
           content: Center(
@@ -68,10 +80,12 @@ class _IdiomaState extends State<Idioma> {
         );
       } else {
         // Handle error
+        Navigator.pop(context);
         snackbarRed(
             "Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
       }
     } catch (error) {
+      Navigator.pop(context);
       snackbarRed('Error: $error');
     }
   }
@@ -117,7 +131,7 @@ class _IdiomaState extends State<Idioma> {
             title: 'Idioma',
             content: const Scaffold(
               body: Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(color: Color(0xff927249)),
               ),
             ),
           );

@@ -33,6 +33,81 @@ class _RegistrarseState extends State<Registrarse> {
       ));
     }
 
+    void _showPrivacyPolicy() {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Colors.grey.withOpacity(0.9),
+            title: const Text(
+              'Políticas de privacidad',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            content: const SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'ENCUESTA DE SEGUIMIENTO DE TRAYECTORIAS ESCOLARES\n\n'
+                    'La Universidad Autónoma de Zacatecas “Francisco García Salinas”, con domicilio en Jardín Juárez #147, Centro Histórico, C.P. 98000, Zacatecas, Zacatecas, es la responsable del tratamiento de los datos personales proporcionados y de protegerlos en términos de lo dispuesto en la Ley General de Protección de Datos Personales en Posesión de Sujetos Obligados, la Ley de Protección de Datos Personales en Posesión de los Sujetos Obligados del Estado de Zacatecas y demás normatividad que resulte aplicable.',
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                  ),
+                  SizedBox(height: 12),
+                  Text(
+                    '¿Para qué fines utilizaremos tus datos personales?',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 6),
+                  Text(
+                    'Nos interesa conocer cuál ha sido tu experiencia dentro de esta institución educativa con el objetivo de poder ofrecerte mejores condiciones de estudio y servicios educativos mediante el programa de Seguimiento de Trayectorias Escolares y la Subsede del CASE del Programa Académico y, por ende, formar recursos humanos más competitivos y con mayores valores, habilidades y destrezas en el campo de estudio. Para las finalidades anteriores se recabarán los siguientes datos personales: nombre completo, correo electrónico, género, matrícula escolar y de manera general los recursos materiales y económicos con los que cuentas para estudiar, así como datos personales sensibles relacionados con tus emociones.',
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                  ),
+                  SizedBox(height: 12),
+                  Text(
+                    '¿Con quién compartimos tus datos personales y para qué fines?',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 6),
+                  Text(
+                    'Tus datos personales no serán transferidos, salvo que sea necesario atender un requerimiento de información de una autoridad competente, que esté debidamente fundado y motivado.\n\n'
+                    'Si deseas conocer nuestro Aviso de Privacidad Integral, lo podrás consultar en: http://transparencia.uaz.edu.mx Última actualización 07/10/2021.\n\n'
+                    'Programa de seguimiento de Trayectorias Escolares. CASE-UAZ.',
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Cerrar',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     bool isValidEmail(String email) {
       // A more robust regular expression for validating email addresses.
       final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[a-z]{2,})$');
@@ -94,7 +169,17 @@ class _RegistrarseState extends State<Registrarse> {
       String loginEndpoint =
           dotenv.env['REGISTER_ENDPOINT'] ?? "/defaultEndpoint1";
       String apiUrl = baseUrl + loginEndpoint;
-
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Color(
+                  0xff927249), // The color to use for text and icons on the background color
+            ),
+          );
+        },
+      );
       try {
         final response = await http.post(
           Uri.parse(apiUrl),
@@ -108,6 +193,7 @@ class _RegistrarseState extends State<Registrarse> {
           final String userId = responseData['userId'].toString();
           await _secureStorage.write(key: 'id', value: userId);
           await _secureStorage.write(key: 'token', value: token);
+          Navigator.pop(context);
           // Navigate to Dashboard
           Navigator.push(
             context,
@@ -119,9 +205,11 @@ class _RegistrarseState extends State<Registrarse> {
             content: const Center(child: Text('Registro exitoso!')),
           ));
         } else {
+          Navigator.pop(context);
           snackbarRed('Registro fallido. ${response.statusCode}');
         }
       } catch (error) {
+        Navigator.pop(context);
         snackbarRed("Registro fallido, vuelve a intentarlo.");
       }
     }
@@ -256,7 +344,9 @@ class _RegistrarseState extends State<Registrarse> {
             height: 25,
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              _showPrivacyPolicy();
+            },
             child: Text(
               'Políticas de privacidad',
               style: TextStyle(

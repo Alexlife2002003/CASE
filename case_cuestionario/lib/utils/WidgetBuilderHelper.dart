@@ -255,6 +255,7 @@ Widget buildRadioButtonRow(String label, String value, String? groupValue,
           border: Border.all(color: Colors.white, width: .2),
           borderRadius: BorderRadius.circular(12),
         ),
+        
         child: GestureDetector(
           onTap: onTapCallback,
           child: Material(

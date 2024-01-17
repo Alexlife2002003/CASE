@@ -34,6 +34,17 @@ class _conectividadState extends State<conectividad> {
   }
 
   Future<void> addConectividad() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(
+                0xff927249), // The color to use for text and icons on the background color
+          ),
+        );
+      },
+    );
     String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
     String Endpoint = dotenv.env['ADD_CONECTIVIDAD'] ?? "/defaultEndpoint1";
     String url = baseUrl + Endpoint;
@@ -51,6 +62,7 @@ class _conectividadState extends State<conectividad> {
             'pregunta68': _selectedPregunta68
           }));
       if (response.statusCode == 201) {
+        Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: Colors.green,
           content: Center(
@@ -65,10 +77,12 @@ class _conectividadState extends State<conectividad> {
         );
       } else {
         // Handle error
+        Navigator.pop(context);
         snackbarRed(
             "Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
       }
     } catch (error) {
+      Navigator.pop(context);
       snackbarRed('Error: $error');
     }
   }
@@ -118,7 +132,8 @@ class _conectividadState extends State<conectividad> {
             return AppWithDrawer(
                 title: 'Conectividad',
                 content: const Scaffold(
-                  body: Center(child: CircularProgressIndicator()),
+                  body: Center(child: CircularProgressIndicator( color: Color(
+                0xff927249),)),
                 ));
           } else if (snapshot.hasError) {
             return AppWithDrawer(

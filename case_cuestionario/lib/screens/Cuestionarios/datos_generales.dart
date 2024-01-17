@@ -45,10 +45,11 @@ class _datosGeneralesState extends State<datosGenerales> {
 
   Future<Map<String, dynamic>> fetchData() async {
     String baseUrl = dotenv.env['BASE_URL'] ?? "default_base_url";
-    String datosgenerales_endpoint = dotenv.env['DATOS_GENERALES_ENDPOINT'] ?? "/defaultEndpoint1";
+    String datosgenerales_endpoint =
+        dotenv.env['DATOS_GENERALES_ENDPOINT'] ?? "/defaultEndpoint1";
 
-   final response = await http
-        .get(Uri.parse(baseUrl+datosgenerales_endpoint));
+    final response =
+        await http.get(Uri.parse(baseUrl + datosgenerales_endpoint));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data =
@@ -86,12 +87,21 @@ class _datosGeneralesState extends State<datosGenerales> {
       required String trabaja,
       required String yearIngreso,
     }) async {
-
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Color(
+                  0xff927249), // The color to use for text and icons on the background color
+            ),
+          );
+        },
+      );
       String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
       String loginEndpoint =
           dotenv.env['ADD_DATOS_GENERALES_ENDPOINT'] ?? "/defaultEndpoint1";
       String url = baseUrl + loginEndpoint;
-
 
       try {
         final response = await http.post(
@@ -114,6 +124,7 @@ class _datosGeneralesState extends State<datosGenerales> {
         );
 
         if (response.statusCode == 201) {
+          Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             backgroundColor: Colors.green,
             content: Center(
@@ -128,11 +139,13 @@ class _datosGeneralesState extends State<datosGenerales> {
           );
         } else {
           // Handle error
+          Navigator.pop(context);
           snackbarRed(
               "Hubo un problema al agregar las respuestas. Por favor, inténtalo de nuevo.");
         }
       } catch (error) {
         // Handle network or other errors
+        Navigator.pop(context);
         snackbarRed('Error: $error');
       }
     }
@@ -145,7 +158,8 @@ class _datosGeneralesState extends State<datosGenerales> {
             return AppWithDrawer(
               title: 'Datos generales',
               content: const Scaffold(
-                body: Center(child: CircularProgressIndicator()),
+                body: Center(
+                    child: CircularProgressIndicator(color: Color(0xff927249))),
               ),
             );
           } else if (snapshot.hasError) {
