@@ -4,6 +4,9 @@ Is a project in progress made to have a way to track the challenges of a student
 
 So far it gets the questions and answers from a personal api, and it connects to localhost mariadb database, and is waiting for a database provided by the university.
 
+# Download Link
+
+🔗[You can download here](https://alexlife2002003.github.io/CASE-html/)
 
 ## 📸 Screenshots
 
