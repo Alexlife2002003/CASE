@@ -6,6 +6,23 @@ So far it gets the questions and answers from a personal api, and it connects to
 
 # Download Link
 
+[examen]: screenshots/examen.jpg 'Examenes'
+[login]: screenshots/login.jpg 'Login'
+[menu]: screenshots/menu.jpg 'Menu'
+[politicas]: screenshots/politicas.jpg 'Politicas'
+[registro]: screenshots/registro.jpg 'Registro'
+
+
+<!-- Table -->
+|  Examenes  |  Inicio de Sesion  |  Menu  |
+| :----------: |  :----------:  |   :----------:  |
+| ![Examenes][examen]| ![Login][login]| ![Menu][menu]|
+
+|  Politicas de privacidad  |  Registro  |
+| :----------: |  :----------:  |   
+| ![Politicas][politicas]| ![Registro][registro]|
+
+
 🔗[You can download here](https://alexlife2002003.github.io/CASE-html/)
 
 ## 📸 Screenshots
