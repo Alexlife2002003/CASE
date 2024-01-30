@@ -1,16 +1,41 @@
 # case_cuestionario
 
-A new Flutter project.
+Is a project in progress made to have a way to track the challenges of a student in their academic life.
 
-## Getting Started
+So far it gets the questions and answers from a personal api, and it connects to localhost mariadb database, and is waiting for a database provided by the university.
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## 📸 Screenshots
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 📚 Dependencies
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+| Name                                                                                  | Version       | Description                                                                                                                                |
+| ------------------------------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| [http](https://pub.dev/packages/http)                                                 | 1.1.2         | A composable, multi-platform, Future-based API for HTTP requests. |
+| [flutter_secure_storage](https://pub.dev/packages/flutter_secure_storage)  | 9.0.0     |Flutter Secure Storage provides API to store data in secure storage. Keychain is used in iOS, KeyStore based solution is used in Android.|
+|[flutter_dotenv](https://pub.dev/packages?q=flutter_dotenv)| 5.1.0    |Easily configure any flutter application with global variables using a `.env` file.|
+### Prerequisites
+
+-   Flutter
+-   Android Studio / Xcode
+
+### Setup
+
+1. Clone the repo
+
+```sh
+git clone
+```
+
+2. Install dependencies
+
+```sh
+dart pub get
+```
+
+3. Run the app
+
+```sh
+flutter run
+```
+
