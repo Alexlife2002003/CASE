@@ -19,9 +19,7 @@ So far it gets the questions and answers from a personal api, and it connects to
 |  Examenes  |  Inicio de Sesion  |  Menu  |
 | :----------: |  :----------:  |   :----------:  |
 | ![Examenes][examen]| ![Login][login]| ![Menu][menu]|
-
 |  Politicas de privacidad  |  Registro  |
-| :----------: |  :----------:  |   
 | ![Politicas][politicas]| ![Registro][registro]|
 
 ## 📚 Dependencies
