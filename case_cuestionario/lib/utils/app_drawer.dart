@@ -227,8 +227,9 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
   }
 
   Future<void> checkServiciosUnidad() async {
-      String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
-    String Endpoint = dotenv.env['REVISAR_SERVICIOS_UNIDAD'] ?? "/defaultEndpoint1";
+    String baseUrl = dotenv.env['API_BASE_URL_BD'] ?? "default_base_url";
+    String Endpoint =
+        dotenv.env['REVISAR_SERVICIOS_UNIDAD'] ?? "/defaultEndpoint1";
     String url = baseUrl + Endpoint;
     userId = await _secureStorage.read(key: 'id');
     try {
@@ -278,8 +279,17 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      'lib/assets/case-logo.png',
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => const Login()),
+                          (Route<dynamic> route) => false,
+                        );
+                      },
+                      child: Image.asset(
+                        'lib/assets/case-logo.png',
+                      ),
                     ),
                   ],
                 ),
@@ -339,7 +349,7 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                             width: 10,
                           ),
                           const Text(
-                            'Incorporacion, medios \ny recursos',
+                            'Incorporación, medios \ny recursos',
                             style: TextStyle(fontSize: 20),
                           ),
                         ],
@@ -377,7 +387,7 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                             width: 10,
                           ),
                           const Text(
-                            'Area profesional',
+                            'Área profesional',
                             style: TextStyle(fontSize: 20),
                           ),
                         ],
@@ -461,7 +471,7 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                             width: 10,
                           ),
                           const Text(
-                            'Motivos de desercion \ny abandono escolar',
+                            'Motivos de deserción \ny abandono escolar',
                             style: TextStyle(fontSize: 20),
                           ),
                         ],
@@ -545,7 +555,7 @@ class _AppWithDrawerState extends State<AppWithDrawer> {
                             width: 10,
                           ),
                           const Text(
-                            'Servicios de la \nunidad academica',
+                            'Servicios de la \nUnidad académica',
                             style: TextStyle(fontSize: 20),
                           ),
                         ],
